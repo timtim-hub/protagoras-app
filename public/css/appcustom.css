@@ -1,0 +1,51 @@
+#main-wrapper #main-background {
+    background: #11CCF5cf !important;
+}
+
+#main-wrapper .minimize-navbar {
+    background: #313338 !important;
+}
+
+#brand-img {
+    max-width: 200px!important;
+}
+
+#main-wrapper .navbar-nav li.nav-item a.active {
+    color: #11CCF5 !important;
+}
+
+#main-wrapper .minimize-navbar li.nav-item a.active {
+    color: #11CCF5!important;
+}
+
+.fs-12.aos-init.aos-animate {
+    color: #ffffff!important;
+}
+
+#main-wrapper .dark-color {
+    color: #ffffff !important;
+}
+
+#main-wrapper .navbar {
+    background: #313338 !important;
+}
+
+/*.app-header.header {
+    background: #30003B!important;
+}*/
+
+.app-sidebar__logo {
+    background: #313338 !important;
+}
+
+#welcome-footer {
+    background: #313338 !important;
+}
+
+#main-wrapper .minimize-navbar .icon span {
+    color: #313338 !important;
+}
+
+.happy-customers {
+    color: #000000 !important;
+}

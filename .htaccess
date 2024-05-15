@@ -1,0 +1,26 @@
+#disable directory browsing
+Options -Indexes
+RewriteEngine on
+RewriteCond %{REQUEST_URI} !^public
+RewriteRule ^(.*)$ public/$1 [L]
+#PROTECT ENV FILE
+<Files .env>
+order allow,deny
+Deny from all
+</Files>
+#PROTECT ENV FILE
+<Files .htaccess>
+order allow,deny
+Deny from all
+</Files>
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION BEGIN
+PassengerAppRoot "/home/aihowgkq/protagoras.app"
+PassengerBaseURI "/"
+PassengerNodejs "/home/aihowgkq/nodevenv/protagoras.app/14/bin/node"
+PassengerAppType node
+PassengerStartupFile app.js
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION END
+# DO NOT REMOVE OR MODIFY. CLOUDLINUX ENV VARS CONFIGURATION BEGIN
+<IfModule Litespeed>
+</IfModule>
+# DO NOT REMOVE OR MODIFY. CLOUDLINUX ENV VARS CONFIGURATION END
