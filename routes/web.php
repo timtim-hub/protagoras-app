@@ -1102,3 +1102,11 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 
 // Fallback route to ensure the admin.about route is defined
 Route::get('/admin/settings/about', [App\Http\Controllers\Admin\Settings\GlobalController::class, 'about'])->name('admin.settings.about');
+
+// Fallback route to ensure the admin.dashboard route is defined
+Route::get('/admin/dashboard', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('admin.dashboard');
+
+// Test route to verify routing
+Route::get('/test', function() {
+    return 'Routing OK';
+});
