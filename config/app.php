@@ -195,6 +195,7 @@ return [
         ZanySoft\Zip\ZipServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
         Zorb\Promocodes\PromocodesServiceProvider::class,
+        Elseyyid\LaravelJsonLocationsManager\Providers\LaravelJsonLocationsManagerServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -205,6 +206,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\DropboxServiceProvider::class,
+        App\Providers\ViewServiceProvider::class,
 
     ],
 

@@ -97,20 +97,20 @@
                         <div class="col-sm-12 upload-responsive">
                             <div class="text-container text-center">
                                 <h6 class="mb-4 fs-14" data-aos="fade-up" data-aos-delay="50" data-aos-once="true" data-aos-duration="100"><i class="fa-sharp fa-solid fa-sparkles mr-1"></i> <?php echo e(__('Meet')); ?>, <?php echo e(config('app.name')); ?></span></h6>
-                                <h1 data-aos="fade-up" data-aos-delay="100" data-aos-once="true" data-aos-duration="200"><?php echo e(__('Ultimate AI Creator')); ?></span></h1>
+                                <h1 data-aos="fade-up" data-aos-delay="100" data-aos-once="true" data-aos-duration="200">Ultimate Content and SEO AI Tool</span></h1>
                                 <div class="word-container" data-aos="fade-up" data-aos-delay="150" data-aos-once="true" data-aos-duration="300">
                                     <h1 class="ah-headline">
                                       <span class="ah-words-wrapper text-center">
                                         <b class="is-visible"><?php echo e(__('Article Generator')); ?></b>
                                         <b><?php echo e(__('Content Improver')); ?></b>
-                                        <b><?php echo e(__('Blog Contents')); ?></b>
-                                        <b><?php echo e(__('Ad Creations')); ?></b>
-                                        <b><?php echo e(__('Text to Speech')); ?></b>
+                                        <b><?php echo e(__('SEO Content')); ?></b>
+                                        <b><?php echo e(__('Ad Creatives')); ?></b>
+                                        <b><?php echo e(__('Rewriter')); ?></b>
                                         <b><?php echo e(__('And Many More!')); ?></b>
                                       </span>
                                     </h1>
                                   </div>
-                                <p class="fs-16" data-aos="fade-up" data-aos-delay="400" data-aos-once="true" data-aos-duration="700"><?php echo e(__('One platform to generate all AI contents & AI Voiceovers')); ?></p>
+                                <p class="fs-16" data-aos="fade-up" data-aos-delay="400" data-aos-once="true" data-aos-duration="700">SEO-optimized articles with over 20,000+ words with a single keyword. Create engaging blog posts and affiliate content in 48 languages with AI images. All in one click!</p>
 
                                 <a href="<?php echo e(route('register')); ?>" class="btn-primary-frontend btn-frontend-scroll-effect mb-2" id="top-main-button"  data-aos="fade-up" data-aos-delay="500" data-aos-once="true" data-aos-duration="800">
                                     <div>
@@ -135,6 +135,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <img src='https://svgshare.com/i/125h.svg' title='Best Choice By AffordHunt' rel='nofollow' width='100' height='100' style='margin-top: 10px;' />
                             </div>
                         </div>                                
                     </div>           

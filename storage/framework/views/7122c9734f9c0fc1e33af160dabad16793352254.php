@@ -12,7 +12,8 @@
 	} 
 ?>
 <!DOCTYPE html>
-<html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>">
+<html lang="<?php echo e(LaravelLocalization::getCurrentLocale()); ?>"
+dir="<?php echo e(LaravelLocalization::getCurrentLocaleDirection()); ?>">
 	<head>
 		<!-- Meta data -->
 		<meta charset="utf-8">

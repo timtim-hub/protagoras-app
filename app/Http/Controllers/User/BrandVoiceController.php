@@ -162,7 +162,7 @@ class BrandVoiceController extends Controller
             ]); 
 
             toastr()->success(__('Brand voice was successfully updated'));
-            return redirect()->route('user.templates.custom');
+            return redirect()->back();
         } else {
             toastr()->warning(__('Access denied'));
             return redirect()->back();   

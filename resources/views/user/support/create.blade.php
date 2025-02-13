@@ -38,6 +38,7 @@
 										<option value="Billing Inquiry">{{ __('Billing Issue') }}</option>
 										<option value="Improvement Idea">{{ __('Improvement Idea') }}</option>
 										<option value="Feedback">{{ __('Feedback') }}</option>
+										<option value="Feedback">{{ __('Other') }}</option>
 									</select>
 									@error('category')
 										<p class="text-danger">{{ $errors->first('category') }}</p>
@@ -81,10 +82,10 @@
 								<div class="input-box">
 									<div class="input-group file-browser">	
 										<h6>{{ __('Attach File') }} <span class="text-muted fs-12">({{ __('JPG | JPEG | PNG') }})</h6>								
-										<input type="text" class="form-control border-right-0 browse-file" placeholder="{{ __('Include attachment file...') }}" style="margin-right: 80px;" readonly>
+										<input type="text" class="form-control border-right-0 browse-file" placeholder="{{ __('Include attachment file...') }}"  style="margin-right: 80px;" readonly>
 										<label class="input-group-btn mt-4">
 											<span class="btn btn-primary special-btn">
-												{{ __('Browse') }} <input type="file" name="attachment" style="display: none;">
+												{{ __('Browse') }} <input type="file" name="attachment" style="display: none;" accept="image/png, image/jpeg, image/webp">
 											</span>
 										</label>
 									</div>	

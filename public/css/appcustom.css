@@ -49,3 +49,35 @@
 .happy-customers {
     color: #000000 !important;
 }
+
+h1.aos-init.aos-animate {
+
+    font-size: 50px !important;
+}
+
+#main-wrapper .minimize-navbar #login-button {
+    color: #ffffff !important;
+}
+
+#frontend-local {
+
+    display: none!important;
+}
+
+#main-wrapper .text-container p {
+    color: #ffd900!important;
+    margin-left: 20%!important;
+    margin-right:20%!important;
+}
+
+#search-field {
+    display:none!important;
+}
+
+.header-icon.flag.flag-us.pr-1 {
+    display:none!important;
+}
+
+.dropdown.header-locale {
+    display:none!important;
+}

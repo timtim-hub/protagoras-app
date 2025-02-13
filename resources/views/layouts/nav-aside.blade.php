@@ -31,7 +31,7 @@
             <li class="slide">
                 <a class="side-menu__item" href="{{ route('user.smart.editor') }}">
                 <span class="side-menu__icon lead-3 fs-18 fa-solid fa-feather"></span>
-                <span class="side-menu__label">{{ __('Smart Editor') }}</span><span class="text-primary remove-new fs-9 side-menu__new">{{ __('New') }}</span></a>
+                <span class="side-menu__label">{{ __('Smart Editor') }}</span></a>
             </li> 
         @endif
         @if (config('settings.rewriter_feature_user') == 'allow')
@@ -45,14 +45,14 @@
             <li class="slide">
                 <a class="side-menu__item" href="{{ route('user.plagiarism') }}">
                 <span class="side-menu__icon fa-sharp fa-solid fa-shield-check"></span>
-                <span class="side-menu__label">{{ __('AI Plagiarism Checker') }}</span><span class="text-primary remove-new fs-9 side-menu__new">{{ __('New') }}</span></a>
+                <span class="side-menu__label">{{ __('AI Plagiarism Checker') }}</span></a>
             </li> 
         @endif
         @if (config('settings.ai_detector_feature_user') == 'allow')
             <li class="slide">
                 <a class="side-menu__item" href="{{ route('user.detector') }}">
                 <span class="side-menu__icon fa-sharp fa-solid fa-user-secret"></span>
-                <span class="side-menu__label">{{ __('AI Content Detector') }}</span><span class="text-primary remove-new fs-9 side-menu__new">{{ __('New') }}</span></a>
+                <span class="side-menu__label">{{ __('AI Content Detector') }}</span></a>
             </li> 
         @endif
         @if (config('settings.video_feature_user') == 'allow')
@@ -62,7 +62,7 @@
                     <span class="side-menu__label">{{ __('AI Video') }}</span><i class="angle fa fa-angle-right"></i>
                 </a>
                 <ul class="slide-menu">
-                    <li><a href="{{ route('user.video') }}" class="slide-item">{{ __('Image to Video') }} <span class="text-primary remove-new fs-9 side-menu__new ml-6">{{ __('New') }}</span></a></li>
+                    <li><a href="{{ route('user.video') }}" class="slide-item">{{ __('Image to Video') }}</a></li>
                 </ul>
             </li> 
         @endif
@@ -71,6 +71,13 @@
                 <a class="side-menu__item" href="{{ route('user.images') }}">
                 <span class="side-menu__icon lead-3 fa-solid fa-camera-viewfinder"></span>
                 <span class="side-menu__label">{{ __('AI Images') }}</span></a>
+            </li> 
+        @endif
+        @if (config('settings.photo_studio_feature_user') == 'allow')
+            <li class="slide">
+                <a class="side-menu__item" href="{{ route('user.photo.studio') }}">
+                <span class="side-menu__icon lead-3 fa-solid fa-photo-film"></span>
+                <span class="side-menu__label">{{ __('AI Photo Studio') }}</span></a>
             </li> 
         @endif
         @if (config('settings.voiceover_feature_user') == 'allow')
@@ -82,10 +89,10 @@
                 <ul class="slide-menu">
                     <li><a href="{{ route('user.voiceover') }}" class="slide-item">{{ __('Text to Speech') }}</a></li>
                     @if (config('settings.voice_clone_feature_user') == 'allow')
-                        <li><a href="{{ route('user.voiceover.clone') }}" class="slide-item">{{ __('Voice Cloning') }}<span class="text-primary remove-new fs-9 side-menu__new ml-6">{{ __('New') }}</span></a></li>
+                        <li><a href="{{ route('user.voiceover.clone') }}" class="slide-item">{{ __('Voice Cloning') }}</a></li>
                     @endif
                     @if (config('settings.sound_studio_feature_user') == 'allow')
-                        <li><a href="{{ route('user.studio') }}" class="slide-item">{{ __('Sound Studio') }}<span class="text-primary remove-new fs-9 side-menu__new ml-6">{{ __('New') }}</span></a></li>
+                        <li><a href="{{ route('user.studio') }}" class="slide-item">{{ __('Sound Studio') }}</a></li>
                     @endif
                 </ul>
             </li> 
@@ -115,7 +122,7 @@
             <li class="slide">
                 <a class="side-menu__item" href="{{ route('user.chat.file') }}">
                 <span class="side-menu__icon lead-3 fs-18 fa-solid fa-folder-grid"></span>
-                <span class="side-menu__label">{{ __('AI File Chat') }}</span><span class="text-primary remove-new fs-9 side-menu__new">{{ __('New') }}</span></a>
+                <span class="side-menu__label">{{ __('AI File Chat') }}</span></a>
             </li> 
         @endif
         @if (config('settings.chat_web_feature_user') == 'allow')
@@ -150,9 +157,18 @@
             <li class="slide">
                 <a class="side-menu__item" href="{{ route('user.brand') }}">
                 <span class="side-menu__icon fa-solid fa-signature"></span>
-                <span class="side-menu__label">{{ __('Brand Voice') }}</span><span class="text-primary remove-new fs-9 side-menu__new">{{ __('New') }}</span></a>
+                <span class="side-menu__label">{{ __('Brand Voice') }}</span></a>
             </li> 
         @endif 
+        @if (config('settings.integration_feature_user') == 'allow')
+            @if (App\Services\HelperService::checkIntegrationFeature())
+                <li class="slide">
+                    <a class="side-menu__item" href="{{ route('user.integration') }}">
+                    <span class="side-menu__icon fa-solid fa-rectangles-mixed"></span>
+                    <span class="side-menu__label">{{ __('Integrations') }}</span></a>
+                </li> 
+            @endif 
+        @endif
         <li class="slide mb-3">
             <a class="side-menu__item" data-toggle="slide" href="{{ url('#')}}">
                 <span class="side-menu__icon fa-solid fa-folder-bookmark"></span>
@@ -212,13 +228,13 @@
             <li class="slide">
                     <a class="side-menu__item" data-toggle="slide" href="{{ url('#')}}">
                         <span class="side-menu__icon fa-solid fa-microchip-ai fs-18"></span>
-                        <span class="side-menu__label">{{ __('Davinci Management') }}</span><i class="angle fa fa-angle-right"></i>
+                        <span class="side-menu__label">{{ __('AI Management') }}</span><i class="angle fa fa-angle-right"></i>
                     </a>
                     <ul class="slide-menu">
-                        <li><a href="{{ route('admin.davinci.dashboard') }}" class="slide-item">{{ __('Davinci Dashboard') }}</a></li>                        
-                        <li><a href="{{ route('admin.davinci.image.prompt') }}" class="slide-item">{{ __('Image Prompts') }}</a></li>
-                        <li><a href="{{ route('admin.davinci.voices') }}" class="slide-item">{{ __('Voices Customization') }}</a></li>                        
-                        <li><a href="{{ route('admin.davinci.configs') }}" class="slide-item">{{ __('Davinci Settings') }}</a></li>
+                        <li><a href="{{ route('admin.davinci.dashboard') }}" class="slide-item">{{ __('AI Usage Dashboard') }}</a></li>                        
+                        <li><a href="{{ route('admin.davinci.image.prompt') }}" class="slide-item">{{ __('AI Image Prompts') }}</a></li>
+                        <li><a href="{{ route('admin.davinci.voices') }}" class="slide-item">{{ __('AI Voiceover Voices') }}</a></li>                        
+                        <li><a href="{{ route('admin.davinci.configs') }}" class="slide-item">{{ __('AI Settings') }}</a></li>
                     </ul>
             </li>
             <li class="slide">
@@ -241,7 +257,8 @@
                     <li><a href="{{ route('admin.davinci.chat.category') }}" class="slide-item">{{ __('Chat Categories') }}</a></li>
                     <li><a href="{{ route('admin.davinci.chat.prompt') }}" class="slide-item">{{ __('Chat Prompts') }}</a></li>
                     <li><a href="{{ route('admin.davinci.chats') }}" class="slide-item">{{ __('Original Chatbots') }}</a></li>                   
-                    <li><a href="{{ route('admin.chat.assistant') }}" class="slide-item">{{ __('Chat Assistants') }} <span class="text-primary remove-new fs-9 side-menu__new ml-4">{{ __('New') }}</span></a></li>                                     
+                    <li><a href="{{ route('admin.chat.assistant') }}" class="slide-item">{{ __('Chat Assistants') }}</a></li>                   
+                    {{-- <li><a href="{{ route('admin.chat.training') }}" class="slide-item">{{ __('Chat Training') }}</a></li>                    --}}
                 </ul>
             </li>
             <li class="slide">
@@ -340,6 +357,7 @@
                         <li><a href="{{ route('admin.settings.oauth') }}" class="slide-item">{{ __('Auth Settings') }}</a></li>
                         <li><a href="{{ route('admin.settings.registration') }}" class="slide-item">{{ __('Registration Settings') }}</a></li>
                         <li><a href="{{ route('admin.settings.smtp') }}" class="slide-item">{{ __('SMTP Settings') }}</a></li>
+                        <li><a href="{{ route('elseyyid.translations.home') }}" class="slide-item">{{ __('Languages') }}</a></li>     
                         <li><a href="{{ route('admin.settings.activation') }}" class="slide-item">{{ __('Activation') }}</a></li>     
                         <li><a href="{{ route('admin.settings.upgrade') }}" class="slide-item">{{ __('Upgrade Software') }}</a></li>                 
                         <li><a href="{{ route('admin.settings.clear') }}" class="slide-item">{{ __('Clear Cache') }}</a></li>                 
@@ -347,37 +365,120 @@
             </li>
         @endrole
         <hr class="w-90 text-center m-auto">
-        <li class="side-item side-item-category mt-4 mb-3">{{ __('AI Credits') }}</li>
-        <li class="side-item side-item-category mt-4 mb-2">{{ __('Plan') }}: @if (is_null(auth()->user()->plan_id))<span class="text-primary">{{ __('Free Trial') }}</span> @else <span class="text-primary">{{ __(App\Services\HelperService::getPlanName())}}</span>  @endif @if (is_null(auth()->user()->plan_id)) - <a href="{{ route('user.plans') }}" class="text-yellow upgrade-action-button"> {{ __('Upgrade Now') }}</a> @endif</li>
-        <li class="side-item side-item-category mt-0 mb-2">{{ __('Next Renewal') }}: @if (is_null(auth()->user()->plan_id)){{ __('No Renewal') }} @else {{ __(App\Services\HelperService::getRenewalDate())}}  @endif</li>
-        <div class="side-progress-position">
-            <div class="inline-flex w-100">
-                <div class="flex w-100">
-                    <span class="fs-11 font-weight-600 side-word-notification"><i class="fa-solid fa-message-lines text-primary mr-2"></i><span class="text-muted">{{ __('GPT 3.5') }} {{ __('Words') }}</span> <span class="text-primary ml-1" id="available-words">{{ App\Services\HelperService::getTotalWords()}}</span></span>
-                </div> 
-                @role('user|subscriber|admin')
-                    @if (config('settings.image_feature_user') == 'allow')
-                        <div class="flex w-100">
-                            <span class="fs-11 font-weight-600 side-word-notification"><i class="fa-sharp fa-solid fa-message-image text-primary mr-2"></i><span class="text-muted">{{ __('DE/SD Images') }}</span> <span class="text-primary ml-1" id="available-images">{{ App\Services\HelperService::getTotalImages()}}</span></span>
-                        </div> 
-                    @endif
-                @endrole
-                @role('user|subscriber|admin')
-                    @if (config('settings.whisper_feature_user') == 'allow')
-                        <div class="flex w-100">
-                            <span class="fs-11 font-weight-600 side-word-notification"><i class="fa-sharp fa-solid fa-message-music text-primary mr-2"></i><span class="text-muted">{{ __('Minutes') }}</span> <span class="text-primary ml-1" id="available-minutes">{{ App\Services\HelperService::getTotalMinutes()}}</span></span>
-                        </div> 
-                    @endif
-                @endrole
-                @role('user|subscriber|admin')
-                    @if (config('settings.voiceover_feature_user') == 'allow')
-                        <div class="flex w-100">
-                            <span class="fs-11 font-weight-600 side-word-notification"><i class="fa-solid fa-message-captions text-primary mr-2"></i><span class="text-muted">{{ __('Characters') }}</span> <span class="text-primary ml-1" id="available-characters">{{ App\Services\HelperService::getTotalCharacters()}}</span></span>
-                        </div>   
-                    @endif
-                @endrole                  
+        <div class="side-progress-position mt-4">
+            <div class="side-plan-wrapper text-center pt-3 pb-3">
+                <span class="side-item side-item-category mt-4">{{ __('Plan') }}: @if (is_null(auth()->user()->plan_id))<span class="text-primary">{{ __('No Active Subscription') }}</span> @else <span class="text-primary">{{ __(App\Services\HelperService::getPlanName())}}</span>  @endif </span>
+                <div class="view-credits mt-1"><a class=" fs-11 text-muted mb-2" href="javascript:void(0)" id="view-credits" data-bs-toggle="modal" data-bs-target="#creditsModel"><i class="fa-solid fa-coin-front text-yellow "></i> {{ __('View Credits') }}</a></div> 
+                @if (is_null(auth()->user()->plan_id))
+                    <div class="text-center mt-3 mb-2"><a href="{{ route('user.plans') }}" class="btn btn-primary pl-6 pr-6 fs-11"> <i class="fa-solid fa-bolt text-yellow mr-2"></i> {{ __('Upgrade') }}</a></div> 
+                @endif              
             </div>
+            @if (config('payment.referral.enabled') == 'on')
+                <div class="side-plan-wrapper mt-4 text-center p-3 pl-5 pr-5">
+                    <div class="mb-1"><i class="fa-solid fa-gifts fs-20 text-yellow"></i></div>
+                    <span class="fs-12 mt-4" style="color: #344050">{{ __('Invite your friends and get') }} {{ config('payment.referral.payment.commission') }}% @if (config('payment.referral.payment.policy') == 'all') {{ __('of all their purchases') }} @else {{ __('of their first purchase') }}@endif</span>
+                    <div class="text-center mt-3 mb-2"><a href="{{ route('user.referral') }}" class="btn btn-primary pl-6 pr-6 fs-11" id="referral-button"> {{ __('Invite Friends') }}</a></div>              
+                </div>
+            @endif
         </div>
     </ul>
 </aside>
+
+<div class="modal fade" id="creditsModel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-md">
+          <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="text-center font-weight-bold fs-16"> {{ __('Credits on') }} {{ config('app.name') }}</h6>	
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body pl-5 pr-5">
+                
+                <h6 class="font-weight-semibold mb-2 mt-3">{{ __('Unlock your creativity with') }} {{ config('app.name') }} {{ __('credits') }}</h6>
+                <p class="text-muted">{{ __('Maximize your content creation with') }} {{ config('app.name') }}. {{ __('Each credit unlocks powerful AI tools and features designed to enhance your content creation.') }}</p>
+                
+                <div class="d-flex justify-content-between mt-3">
+                    <div class="font-weight-bold fs-12">{{ __('AI Chats/Templates') }}</div>
+                    <div class="font-weight-bold fs-12">{{ __('Credits') }}</div>
+                </div>
+                <hr class="mt-2 mb-2">
+                <div class="d-flex justify-content-between">
+                    <div class="text-muted fs-10">{{ __('OpenAI GPT 4') }}</div>
+                    <div class="text-muted fs-10"><span>@if (\App\Services\HelperService::userAvailableGPT4Words() == -1) {{ __('Unlimited') }} @else {{ \App\Services\HelperService::userAvailableGPT4Words()}} @endif {{ __('Words') }}</span></div>
+                </div>
+                <hr class="mt-2 mb-2">
+                <div class="d-flex justify-content-between">
+                    <div class="text-muted fs-10">{{ __('OpenAI GPT 4o') }}</div>
+                    <div class="text-muted fs-10">@if (\App\Services\HelperService::userAvailableGPT4oWords() == -1) {{ __('Unlimited') }} @else {{ \App\Services\HelperService::userAvailableGPT4oWords()}}  @endif{{ __('Words') }}</div>
+                </div>
+                <hr class="mt-2 mb-2">
+                <div class="d-flex justify-content-between">
+                    <div class="text-muted fs-10">{{ __('OpenAI GPT 4 Turbo') }}</div>
+                    <div class="text-muted fs-10">@if (\App\Services\HelperService::userAvailableGPT4TWords() == -1) {{ __('Unlimited') }} @else {{ App\Services\HelperService::userAvailableGPT4TWords()}} @endif {{ __('Words') }}</div>
+                </div>
+                <hr class="mt-2 mb-2">
+                <div class="d-flex justify-content-between">
+                    <div class="text-muted fs-10">{{ __('OpenAI GPT 3.5 Turbo') }}</div>
+                    <div class="text-muted fs-10">@if (\App\Services\HelperService::userAvailableWords() == -1) {{ __('Unlimited') }} @else {{ App\Services\HelperService::userAvailableWords()}} @endif {{ __('Words') }}</div>
+                </div>
+                <hr class="mt-2 mb-2">
+                <div class="d-flex justify-content-between">
+                    <div class="text-muted fs-10">{{ __('OpenAI Fine Tune') }}</div>
+                    <div class="text-muted fs-10">@if (\App\Services\HelperService::userAvailableFineTuneWords() == -1) {{ __('Unlimited') }} @else {{ App\Services\HelperService::userAvailableFineTuneWords()}} @endif {{ __('Words') }}</div>
+                </div>
+                <hr class="mt-2 mb-2">
+                <div class="d-flex justify-content-between">
+                    <div class="text-muted fs-10">{{ __('Anthropic Claude 3 Opus') }}</div>
+                    <div class="text-muted fs-10">@if (\App\Services\HelperService::userAvailableClaudeOpusWords() == -1) {{ __('Unlimited') }} @else {{ App\Services\HelperService::userAvailableClaudeOpusWords()}} @endif {{ __('Words') }}</div>
+                </div>
+                <hr class="mt-2 mb-2">
+                <div class="d-flex justify-content-between">
+                    <div class="text-muted fs-10">{{ __('Anthropic Claude 3.5 Sonnet') }}</div>
+                    <div class="text-muted fs-10">@if (\App\Services\HelperService::userAvailableClaudeSonnetWords() == -1) {{ __('Unlimited') }} @else {{ App\Services\HelperService::userAvailableClaudeSonnetWords()}} @endif {{ __('Words') }}</div>
+                </div>
+                <hr class="mt-2 mb-2">
+                <div class="d-flex justify-content-between">
+                    <div class="text-muted fs-10">{{ __('Anthropic Claude 3 Haiku') }}</div>
+                    <div class="text-muted fs-10">@if (\App\Services\HelperService::userAvailableClaudeHaikuWords() == -1) {{ __('Unlimited') }} @else {{ App\Services\HelperService::userAvailableClaudeHaikuWords()}} @endif {{ __('Words') }}</div>
+                </div>
+                <hr class="mt-2 mb-2">
+                <div class="d-flex justify-content-between">
+                    <div class="text-muted fs-10">{{ __('Google Gemini Pro') }}</div>
+                    <div class="text-muted fs-10">@if (\App\Services\HelperService::userAvailableGeminiProWords() == -1) {{ __('Unlimited') }} @else {{ App\Services\HelperService::userAvailableGeminiProWords()}} @endif {{ __('Words') }}</div>
+                </div>
+                
+                <div class="d-flex justify-content-between mt-4">
+                    <div class="font-weight-bold fs-12">{{ __('AI Image') }}</div>
+                    <div class="font-weight-bold fs-12">{{ __('Credits') }}</div>
+                </div>
+                <hr class="mt-2 mb-2">
+                <div class="d-flex justify-content-between">
+                    <div class="text-muted fs-10">{{ __('Dalle') }}</div>
+                    <div class="text-muted fs-10">{{ \App\Services\HelperService::userAvailableDEImages()}} {{ __('Images') }}</div>
+                </div>
+                <hr class="mt-2 mb-2">
+                <div class="d-flex justify-content-between">
+                    <div class="text-muted fs-10">{{ __('Stable Diffusion') }}</div>
+                    <div class="text-muted fs-10">{{ \App\Services\HelperService::userAvailableSDImages()}} {{ __('Images') }}</div>
+                </div>
+
+                <div class="d-flex justify-content-between mt-4">
+                    <div class="font-weight-bold fs-12">{{ __('Extra') }}</div>
+                    <div class="font-weight-bold fs-12">{{ __('Credits') }}</div>
+                </div>
+                <hr class="mt-2 mb-2">
+                <div class="d-flex justify-content-between">
+                    <div class="text-muted fs-10">{{ __('AI Voiceover') }}</div>
+                    <div class="text-muted fs-10">{{ App\Services\HelperService::getTotalCharacters()}} {{ __('Characters') }}</div>
+                </div>
+                <hr class="mt-2 mb-2">
+                <div class="d-flex justify-content-between">
+                    <div class="text-muted fs-10">{{ __('AI Speech to Text') }}</div>
+                    <div class="text-muted fs-10">{{ App\Services\HelperService::getTotalMinutes()}} {{ __('Minutes') }}</div>
+                </div>
+               
+                <div class="text-center mt-4"><a href="{{ route('user.plans') }}" class="btn btn-primary pl-6 pr-6 fs-11" style="text-transform: none"> <i class="fa-solid fa-bolt text-yellow mr-2"></i> {{ __('Upgrade Now') }}</a></div> 
+            </div>
+          </div>
+    </div>
+</div>
 <!-- END SIDE MENU BAR -->

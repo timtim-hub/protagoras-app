@@ -500,7 +500,7 @@ class ChatAssistantController extends Controller
             }
             
         } else {
-            $avatarPath = '/chats/custom/avatar.webp';
+            $avatarPath = $id->logo;
         }
 
         if (request()->has('file')) {

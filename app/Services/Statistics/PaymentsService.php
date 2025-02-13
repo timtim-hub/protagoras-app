@@ -3,6 +3,8 @@
 namespace App\Services\Statistics;
 
 use App\Models\Payment;
+use App\Models\Payout;
+use App\Models\Referral;
 use DB;
 
 class PaymentsService 
@@ -87,7 +89,7 @@ class PaymentsService
                 ->where('status', 'completed')
                 ->get();  
         
-        return $payments;
+        return $payments[0]['data'];
     }
 
 
@@ -102,7 +104,7 @@ class PaymentsService
                 ->where('status', 'completed')
                 ->get();  
         
-        return $payments;
+        return $payments[0]['data'];
     }
 
 
@@ -110,6 +112,25 @@ class PaymentsService
     {   
         $payments = Payment::select(DB::raw("count(id) as data"))                
                 ->whereYear('created_at', $this->year)
+                ->where('status', 'completed')
+                ->get();  
+        
+        return $payments;
+    }
+
+
+    public function getTotalReferralEarnings()
+    {   
+        $payments = Referral::select(DB::raw("sum(payment) as data"))                
+                ->get();  
+        
+        return $payments;
+    }
+
+
+    public function getTotalReferralPayouts()
+    {   
+        $payments = Payout::select(DB::raw("sum(total) as data"))                
                 ->where('status', 'completed')
                 ->get();  
         

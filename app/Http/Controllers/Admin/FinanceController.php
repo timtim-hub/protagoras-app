@@ -12,6 +12,7 @@ use App\Models\Subscriber;
 use App\Models\Payment;
 use App\Models\User;
 use App\Models\SubscriptionPlan;
+use App\Models\PrepaidPlan;
 use DataTables;
 use Carbon\Carbon;
 
@@ -354,12 +355,15 @@ class FinanceController extends Controller
             $group = ($user->hasRole('admin'))? 'admin' : 'subscriber';
 
             if ($id->frequency != 'prepaid') {
+
+                $subscription = SubscriptionPlan::where('id', $id->plan_id)->first();
                 $user->syncRoles($group);    
                 $user->group = $group;
                 $user->plan_id = $id->plan_id;
                 $user->gpt_3_turbo_credits = $id->gpt_3_turbo_credits;
                 $user->gpt_4_turbo_credits = $id->gpt_4_turbo_credits;
                 $user->gpt_4_credits = $id->gpt_4_credits;
+                $user->gpt_4o_credits = $subscription->gpt_4o_credits;
                 $user->claude_3_opus_credits = $id->claude_3_opus_credits;
                 $user->claude_3_sonnet_credits = $id->claude_3_sonnet_credits;
                 $user->claude_3_haiku_credits = $id->claude_3_haiku_credits;
@@ -376,14 +380,16 @@ class FinanceController extends Controller
                 $subscription->status = 'Active';
                 $subscription->save();
             } else {
-                $user->gpt_3_turbo_credits_prepaid = ($user->gpt_3_turbo_credits_prepaid + $id->gpt_3_turbo_credits_prepaid);
-                $user->gpt_4_turbo_credits_prepaid = ($user->gpt_4_turbo_credits_prepaid + $id->gpt_4_turbo_credits_prepaid);
-                $user->gpt_4_credits_prepaid = ($user->gpt_4_credits_prepaid + $id->gpt_4_credits_prepaid);
-                $user->fine_tune_credits_prepaid = ($user->fine_tune_credits_prepaid + $id->fine_tune_credits_prepaid);
-                $user->claude_3_opus_credits_prepaid = ($user->claude_3_opus_credits_prepaid + $id->claude_3_opus_credits_prepaid);
-                $user->claude_3_sonnet_credits_prepaid = ($user->claude_3_sonnet_credits_prepaid + $id->claude_3_sonnet_credits_prepaid);
-                $user->claude_3_haiku_credits_prepaid = ($user->claude_3_haiku_credits_prepaid + $id->claude_3_haiku_credits_prepaid);
-                $user->gemini_pro_credits_prepaid = ($user->gemini_pro_credits_prepaid + $id->gemini_pro_credits_prepaid);
+                $subscription = PrepaidPlan::where('id', $id->plan_id)->first();
+                $user->gpt_3_turbo_credits_prepaid = ($user->gpt_3_turbo_credits_prepaid + $id->gpt_3_turbo_credits);
+                $user->gpt_4_turbo_credits_prepaid = ($user->gpt_4_turbo_credits_prepaid + $id->gpt_4_turbo_credits);
+                $user->gpt_4_credits_prepaid = ($user->gpt_4_credits_prepaid + $id->gpt_4_credits);
+                $user->gpt_4o_credits_prepaid = ($user->gpt_4o_credits_prepaid + $subscription->gpt_4o_credits_prepaid);
+                $user->fine_tune_credits_prepaid = ($user->fine_tune_credits_prepaid + $id->fine_tune_credits);
+                $user->claude_3_opus_credits_prepaid = ($user->claude_3_opus_credits_prepaid + $id->claude_3_opus_credits);
+                $user->claude_3_sonnet_credits_prepaid = ($user->claude_3_sonnet_credits_prepaid + $id->claude_3_sonnet_credits);
+                $user->claude_3_haiku_credits_prepaid = ($user->claude_3_haiku_credits_prepaid + $id->claude_3_haiku_credits);
+                $user->gemini_pro_credits_prepaid = ($user->gemini_pro_credits_prepaid + $id->gemini_pro_credits);
                 $user->available_sd_images_prepaid = ($user->available_sd_images_prepaid + $id->sd_images);
                 $user->available_dalle_images_prepaid = ($user->available_dalle_images_prepaid + $id->dalle_images);
                 $user->available_chars_prepaid = ($user->available_chars_prepaid + $id->characters);

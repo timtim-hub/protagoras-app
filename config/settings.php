@@ -65,10 +65,13 @@ return [
     'youtube_user_access' => env('DAVINCI_SETTINGS_YOUTUBE_FREE_TIER_USER'),
     'brand_voice_user_access' => env('DAVINCI_SETTINGS_BRAND_VOICE_FREE_TIER_USER'),
     'writer_user_access' => env('DAVINCI_SETTINGS_WRITER_FREE_TIER_USER'),
+    'integration_user_access' => env('DAVINCI_SETTINGS_INTEGRATION_FREE_TIER_USER'),
+    'photo_studio_user_access' => env('DAVINCI_SETTINGS_PHOTO_STUDIO_FREE_TIER_USER'),
 
     'free_gpt_3_turbo_credits' => env('DAVINCI_SETTINGS_FREE_TIER_GPT_3_TURBO_CREDITS'),
     'free_gpt_4_turbo_credits' => env('DAVINCI_SETTINGS_FREE_TIER_GPT_4_TURBO_CREDITS'),
     'free_gpt_4_credits' => env('DAVINCI_SETTINGS_FREE_TIER_GPT_4_CREDITS'),
+    'free_gpt_4o_credits' => env('DAVINCI_SETTINGS_FREE_TIER_GPT_4o_CREDITS'),
     'free_fine_tune_credits' => env('DAVINCI_SETTINGS_FREE_TIER_FINE_TUNE_CREDITS'),
     'free_claude_3_opus_credits' => env('DAVINCI_SETTINGS_FREE_TIER_CLAUDE_3_OPUS_CREDITS'),
     'free_claude_3_sonnet_credits' => env('DAVINCI_SETTINGS_FREE_TIER_CLAUDE_3_SONNET_CREDITS'),
@@ -105,6 +108,8 @@ return [
     'ai_detector_feature_user' => env('DAVINCI_SETTINGS_AI_DETECTOR_FEATURE_USER'),
     'youtube_feature_user' => env('DAVINCI_SETTINGS_YOUTUBE_FEATURE_USER'),
     'writer_feature_user' => env('DAVINCI_SETTINGS_WRITER_FEATURE_USER'),
+    'integration_feature_user' => env('DAVINCI_SETTINGS_INTEGRATION_FEATURE_USER'),
+    'photo_studio_feature_user' => env('DAVINCI_SETTINGS_PHOTO_STUDIO_FEATURE_USER'),
 
     'max_results_limit_admin' => env('DAVINCI_SETTINGS_MAX_RESULTS_LIMIT_ADMIN'),
     'max_results_limit_user' => env('DAVINCI_SETTINGS_MAX_RESULTS_LIMIT_USER'),
@@ -118,6 +123,8 @@ return [
     'team_members_quantity_user' => env('DAVINCI_SETTINGS_TEAM_MEMBERS_QUANTITY'),
 
     'personal_openai_api' => env('DAVINCI_SETTINGS_PERSONAL_OPENAI_API_KEY'),
+    'personal_claude_api' => env('DAVINCI_SETTINGS_PERSONAL_CLAUDE_API_KEY'),
+    'personal_gemini_api' => env('DAVINCI_SETTINGS_PERSONAL_GEMINI_API_KEY'),
     'personal_sd_api' => env('DAVINCI_SETTINGS_PERSONAL_SD_API_KEY'),
 
     'cost_per_image_to_video' => env('DAVINCI_SETTINGS_COST_PER_IMAGE_TO_VIDEO'),

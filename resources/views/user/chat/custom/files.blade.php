@@ -27,7 +27,7 @@
 			<div class="card border-0">
 				<div class="card-header">
 					<h3 class="card-title">{{ __('All Included Files') }}: <span class="font-weight-semibold text-primary">{{ __($chat->name) }}</span></h3>
-					<a href="{{ route('admin.chat.assistant.show', $chat->id) }}" id="createButton" class="btn btn-primary ripple">{{ __('Return') }}</a>
+					<a href="{{ route('user.chat.custom.show', $chat->id) }}" id="createButton" class="btn btn-primary ripple">{{ __('Return') }}</a>
 				</div>
 				<div class="card-body pt-2">
 					<!-- SET DATATABLE -->

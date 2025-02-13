@@ -370,7 +370,7 @@ class VideoController extends Controller
 
                 $response = json_decode($result , true);
                 
-
+\Log::info($response);
                 if (isset($response['finish_reason'])) {
 
                     if ($response['finish_reason'] == 'SUCCESS') {
@@ -407,8 +407,9 @@ class VideoController extends Controller
                             'status' => 'completed',
                         ]);
                     }
-
                 }
+
+
 
              
             }

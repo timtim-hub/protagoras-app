@@ -13,10 +13,10 @@
 				<h3 class="card-title mb-3 ml-2 fs-20 super-strong"><i class="fa-solid fa-message-captions mr-2 text-primary"></i>{{ __('AI Chat Assistants') }}</h3>
 				<h6 class="text-muted mb-3 ml-2">{{ __('Find your AI assistant quickly! Get ready to explore our fantastic lineup of AI chat assistants') }}</h6>
 				@if (config('settings.custom_chats') == 'anyone')
-					<a href="{{ route('user.chat.custom') }}" class="btn btn-primary ripple" id="create-ai-button" style="text-transform: none;">{{ __('Custom Chat Assistants') }}</a>
+					<a href="{{ route('user.chat.custom') }}" class="btn btn-primary ripple rtl-main-button" id="create-ai-button" style="text-transform: none;">{{ __('Custom Chat Assistants') }}</a>
 				@else
 					@if ($check)
-						<a href="{{ route('user.chat.custom') }}" class="btn btn-primary ripple" id="create-ai-button" style="text-transform: none;">{{ __('Custom Chat Assistants') }}</a>
+						<a href="{{ route('user.chat.custom') }}" class="btn btn-primary ripple rtl-main-button" id="create-ai-button" style="text-transform: none;">{{ __('Custom Chat Assistants') }}</a>
 					@endif	
 				@endif	
 				<div class="search-template">
@@ -26,6 +26,7 @@
 						</div> 
 					</div> 
 				</div>
+				
 			</div>
 
 			<div class="templates-nav-menu chat-nav-menu">
@@ -42,12 +43,12 @@
 							@endif									
 						@endforeach	
 						@foreach ($categories as $category)
-						@if (strtolower($category->code) == 'other')
-							<li class="nav-item category-check" role="presentation">
-								<button class="nav-link" id="{{ $category->code }}-tab" data-bs-toggle="tab" data-bs-target="#{{ $category->code }}" type="button" role="tab" aria-controls="{{ $category->code }}" aria-selected="false">{{ __($category->name) }}</button>
-							</li>
-						@endif									
-					@endforeach				
+							@if (strtolower($category->code) == 'other')
+								<li class="nav-item category-check" role="presentation">
+									<button class="nav-link" id="{{ $category->code }}-tab" data-bs-toggle="tab" data-bs-target="#{{ $category->code }}" type="button" role="tab" aria-controls="{{ $category->code }}" aria-selected="false">{{ __($category->name) }}</button>
+								</li>
+							@endif									
+						@endforeach				
 					</ul>
 				</div>
 			</div>	
@@ -74,6 +75,32 @@
 										<p class="fs-8 btn btn-yellow"><i class="fa-sharp fa-solid fa-gem mr-2"></i>{{ __('Premium') }}</p> 
 									@endif
 									<div class="card @if($chat->category == 'professional') professional @elseif($chat->category == 'premium') premium @elseif($chat->favorite) favorite @else border-0 @endif" id="{{ $chat->chat_code }}-card" onclick="window.location.href='{{ url('user/chats') }}/{{ $chat->chat_code }}'">
+										<div class="card-body pt-3">
+											<div class="widget-user-image overflow-hidden mx-auto mt-3 mb-4"><img alt="User Avatar" class="rounded-circle" src="{{ URL::asset($chat->logo) }}"></div>
+											<div class="template-title">
+												<h6 class="mb-2 fs-15 number-font">{{ __($chat->name) }}</h6>
+											</div>
+											<div class="template-info">
+												<p class="fs-13 text-muted mb-2">{{ __($chat->sub_name) }}</p>
+											</div>							
+										</div>
+									</div>
+								</div>							
+							</div>
+						@endforeach
+
+						@foreach ($favorite_chats_custom as $chat)
+							<div class="col-lg-3 col-md-6 col-sm-12" id="{{ $chat->chat_code }}">
+								<div class="chat-boxes text-center">
+									<a id="{{ $chat->chat_code }}" @if($chat->favorite) data-tippy-content="{{ __('Remove from favorite') }}" @else data-tippy-content="{{ __('Select as favorite') }}" @endif onclick="favoriteStatus(this.id)"><i id="{{ $chat->chat_code }}-icon" class="@if($chat->favorite) fa-solid fa-stars @else fa-regular fa-star @endif star"></i></a>
+									@if($chat->category == 'professional') 
+										<p class="fs-8 btn btn-pro"><i class="fa-sharp fa-solid fa-crown mr-2"></i>{{ __('Pro') }}</p> 
+									@elseif($chat->category == 'free')
+										<p class="fs-8 btn btn-free"><i class="fa-sharp fa-solid fa-gift mr-2"></i>{{ __('Free') }}</p> 
+									@elseif($chat->category == 'premium')
+										<p class="fs-8 btn btn-yellow"><i class="fa-sharp fa-solid fa-gem mr-2"></i>{{ __('Premium') }}</p> 
+									@endif
+									<div class="card @if($chat->category == 'professional') professional @elseif($chat->category == 'premium') premium @elseif($chat->favorite) favorite @else border-0 @endif" id="{{ $chat->chat_code }}-card" onclick="window.location.href='{{ url('user/chats/custom') }}/{{ $chat->chat_code }}'">
 										<div class="card-body pt-3">
 											<div class="widget-user-image overflow-hidden mx-auto mt-3 mb-4"><img alt="User Avatar" class="rounded-circle" src="{{ URL::asset($chat->logo) }}"></div>
 											<div class="template-title">
@@ -118,7 +145,14 @@
 							<div class="col-lg-3 col-md-6 col-sm-12" id="{{ $chat->chat_code }}">
 								<div class="chat-boxes text-center">
 									<a id="{{ $chat->chat_code }}" @if($chat->favorite) data-tippy-content="{{ __('Remove from favorite') }}" @else data-tippy-content="{{ __('Select as favorite') }}" @endif onclick="favoriteStatus(this.id)"><i id="{{ $chat->chat_code }}-icon" class="@if($chat->favorite) fa-solid fa-stars @else fa-regular fa-star @endif star"></i></a>
-									<div class="card @if($chat->favorite) favorite @else border-0 @endif" id="{{ $chat->chat_code }}-card" onclick="window.location.href='{{ url('user/chats/custom') }}/{{ $chat->chat_code }}'">
+									@if($chat->category == 'professional') 
+										<p class="fs-8 btn btn-pro"><i class="fa-sharp fa-solid fa-crown mr-2"></i>{{ __('Pro') }}</p> 
+									@elseif($chat->category == 'free')
+										<p class="fs-8 btn btn-free"><i class="fa-sharp fa-solid fa-gift mr-2"></i>{{ __('Free') }}</p> 
+									@elseif($chat->category == 'premium')
+										<p class="fs-8 btn btn-yellow"><i class="fa-sharp fa-solid fa-gem mr-2"></i>{{ __('Premium') }}</p> 
+									@endif
+									<div class="card @if($chat->category == 'professional') professional @elseif($chat->category == 'premium') premium @elseif($chat->favorite) favorite @else border-0 @endif" id="{{ $chat->chat_code }}-card" onclick="window.location.href='{{ url('user/chats/custom') }}/{{ $chat->chat_code }}'">
 										<div class="card-body pt-3">
 											<div class="widget-user-image overflow-hidden mx-auto mt-3 mb-4"><img alt="User Avatar" class="rounded-circle" src="{{ URL::asset($chat->logo) }}"></div>
 											<div class="template-title">
@@ -137,7 +171,14 @@
 							<div class="col-lg-3 col-md-6 col-sm-12" id="{{ $chat->chat_code }}">
 								<div class="chat-boxes text-center">
 									<a id="{{ $chat->chat_code }}" @if($chat->favorite) data-tippy-content="{{ __('Remove from favorite') }}" @else data-tippy-content="{{ __('Select as favorite') }}" @endif onclick="favoriteStatus(this.id)"><i id="{{ $chat->chat_code }}-icon" class="@if($chat->favorite) fa-solid fa-stars @else fa-regular fa-star @endif star"></i></a>
-									<div class="card @if($chat->favorite) favorite @else border-0 @endif" id="{{ $chat->chat_code }}-card" onclick="window.location.href='{{ url('user/chats/custom') }}/{{ $chat->chat_code }}'">
+									@if($chat->category == 'professional') 
+										<p class="fs-8 btn btn-pro"><i class="fa-sharp fa-solid fa-crown mr-2"></i>{{ __('Pro') }}</p> 
+									@elseif($chat->category == 'free')
+										<p class="fs-8 btn btn-free"><i class="fa-sharp fa-solid fa-gift mr-2"></i>{{ __('Free') }}</p> 
+									@elseif($chat->category == 'premium')
+										<p class="fs-8 btn btn-yellow"><i class="fa-sharp fa-solid fa-gem mr-2"></i>{{ __('Premium') }}</p> 
+									@endif
+									<div class="card @if($chat->category == 'professional') professional @elseif($chat->category == 'premium') premium @elseif($chat->favorite) favorite @else border-0 @endif" id="{{ $chat->chat_code }}-card" onclick="window.location.href='{{ url('user/chats/custom') }}/{{ $chat->chat_code }}'">
 										<div class="card-body pt-3">
 											<div class="widget-user-image overflow-hidden mx-auto mt-3 mb-4"><img alt="User Avatar" class="rounded-circle" src="{{ URL::asset($chat->logo) }}"></div>
 											<div class="template-title">
@@ -170,6 +211,34 @@
 												<p class="fs-8 btn btn-yellow"><i class="fa-sharp fa-solid fa-gem mr-2"></i>{{ __('Premium') }}</p> 
 											@endif
 											<div class="card @if($chat->category == 'professional') professional @elseif($chat->category == 'premium') premium @elseif($chat->favorite) favorite @else border-0 @endif" id="{{ $chat->chat_code }}-card" onclick="window.location.href='{{ url('user/chats') }}/{{ $chat->chat_code }}'">
+												<div class="card-body pt-3">
+													<div class="widget-user-image overflow-hidden mx-auto mt-3 mb-4"><img alt="User Avatar" class="rounded-circle" src="{{ URL::asset($chat->logo) }}"></div>
+													<div class="template-title">
+														<h6 class="mb-2 fs-15 number-font">{{ __($chat->name) }}</h6>
+													</div>
+													<div class="template-info">
+														<p class="fs-13 text-muted mb-2">{{ __($chat->sub_name) }}</p>
+													</div>							
+												</div>
+											</div>
+										</div>							
+									</div>
+								@endif
+							@endforeach
+
+							@foreach ($favorite_chats_custom as $chat)
+								@if ($chat->group == $category->code)
+									<div class="col-lg-3 col-md-6 col-sm-12" id="{{ $chat->chat_code }}">
+										<div class="chat-boxes text-center">
+											<a id="{{ $chat->chat_code }}" @if($chat->favorite) data-tippy-content="{{ __('Remove from favorite') }}" @else data-tippy-content="{{ __('Select as favorite') }}" @endif onclick="favoriteStatus(this.id)"><i id="{{ $chat->chat_code }}-icon" class="@if($chat->favorite) fa-solid fa-stars @else fa-regular fa-star @endif star"></i></a>
+											@if($chat->category == 'professional') 
+												<p class="fs-8 btn btn-pro"><i class="fa-sharp fa-solid fa-crown mr-2"></i>{{ __('Pro') }}</p> 
+											@elseif($chat->category == 'free')
+												<p class="fs-8 btn btn-free"><i class="fa-sharp fa-solid fa-gift mr-2"></i>{{ __('Free') }}</p> 
+											@elseif($chat->category == 'premium')
+												<p class="fs-8 btn btn-yellow"><i class="fa-sharp fa-solid fa-gem mr-2"></i>{{ __('Premium') }}</p> 
+											@endif
+											<div class="card @if($chat->category == 'professional') professional @elseif($chat->category == 'premium') premium @elseif($chat->favorite) favorite @else border-0 @endif" id="{{ $chat->chat_code }}-card" onclick="window.location.href='{{ url('user/chats/custom') }}/{{ $chat->chat_code }}'">
 												<div class="card-body pt-3">
 													<div class="widget-user-image overflow-hidden mx-auto mt-3 mb-4"><img alt="User Avatar" class="rounded-circle" src="{{ URL::asset($chat->logo) }}"></div>
 													<div class="template-title">
@@ -218,7 +287,42 @@
 									<div class="col-lg-3 col-md-6 col-sm-12" id="{{ $chat->chat_code }}">
 										<div class="chat-boxes text-center">
 											<a id="{{ $chat->chat_code }}" @if($chat->favorite) data-tippy-content="{{ __('Remove from favorite') }}" @else data-tippy-content="{{ __('Select as favorite') }}" @endif onclick="favoriteStatus(this.id)"><i id="{{ $chat->chat_code }}-icon" class="@if($chat->favorite) fa-solid fa-stars @else fa-regular fa-star @endif star"></i></a>
-											<div class="card @if($chat->favorite) favorite @else border-0 @endif" id="{{ $chat->chat_code }}-card" onclick="window.location.href='{{ url('user/chats/custom') }}/{{ $chat->chat_code }}'">
+											@if($chat->category == 'professional') 
+												<p class="fs-8 btn btn-pro"><i class="fa-sharp fa-solid fa-crown mr-2"></i>{{ __('Pro') }}</p> 
+											@elseif($chat->category == 'free')
+												<p class="fs-8 btn btn-free"><i class="fa-sharp fa-solid fa-gift mr-2"></i>{{ __('Free') }}</p> 
+											@elseif($chat->category == 'premium')
+												<p class="fs-8 btn btn-yellow"><i class="fa-sharp fa-solid fa-gem mr-2"></i>{{ __('Premium') }}</p> 
+											@endif
+											<div class="card @if($chat->category == 'professional') professional @elseif($chat->category == 'premium') premium @elseif($chat->favorite) favorite @else border-0 @endif" id="{{ $chat->chat_code }}-card" onclick="window.location.href='{{ url('user/chats/custom') }}/{{ $chat->chat_code }}'">
+												<div class="card-body pt-3">
+													<div class="widget-user-image overflow-hidden mx-auto mt-3 mb-4"><img alt="User Avatar" class="rounded-circle" src="{{ URL::asset($chat->logo) }}"></div>
+													<div class="template-title">
+														<h6 class="mb-2 fs-15 number-font">{{ __($chat->name) }}</h6>
+													</div>
+													<div class="template-info">
+														<p class="fs-13 text-muted mb-2">{{ __($chat->sub_name) }}</p>
+													</div>							
+												</div>
+											</div>
+										</div>							
+									</div>
+								@endif								
+							@endforeach
+							
+							@foreach ($public_custom_chats as $chat)
+								@if ($chat->group == $category->code)
+									<div class="col-lg-3 col-md-6 col-sm-12" id="{{ $chat->chat_code }}">
+										<div class="chat-boxes text-center">
+											<a id="{{ $chat->chat_code }}" @if($chat->favorite) data-tippy-content="{{ __('Remove from favorite') }}" @else data-tippy-content="{{ __('Select as favorite') }}" @endif onclick="favoriteStatus(this.id)"><i id="{{ $chat->chat_code }}-icon" class="@if($chat->favorite) fa-solid fa-stars @else fa-regular fa-star @endif star"></i></a>
+											@if($chat->category == 'professional') 
+												<p class="fs-8 btn btn-pro"><i class="fa-sharp fa-solid fa-crown mr-2"></i>{{ __('Pro') }}</p> 
+											@elseif($chat->category == 'free')
+												<p class="fs-8 btn btn-free"><i class="fa-sharp fa-solid fa-gift mr-2"></i>{{ __('Free') }}</p> 
+											@elseif($chat->category == 'premium')
+												<p class="fs-8 btn btn-yellow"><i class="fa-sharp fa-solid fa-gem mr-2"></i>{{ __('Premium') }}</p> 
+											@endif
+											<div class="card @if($chat->category == 'professional') professional @elseif($chat->category == 'premium') premium @elseif($chat->favorite) favorite @else border-0 @endif" id="{{ $chat->chat_code }}-card" onclick="window.location.href='{{ url('user/chats/custom') }}/{{ $chat->chat_code }}'">
 												<div class="card-body pt-3">
 													<div class="widget-user-image overflow-hidden mx-auto mt-3 mb-4"><img alt="User Avatar" class="rounded-circle" src="{{ URL::asset($chat->logo) }}"></div>
 													<div class="template-title">
@@ -232,25 +336,6 @@
 										</div>							
 									</div>
 								@endif
-
-								@foreach ($public_custom_chats as $chat)
-									<div class="col-lg-3 col-md-6 col-sm-12" id="{{ $chat->chat_code }}">
-										<div class="chat-boxes text-center">
-											<a id="{{ $chat->chat_code }}" @if($chat->favorite) data-tippy-content="{{ __('Remove from favorite') }}" @else data-tippy-content="{{ __('Select as favorite') }}" @endif onclick="favoriteStatus(this.id)"><i id="{{ $chat->chat_code }}-icon" class="@if($chat->favorite) fa-solid fa-stars @else fa-regular fa-star @endif star"></i></a>
-											<div class="card @if($chat->favorite) favorite @else border-0 @endif" id="{{ $chat->chat_code }}-card" onclick="window.location.href='{{ url('user/chats/custom') }}/{{ $chat->chat_code }}'">
-												<div class="card-body pt-3">
-													<div class="widget-user-image overflow-hidden mx-auto mt-3 mb-4"><img alt="User Avatar" class="rounded-circle" src="{{ URL::asset($chat->logo) }}"></div>
-													<div class="template-title">
-														<h6 class="mb-2 fs-15 number-font">{{ __($chat->name) }}</h6>
-													</div>
-													<div class="template-info">
-														<p class="fs-13 text-muted mb-2">{{ __($chat->sub_name) }}</p>
-													</div>							
-												</div>
-											</div>
-										</div>							
-									</div>
-								@endforeach
 							@endforeach
 						</div>
 					</div>

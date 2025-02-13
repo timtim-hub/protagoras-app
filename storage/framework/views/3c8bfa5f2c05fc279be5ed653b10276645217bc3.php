@@ -8,26 +8,6 @@
                 <div class="col-lg-7 mx-auto">
                     <div class="card-body pt-10">
 
-                        <div class="dropdown header-locale" id="frontend-local-login">
-                            <a class="icon" data-bs-toggle="dropdown">
-                                <span class="fs-12 mr-4"><i class="fa-solid text-black fs-16 mr-2 fa-globe"></i><?php echo e(ucfirst(Config::get('locale')[App::getLocale()]['code'])); ?></span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow animated">
-                                <div class="local-menu">
-                                    <?php $__currentLoopData = Config::get('locale'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $language): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <?php if($lang != App::getLocale()): ?>
-                                            <a href="<?php echo e(route('locale', $lang)); ?>" class="dropdown-item d-flex">
-                                                <div class="text-info"><i class="flag flag-<?php echo e($language['flag']); ?> mr-3"></i></div>
-                                                <div>
-                                                    <span class="font-weight-normal fs-12"><?php echo e($language['display']); ?></span>
-                                                </div>
-                                            </a>                                        
-                                        <?php endif; ?>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                </div>
-                            </div>
-                        </div>
-
                         <form method="POST" action="<?php echo e(route('login')); ?>" onsubmit="process()">
                             <?php echo csrf_field(); ?>                                       
         

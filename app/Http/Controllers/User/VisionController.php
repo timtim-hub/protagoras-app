@@ -54,6 +54,7 @@ class VisionController extends Controller
         $fine_tunes = FineTuneModel::all();
         $brands = BrandVoice::where('user_id', auth()->user()->id)->get();
         $brands_feature = \App\Services\HelperService::checkBrandsFeature();
+        $default_model = auth()->user()->default_model_chat;
 
         # Check user permission to use the feature
         if (auth()->user()->group == 'user') {
@@ -71,7 +72,7 @@ class VisionController extends Controller
                 $categories = ChatPrompt::where('status', true)->groupBy('group')->pluck('group'); 
                 $prompts = ChatPrompt::where('status', true)->get();
         
-                return view('user.vision.index', compact('chat', 'messages', 'categories', 'prompts', 'brands', 'models', 'fine_tunes', 'brands_feature'));
+                return view('user.vision.index', compact('chat', 'messages', 'categories', 'prompts', 'brands', 'models', 'fine_tunes', 'brands_feature', 'default_model'));
             }
         } elseif (auth()->user()->group == 'subscriber') {
             $plan = SubscriptionPlan::where('id', auth()->user()->plan_id)->first();
@@ -89,7 +90,7 @@ class VisionController extends Controller
                 $categories = ChatPrompt::where('status', true)->groupBy('group')->pluck('group'); 
                 $prompts = ChatPrompt::where('status', true)->get();
         
-                return view('user.vision.index', compact('chat', 'messages', 'categories', 'prompts', 'brands', 'models', 'fine_tunes', 'brands_feature'));
+                return view('user.vision.index', compact('chat', 'messages', 'categories', 'prompts', 'brands', 'models', 'fine_tunes', 'brands_feature', 'default_model'));
             }
         } else {
             if (session()->has('conversation_id')) {
@@ -103,7 +104,7 @@ class VisionController extends Controller
             $prompts = ChatPrompt::where('status', true)->get();
 
 
-            return view('user.vision.index', compact('chat', 'messages', 'categories', 'prompts', 'brands', 'models', 'fine_tunes', 'brands_feature'));
+            return view('user.vision.index', compact('chat', 'messages', 'categories', 'prompts', 'brands', 'models', 'fine_tunes', 'brands_feature', 'default_model'));
         }
     }
 

@@ -326,6 +326,8 @@ class UserCustomChatController extends Controller
      */
     public function show(CustomChat $id)
     {
+        session()->put('chatbot_id', $id->id);
+
         if ($id->user_id == auth()->user()->id) {
             $categories = ChatCategory::orderBy('name', 'asc')->get();
 
@@ -424,7 +426,7 @@ class UserCustomChatController extends Controller
             }
             
         } else {
-            $avatarPath = '/chats/custom/avatar.webp';
+            $avatarPath = $id->logo;
         }
 
         if (request()->has('file')) {
@@ -505,7 +507,7 @@ class UserCustomChatController extends Controller
                 'model' => $request->model,
                 'type' => 'private',
                 'model_mode' => 'fixed',
-                'category' => $request->category,
+                'category' => 'standard',
             ]); 
 
             if ($has_file) {

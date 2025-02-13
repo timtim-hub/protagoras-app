@@ -167,20 +167,19 @@
                         <span class="header-icon fa-solid fa-expand" id="fullscreen-icon"></span>
                     </a>
                 </div>
-                <div class="dropdown header-locale">
+                <div class="dropdown header-languages mr-2">
                     <a class="nav-link icon" data-bs-toggle="dropdown">
-                        <span class="header-icon flag flag-{{ Config::get('locale')[App::getLocale()]['flag'] }} pr-1"></span><span class="header-text fs-13 pr-5">{{ ucfirst(Config::get('locale')[App::getLocale()]['code']) }}</span>
+                        <span class="header-icon fa-solid fa-globe"></span>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow animated">
+                    <div class="dropdown-menu animated">
                         <div class="local-menu">
-                            @foreach (Config::get('locale') as $lang => $language)
-                                @if ($lang != App::getLocale())
-                                    <a href="{{ route('locale', $lang) }}" class="dropdown-item d-flex pl-4">
-                                        <div class="text-info"><i class="flag flag-{{ $language['flag'] }} mr-4"></i></div>
+                            @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                @if (in_array($localeCode, explode(',', $settings->languages)))
+                                    <a href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}" class="dropdown-item d-flex pl-4" hreflang="{{ $localeCode }}">
                                         <div>
-                                            <span class="font-weight-normal fs-12">{{ $language['display'] }}</span>
+                                            <span class="font-weight-normal fs-12">{{ ucfirst($properties['native']) }}</span> <span class="fs-10 text-muted">{{ $localeCode }}</span>
                                         </div>
-                                    </a>                                        
+                                    </a>   
                                 @endif
                             @endforeach
                         </div>
@@ -219,7 +218,7 @@
                         @role('user|subscriber')
                             @if (config('settings.user_support') == 'enabled')
                                 <a class="dropdown-item d-flex" href="{{ route('user.support') }}">
-                                    <span class="profile-icon fa-solid fa-messages-question"></span>
+                                    <span class="profile-icon fa-solid fa-headset"></span>
                                     <div class="fs-12">{{ __('Support Request') }}</div>
                                 </a>
                             @endif        
@@ -235,7 +234,7 @@
                         @endrole
                         @role('admin')   
                             <a class="dropdown-item d-flex" href="{{ route('user.support') }}">
-                                <span class="profile-icon fa-solid fa-messages-question"></span>
+                                <span class="profile-icon fa-solid fa-headset"></span>
                                 <div class="fs-12">{{ __('Support Request') }}</div>
                             </a>
                             <a class="dropdown-item d-flex" href="{{ route('user.notifications') }}">

@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
-use App\Mail\ContactFormEmail;
+use App\Mail\ContactFormAdmin;
+use App\Mail\ContactFormUser;
 use App\Models\SubscriptionPlan;
 use App\Models\PrepaidPlan;
 use App\Models\Setting;
@@ -19,6 +20,8 @@ use App\Models\Category;
 use App\Models\FrontendStep;
 use App\Models\FrontendTool;
 use App\Models\FrontendFeature;
+use App\Models\User;
+use App\Models\MainSetting;
 use Carbon\Carbon;
 
 class HomeController extends Controller
@@ -52,10 +55,10 @@ class HomeController extends Controller
         $prepaids = PrepaidPlan::where('status', 'active')->get();
 
         $other_templates = Template::where('status', true)->orderBy('group', 'desc')->get();   
-        $custom_templates = CustomTemplate::where('status', true)->orderBy('group', 'desc')->get();   
+        $custom_templates = CustomTemplate::where('status', true)->where('type', '<>', 'private')->orderBy('group', 'desc')->get();   
         
         $check_categories = Template::where('status', true)->groupBy('group')->pluck('group')->toArray();
-        $check_custom_categories = CustomTemplate::where('status', true)->groupBy('group')->pluck('group')->toArray();
+        $check_custom_categories = CustomTemplate::where('status', true)->where('type', '<>', 'private')->groupBy('group')->pluck('group')->toArray();
         $active_categories = array_unique(array_merge($check_categories, $check_custom_categories));
         $categories = Category::whereIn('code', $active_categories)->orderBy('name', 'asc')->get(); 
 
@@ -63,8 +66,9 @@ class HomeController extends Controller
         $tools = FrontendTool::where('status', true)->get();
 
         $features = FrontendFeature::where('status', true)->get();
+        $settings = MainSetting::first();
 
-        return view('home', compact('information', 'steps', 'tools', 'features', 'blog_exists', 'blogs', 'faq_exists', 'faqs', 'review_exists', 'review_second_exists', 'reviews', 'monthly', 'yearly', 'monthly_subscriptions', 'yearly_subscriptions', 'prepaids', 'prepaid', 'other_templates', 'custom_templates', 'lifetime', 'lifetime_subscriptions', 'categories'));
+        return view('home', compact('information', 'steps', 'tools', 'features', 'settings', 'blog_exists', 'blogs', 'faq_exists', 'faqs', 'review_exists', 'review_second_exists', 'reviews', 'monthly', 'yearly', 'monthly_subscriptions', 'yearly_subscriptions', 'prepaids', 'prepaid', 'other_templates', 'custom_templates', 'lifetime', 'lifetime_subscriptions', 'categories'));
     }
 
 
@@ -199,11 +203,12 @@ class HomeController extends Controller
                 return redirect()->back();
             }
 
-            if ($recaptchaResult->score >= 0.5) {
+            if ($recaptchaResult->score >= 0.3) {
 
                 try {
 
-                    Mail::to(config('mail.from.address'))->send(new ContactFormEmail($request));
+                    Mail::to(config('mail.from.address'))->send(new ContactFormAdmin($request));
+                    Mail::to($request->email)->send(new ContactFormUser($request));
  
                     if (Mail::flushMacros()) {
                         toastr()->error(__('Sending email failed, please try again.'));
@@ -227,7 +232,8 @@ class HomeController extends Controller
 
             try {
 
-                Mail::to(config('mail.from.address'))->send(new ContactFormEmail($request));
+                Mail::to(config('mail.from.address'))->send(new ContactFormAdmin($request));
+                Mail::to($request->email)->send(new ContactFormUser($request));
  
                 if (Mail::flushMacros()) {
                     toastr()->error(__('Sending email failed, please try again.'));
@@ -289,6 +295,30 @@ class HomeController extends Controller
         }
 
         return $information;
+    }
+
+
+    public function showUnsubscribe(Request $request)
+    {
+        $email = $request->email;
+        return view('auth.unsubscribe', compact('email'));
+    }
+
+
+    public function unsubscribe($email)
+    {
+        $user = User::where('email', $email)->first();
+        
+        if ($user) {
+            $user->email_opt_in = false;
+            $user->save();
+
+            toastr()->success(__('You have successfully unsubscribed from our newsletters'));
+            return redirect()->back();
+        } else {
+            toastr()->warning(__('You are not subscribed to any newsletters'));
+            return redirect()->back();
+        }
     }
 
 }

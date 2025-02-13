@@ -55,7 +55,7 @@ class UserController extends Controller
             $subscription = false;
         }
 
-        $user_subscription = ($subscription) ? SubscriptionPlan::where('id', auth()->user()->plan_id)->first() : '';
+        $user_subscription = ($subscription) ? SubscriptionPlan::where('id', auth()->user()->plan_id)->first() : null;
 
         $check_api_feature = SubscriptionPlan::where('id', auth()->user()->plan_id)->first();
 
@@ -265,6 +265,8 @@ class UserController extends Controller
         $user = User::where('id', auth()->user()->id)->first();
         $user->update([
             'personal_openai_key' => request('openai-key'),
+            'personal_claude_key' => request('claude-key'),
+            'personal_gemini_key' => request('gemini-key'),
             'personal_sd_key' => request('sd-key'),
         ]);
 

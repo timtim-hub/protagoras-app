@@ -72,6 +72,152 @@
 
 				<div class="changelog">
 					<div class="changelog-version mt-5">
+						<span class="version-name"><?php echo e(__('Version')); ?> 5.7</span> - <span class="fs-14 font-weight-semibold">15.07.2024</span>
+					</div>
+					<div class="changelog-description mt-6"> 
+						<ul>											 					  						 					  						 					 					  						 					  						 
+							<li><span class="version-new mr-2">New</span> <span class="text-muted fs-13">Language Manager via admin panel</span></li> 				 					  						 					  						 					 					  						 					  						 
+							<li><span class="version-new mr-2">New</span> <span class="text-muted fs-13">RTL feature</span></li> 	 					  	
+							<li><span class="version-update mr-2">Update</span> <span class="text-muted fs-13">Brand voice editing updated</span></li> 
+							<li><span class="version-update mr-2">Update</span> <span class="text-muted fs-13">Chat assistant logo remains during update</span></li> 
+							<li><span class="version-fix mr-2">Fix</span> <span class="text-muted fs-13">AI Speech to Text mp4 and other format processing issue fixed</span></li> 
+						</ul>
+					</div>
+				</div>
+
+				<hr class="mt-6">
+
+				<div class="changelog">
+					<div class="changelog-version mt-5">
+						<span class="version-name"><?php echo e(__('Version')); ?> 5.6</span> - <span class="fs-14 font-weight-semibold">01.07.2024</span>
+					</div>
+					<div class="changelog-description mt-6"> 
+						<ul>											 					  						 					  						 					 					  						 					  						 
+							<li><span class="version-new mr-2">New</span> <span class="text-muted fs-13">Stable Diffusion Ultra added</span></li> 					 					  						 					  						 					 					  						 					  						 
+							<li><span class="version-new mr-2">New</span> <span class="text-muted fs-13">Anthropic Claude 3.5 Sonnet added</span></li> 						 					  						 					  						 					 					  						 					  						 
+							<li><span class="version-update mr-2">Update</span> <span class="text-muted fs-13">Custom Chat Assistant custom category alignment improved</span></li> 
+							<li><span class="version-update mr-2">Update</span> <span class="text-muted fs-13">Custom Chat Assistant view in the groups improved</span></li> 
+							<li><span class="version-fix mr-2">Fix</span> <span class="text-muted fs-13"></span></li> 
+						</ul>
+					</div>
+				</div>
+
+				<hr class="mt-6">
+
+				<div class="changelog">
+					<div class="changelog-version mt-5">
+						<span class="version-name"><?php echo e(__('Version')); ?> 5.5</span> - <span class="fs-14 font-weight-semibold">29.06.2024</span>
+					</div>
+					<div class="changelog-description mt-6"> 
+						<ul>						
+							<li><span class="version-new mr-2">New</span> <span class="text-muted fs-13">AI Photo Studio (Extension)</span></li> 						 					  						 					  						 					 					  						 					  						 
+							<li><span class="version-update mr-2">Update</span> <span class="text-muted fs-13">User dashboard page updated</span></li>
+							<li><span class="version-update mr-2">Update</span> <span class="text-muted fs-13">Subscription plans updated</span></li>
+							<li><span class="version-fix mr-2">Fix</span> <span class="text-muted fs-13">API user registration issue fixed</span></li> 
+							<li><span class="version-fix mr-2">Fix</span> <span class="text-muted fs-13">API admin manually user creation issue fixed</span></li> 
+						</ul>
+					</div>
+				</div>
+
+				<hr class="mt-6">
+
+				<div class="changelog">
+					<div class="changelog-version mt-5">
+						<span class="version-name"><?php echo e(__('Version')); ?> 5.4.1</span> - <span class="fs-14 font-weight-semibold">23.06.2024</span>
+					</div>
+					<div class="changelog-description mt-6"> 
+						<ul>						
+							<li><span class="version-fix mr-2">Fix</span> <span class="text-muted fs-13">New user dashboard view issue fixed</span></li> 
+						</ul>
+					</div>
+				</div>
+
+				<hr class="mt-6">
+
+				<div class="changelog">
+					<div class="changelog-version mt-5">
+						<span class="version-name"><?php echo e(__('Version')); ?> 5.4</span> - <span class="fs-14 font-weight-semibold">23.06.2024</span>
+					</div>
+					<div class="changelog-description mt-6"> 
+						<ul>						
+							<li><span class="version-new mr-2">New</span> <span class="text-muted fs-13">User Panel: New User Dashboard Page</span></li> 						 					  						 					  						 
+							<li><span class="version-new mr-2">New</span> <span class="text-muted fs-13">Admin Panel: Advanced Admin Dashboard page</span></li>  						 					  						 					  						 
+							<li><span class="version-new mr-2">New</span> <span class="text-muted fs-13">Google Analytics Dashboards added</span></li>  					 					  						 					  						 
+							<li><span class="version-update mr-2">Update</span> <span class="text-muted fs-13">Admin cannot see custom templates created by users now</span></li>
+							<li><span class="version-update mr-2">Update</span> <span class="text-muted fs-13">Security improvements</span></li> 
+							<li><span class="version-fix mr-2">Fix</span> <span class="text-muted fs-13">Document editing saving issue fixed</span></li> 
+							<li><span class="version-fix mr-2">Fix</span> <span class="text-muted fs-13">Favorite chats visibility issue on the dashboard fixed</span></li> 
+							<li><span class="version-fix mr-2">Fix</span> <span class="text-muted fs-13">RestAPI namespace fix for Authenticate Routes</span></li> 
+						</ul>
+					</div>
+				</div>
+
+				<hr class="mt-6">
+
+				<div class="changelog">
+					<div class="changelog-version mt-5">
+						<span class="version-name"><?php echo e(__('Version')); ?> 5.3.1</span> - <span class="fs-14 font-weight-semibold">06.06.2024</span>
+					</div>
+					<div class="changelog-description mt-6"> 
+						<ul>						  						 					  						 					  						 
+							<li><span class="version-update mr-2">Update</span> <span class="text-muted fs-13">User list table performance improved</span></li>						  						 
+							<li><span class="version-fix mr-2">Fix</span> <span class="text-muted fs-13">RestAPI laravel passport installation issue fixed</span></li> 
+							<li><span class="version-fix mr-2">Fix</span> <span class="text-muted fs-13">Custom templates created by users are removed from the homepage</span></li> 
+							<li><span class="version-fix mr-2">Fix</span> <span class="text-muted fs-13">Menu buttons fixed at privacy & terms pages at homepage</span></li> 
+							<li><span class="version-fix mr-2">Fix</span> <span class="text-muted fs-13">Personal API visibility on My Accounts page improved</span></li> 
+						</ul>
+					</div>
+				</div>
+
+				<hr class="mt-6">
+
+				<div class="changelog">
+					<div class="changelog-version mt-5">
+						<span class="version-name"><?php echo e(__('Version')); ?> 5.3</span> - <span class="fs-14 font-weight-semibold">02.06.2024</span>
+					</div>
+					<div class="changelog-description mt-6">
+						<ul>						  						 
+							<li><span class="version-new mr-2">New</span> <span class="text-muted fs-13">RestAPI added</span></li>  					  						 
+							<li><span class="version-update mr-2">Update</span> <span class="text-muted fs-13">User profile page credits view updated</span></li>						  						 
+							<li><span class="version-update mr-2">Update</span> <span class="text-muted fs-13">AI Chat credit view improved</span></li>						  						 
+							<li><span class="version-update mr-2">Update</span> <span class="text-muted fs-13">Chat/Template credit dynamically changed based on selected models</span></li>						  						 
+							<li><span class="version-update mr-2">Update</span> <span class="text-muted fs-13">Frontend pricing plan tables updated</span></li>						  						 
+							<li><span class="version-update mr-2">Update</span> <span class="text-muted fs-13">Default application model (GPT 3.5 Turbo) is removed</span></li>						  						 
+							<li><span class="version-fix mr-2">Fix</span> <span class="text-muted fs-13">Fine Tune creation issue fixed</span></li> 
+							<li><span class="version-fix mr-2">Fix</span> <span class="text-muted fs-13">Bank Transfer approval issue fixed</span></li> 
+							<li><span class="version-fix mr-2">Fix</span> <span class="text-muted fs-13">SD 3 Turbo minor issue fixed</span></li> 
+							<li><span class="version-fix mr-2">Fix</span> <span class="text-muted fs-13">User Custom Chat Assistant files view page issue fixed</span></li> 
+							<li><span class="version-fix mr-2">Fix</span> <span class="text-muted fs-13">Custom Chat setting as favorite issue fixed</span></li> 
+							<li><span class="version-fix mr-2">Fix</span> <span class="text-muted fs-13">Custom Chat category visibility improved</span></li> 
+						</ul>
+					</div>
+				</div>
+
+				<hr class="mt-6">
+
+				<div class="changelog">
+					<div class="changelog-version mt-5">
+						<span class="version-name"><?php echo e(__('Version')); ?> 5.2</span> - <span class="fs-14 font-weight-semibold">17.05.2024</span>
+					</div>
+					<div class="changelog-description mt-6">
+						<ul>						  						 
+							<li><span class="version-new mr-2">New</span> <span class="text-muted fs-13">Push to Wordpress integration feature added (Extension)</span></li> 
+							<li><span class="version-new mr-2">New</span> <span class="text-muted fs-13">GPT 4o added</span></li> 
+							<li><span class="version-new mr-2">New</span> <span class="text-muted fs-13">Personal API feature for Anthropic Claude 3 option added</span></li> 
+							<li><span class="version-new mr-2">New</span> <span class="text-muted fs-13">Personal API feature for Google Gemini Pro option added</span></li> 
+							<li><span class="version-update mr-2">Update</span> <span class="text-muted fs-13">Subscriptions plan updated with new features</span></li>						  						 
+							<li><span class="version-update mr-2">Update</span> <span class="text-muted fs-13">Finance controller updated</span></li>						  						 
+							<li><span class="version-fix mr-2">Fix</span> <span class="text-muted fs-13">Gemini chatbot streaming response issue fixed</span></li> 
+							<li><span class="version-fix mr-2">Fix</span> <span class="text-muted fs-13">Dark mode styles improved</span></li> 
+							<li><span class="version-fix mr-2">Fix</span> <span class="text-muted fs-13">Paddle subscription payment recording issue fixed</span></li> 
+						</ul>
+					</div>
+				</div>
+
+				<hr class="mt-6">
+
+				<div class="changelog">
+					<div class="changelog-version mt-5">
 						<span class="version-name"><?php echo e(__('Version')); ?> 5.1</span> - <span class="fs-14 font-weight-semibold">05.05.2024</span>
 					</div>
 					<div class="changelog-description mt-6">

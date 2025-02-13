@@ -4,11 +4,11 @@
 	<!--PAGE HEADER -->
 	<div class="page-header mt-5-7">
 		<div class="page-leftheader">
-			<h4 class="page-title mb-0">{{ __('Davinci Dashboard') }}</h4>
+			<h4 class="page-title mb-0">{{ __('AI Usage Dashboard') }}</h4>
 			<ol class="breadcrumb mb-2">
 				<li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}"><i class="fa-solid fa-microchip-ai mr-2 fs-12"></i>{{ __('Admin') }}</a></li>
-				<li class="breadcrumb-item"><a href="{{ route('admin.davinci.dashboard') }}"> {{ __('Davinci Management') }}</a></li>
-				<li class="breadcrumb-item active" aria-current="page"><a href="#"> {{ __('Davinci Dashboard') }}</a></li>
+				<li class="breadcrumb-item"><a href="{{ route('admin.davinci.dashboard') }}"> {{ __('AI Management') }}</a></li>
+				<li class="breadcrumb-item active" aria-current="page"><a href="#"> {{ __('AI Usage Dashboard') }}</a></li>
 			</ol>
 		</div>
 	</div>

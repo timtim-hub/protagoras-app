@@ -72,6 +72,7 @@ class UpgradeController extends Controller
                 Artisan::call('view:clear');
                 Artisan::call('cache:clear');
                 Artisan::call('config:clear');
+                Artisan::call('route:clear');
                 Log::info('Migration completed...');
 
         } catch (\Exception $e) {

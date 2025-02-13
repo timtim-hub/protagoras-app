@@ -34,20 +34,19 @@
             </div>
             <?php if(Route::has('login')): ?>
                     <div id="login-buttons">
-                        <div class="dropdown header-locale" id="frontend-local">
+                        <div class="dropdown header-languages" id="frontend-local">
                             <a class="icon" data-bs-toggle="dropdown">
-                                <span class="fs-12 mr-4"><i class="fa-solid text-black fs-16 mr-2 fa-globe"></i><?php echo e(ucfirst(Config::get('locale')[App::getLocale()]['code'])); ?></span>
+                                <span class="header-icon fa-solid fa-globe mr-4 fs-15"></span>
                             </a>
-                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow animated">
+                            <div class="dropdown-menu animated">
                                 <div class="local-menu">
-                                    <?php $__currentLoopData = Config::get('locale'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $language): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <?php if($lang != App::getLocale()): ?>
-                                            <a href="<?php echo e(route('locale', $lang)); ?>" class="dropdown-item d-flex">
-                                                <div class="text-info"><i class="flag flag-<?php echo e($language['flag']); ?> mr-3"></i></div>
+                                    <?php $__currentLoopData = LaravelLocalization::getSupportedLocales(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $localeCode => $properties): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <?php if(in_array($localeCode, explode(',', $settings->languages))): ?>
+                                            <a href="<?php echo e(LaravelLocalization::getLocalizedURL($localeCode, null, [], true)); ?>" class="dropdown-item d-flex pl-4" hreflang="<?php echo e($localeCode); ?>">
                                                 <div>
-                                                    <span class="font-weight-normal fs-12"><?php echo e($language['display']); ?></span>
+                                                    <span class="font-weight-normal fs-12"><?php echo e(ucfirst($properties['native'])); ?></span> <span class="fs-10 text-muted"><?php echo e($localeCode); ?></span>
                                                 </div>
-                                            </a>                                        
+                                            </a>   
                                         <?php endif; ?>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </div>

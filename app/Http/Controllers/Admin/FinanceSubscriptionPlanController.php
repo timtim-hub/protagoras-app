@@ -3,17 +3,26 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\LicenseController;
 use Illuminate\Http\Request;
 use App\Models\SubscriptionPlan;
 use App\Models\Subscriber;
 use App\Models\FineTuneModel;
 use App\Models\User;
+use Carbon\Carbon;
 use DataTables;
 use Exception;
 use DB;
 
 class FinanceSubscriptionPlanController extends Controller
 {   
+    private $api;
+
+    public function __construct()
+    {
+        $this->api = new LicenseController();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -81,7 +90,11 @@ class FinanceSubscriptionPlanController extends Controller
                     
         }
 
-        return view('admin.finance.plans.index');
+        $verify = $this->api->verify_license();
+        $type = (isset($verify['type'])) ? $verify['type'] : '';
+        $status = (Carbon::parse($verify['date'])->gte(Carbon::parse('2024-07-01'))) ? true : false;
+
+        return view('admin.finance.plans.index', compact('type', 'status'));
     }
 
 
@@ -92,9 +105,13 @@ class FinanceSubscriptionPlanController extends Controller
      */
     public function create()
     {
+        $verify = $this->api->verify_license();
+        $type = (isset($verify['type'])) ? $verify['type'] : '';
+        $status = (Carbon::parse($verify['date'])->gte(Carbon::parse('2024-07-01'))) ? true : false;
+
         $models = FineTuneModel::all();
 
-        return view('admin.finance.plans.create', compact('models'));
+        return view('admin.finance.plans.create', compact('models', 'type', 'status'));
     }
 
 
@@ -154,6 +171,18 @@ class FinanceSubscriptionPlanController extends Controller
             $openai_personal = true; 
         } else {
             $openai_personal = false;
+        }
+
+        if (request('personal-claude-api') == 'on') {
+            $claude_personal = true; 
+        } else {
+            $claude_personal = false;
+        }
+
+        if (request('personal-gemini-api') == 'on') {
+            $gemini_personal = true; 
+        } else {
+            $gemini_personal = false;
         }
 
         if (request('personal-sd-api') == 'on') {
@@ -216,6 +245,12 @@ class FinanceSubscriptionPlanController extends Controller
             $video_image = false;
         }
 
+        if (request('photo-studio-feature') == 'on') {
+            $photo_studio = true; 
+        } else {
+            $photo_studio = false;
+        }
+
         if (request('voice-clone-feature') == 'on') {
             $clone = true; 
         } else {
@@ -256,6 +291,12 @@ class FinanceSubscriptionPlanController extends Controller
             $brand_voice = true; 
         } else {
             $brand_voice = false;
+        }
+
+        if (request('integration-feature') == 'on') {
+            $integration = true; 
+        } else {
+            $integration = false;
         }
 
         $voiceover_vendors = '';
@@ -322,6 +363,8 @@ class FinanceSubscriptionPlanController extends Controller
                 'model_chat' => $chat_models,
                 'team_members' => request('team-members'),
                 'personal_openai_api' => $openai_personal,
+                'personal_claude_api' => $claude_personal,
+                'personal_gemini_api' => $gemini_personal,
                 'personal_sd_api' => $sd_personal,
                 'days' => request('days'),
                 'dalle_image_engine' => request('dalle-image-engine'),
@@ -340,6 +383,7 @@ class FinanceSubscriptionPlanController extends Controller
                 'rewriter_feature' => $rewriter,
                 'smart_editor_feature' => $smart,
                 'video_image_feature' => $video_image,
+                'photo_studio_feature' => $photo_studio,
                 'voice_clone_feature' => $clone,
                 'sound_studio_feature' => $studio,
                 'plagiarism_feature' => $plagiarism,
@@ -357,11 +401,13 @@ class FinanceSubscriptionPlanController extends Controller
                 'gpt_3_turbo_credits' => request('gpt_3_turbo'),
                 'gpt_4_turbo_credits' => request('gpt_4_turbo'),
                 'gpt_4_credits' => request('gpt_4'),
+                'gpt_4o_credits' => request('gpt_4o'),
                 'claude_3_opus_credits' => request('claude_3_opus'),
                 'claude_3_sonnet_credits' => request('claude_3_sonnet'),
                 'claude_3_haiku_credits' => request('claude_3_haiku'),
                 'fine_tune_credits' => request('fine_tune'),
                 'gemini_pro_credits' => request('gemini_pro'),
+                'integration_feature' => $integration,
             ]); 
                    
             $plan->save();            
@@ -385,7 +431,11 @@ class FinanceSubscriptionPlanController extends Controller
      */
     public function show(SubscriptionPlan $id)
     {
-        return view('admin.finance.plans.show', compact('id'));
+        $verify = $this->api->verify_license();
+        $type = (isset($verify['type'])) ? $verify['type'] : '';
+        $status = (Carbon::parse($verify['date'])->gte(Carbon::parse('2024-07-01'))) ? true : false;
+
+        return view('admin.finance.plans.show', compact('id', 'type', 'status'));
     }
 
 
@@ -402,7 +452,11 @@ class FinanceSubscriptionPlanController extends Controller
         $model_templates = explode(',', $id->model);
         $model_chats = explode(',', $id->model_chat);
 
-        return view('admin.finance.plans.edit', compact('id', 'models', 'vendors', 'model_templates', 'model_chats'));
+        $verify = $this->api->verify_license();
+        $type = (isset($verify['type'])) ? $verify['type'] : '';
+        $status = (Carbon::parse($verify['date'])->gte(Carbon::parse('2024-07-01'))) ? true : false;
+
+        return view('admin.finance.plans.edit', compact('id', 'models', 'vendors', 'model_templates', 'model_chats', 'type', 'status'));
     }
 
 
@@ -465,6 +519,18 @@ class FinanceSubscriptionPlanController extends Controller
             $openai_personal = false;
         }
 
+        if (request('personal-claude-api') == 'on') {
+            $claude_personal = true; 
+        } else {
+            $claude_personal = false;
+        }
+
+        if (request('personal-gemini-api') == 'on') {
+            $gemini_personal = true; 
+        } else {
+            $gemini_personal = false;
+        }
+
         if (request('personal-sd-api') == 'on') {
             $sd_personal = true; 
         } else {
@@ -525,6 +591,12 @@ class FinanceSubscriptionPlanController extends Controller
             $video_image = false;
         }
 
+        if (request('photo-studio-feature') == 'on') {
+            $photo_studio = true; 
+        } else {
+            $photo_studio = false;
+        }
+
         if (request('voice-clone-feature') == 'on') {
             $clone = true; 
         } else {
@@ -565,6 +637,12 @@ class FinanceSubscriptionPlanController extends Controller
             $brand_voice = true; 
         } else {
             $brand_voice = false;
+        }
+
+        if (request('integration-feature') == 'on') {
+            $integration = true; 
+        } else {
+            $integration = false;
         }
 
         $voiceover_vendors = '';
@@ -632,6 +710,8 @@ class FinanceSubscriptionPlanController extends Controller
                 'model_chat' => $chat_models,
                 'team_members' => request('team-members'),
                 'personal_openai_api' => $openai_personal,
+                'personal_claude_api' => $claude_personal,
+                'personal_gemini_api' => $gemini_personal,
                 'personal_sd_api' => $sd_personal,
                 'days' => request('days'),
                 'dalle_image_engine' => request('dalle-image-engine'),
@@ -650,6 +730,7 @@ class FinanceSubscriptionPlanController extends Controller
                 'rewriter_feature' => $rewriter,
                 'smart_editor_feature' => $smart,
                 'video_image_feature' => $video_image,
+                'photo_studio_feature' => $photo_studio,
                 'voice_clone_feature' => $clone,
                 'sound_studio_feature' => $studio,
                 'plagiarism_feature' => $plagiarism,
@@ -667,11 +748,13 @@ class FinanceSubscriptionPlanController extends Controller
                 'gpt_3_turbo_credits' => request('gpt_3_turbo'),
                 'gpt_4_turbo_credits' => request('gpt_4_turbo'),
                 'gpt_4_credits' => request('gpt_4'),
+                'gpt_4o_credits' => request('gpt_4o'),
                 'claude_3_opus_credits' => request('claude_3_opus'),
                 'claude_3_sonnet_credits' => request('claude_3_sonnet'),
                 'claude_3_haiku_credits' => request('claude_3_haiku'),
                 'fine_tune_credits' => request('fine_tune'),
                 'gemini_pro_credits' => request('gemini_pro'),
+                'integration_feature' => $integration,
             ]); 
             
             toastr()->success(__('Selected plan has been updated successfully'));
@@ -752,6 +835,10 @@ class FinanceSubscriptionPlanController extends Controller
 
             if (request('gpt_4_check') == 'on') {
                 $user->gpt_4_credits = request('gpt_4');
+            }
+
+            if (request('gpt_4o_check') == 'on') {
+                $user->gpt_4o_credits = request('gpt_4o');
             }
 
             if (request('gpt_4_turbo_check') == 'on') {

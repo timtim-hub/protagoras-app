@@ -29,7 +29,6 @@
 
 <!-- All Styles -->
 <link href="<?php echo e(URL::asset('css/app.css')); ?>" rel="stylesheet" />
-<!-- Custom Styles -->
-<link href="<?php echo e(URL::asset('css/appcustom.css')); ?>" rel="stylesheet" />
+
 
 	<?php /**PATH /home/aihowgkq/protagoras.app/resources/views/layouts/header.blade.php ENDPATH**/ ?>

@@ -49,6 +49,7 @@ class ChatFileController extends Controller
         $fine_tunes = FineTuneModel::all();
         $brands = BrandVoice::where('user_id', auth()->user()->id)->get();
         $brands_feature = \App\Services\HelperService::checkBrandsFeature();
+        $default_model = auth()->user()->default_model_chat;
 
         if (auth()->user()->group == 'user') {
             if (config('settings.chat_file_user_access') != 'allow') {
@@ -58,7 +59,7 @@ class ChatFileController extends Controller
                 $pdf_limit = config('settings.chat_pdf_file_size_user');
                 $csv_limit = config('settings.chat_csv_file_size_user');
                 $word_limit = config('settings.chat_word_file_size_user');
-                return view('user.chat_file.index', compact('chats', 'chat_code', 'prompts', 'pdf_limit', 'csv_limit', 'word_limit', 'brands', 'models', 'fine_tunes', 'brands_feature'));
+                return view('user.chat_file.index', compact('chats', 'chat_code', 'prompts', 'pdf_limit', 'csv_limit', 'word_limit', 'brands', 'models', 'fine_tunes', 'brands_feature', 'default_model'));
             }
         } elseif (auth()->user()->group == 'subscriber') {
             $plan = SubscriptionPlan::where('id', auth()->user()->plan_id)->first();
@@ -69,13 +70,13 @@ class ChatFileController extends Controller
                 $pdf_limit = config('settings.chat_pdf_file_size_user');
                 $csv_limit = config('settings.chat_csv_file_size_user');
                 $word_limit = config('settings.chat_word_file_size_user');
-                return view('user.chat_file.index', compact('chats', 'chat_code', 'prompts', 'pdf_limit', 'csv_limit', 'word_limit', 'brands', 'models', 'fine_tunes', 'brands_feature'));
+                return view('user.chat_file.index', compact('chats', 'chat_code', 'prompts', 'pdf_limit', 'csv_limit', 'word_limit', 'brands', 'models', 'fine_tunes', 'brands_feature', 'default_model'));
             }
         } else {
             $pdf_limit = config('settings.chat_pdf_file_size_user');
             $csv_limit = config('settings.chat_csv_file_size_user');
             $word_limit = config('settings.chat_word_file_size_user');
-            return view('user.chat_file.index', compact('chats', 'chat_code', 'prompts', 'pdf_limit', 'csv_limit', 'word_limit', 'brands', 'models', 'fine_tunes', 'brands_feature'));
+            return view('user.chat_file.index', compact('chats', 'chat_code', 'prompts', 'pdf_limit', 'csv_limit', 'word_limit', 'brands', 'models', 'fine_tunes', 'brands_feature', 'default_model'));
         }
    
     }

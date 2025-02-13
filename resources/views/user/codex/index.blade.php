@@ -34,7 +34,7 @@
 					<div class="row">
 						<div class="col-sm-12">
 							<div class="text-left mb-5" id="balance-status">
-								<span class="fs-11 text-muted pl-3"><i class="fa-sharp fa-solid fa-bolt-lightning mr-2 text-primary"></i>{{ __('Your Balance is') }} <span class="font-weight-semibold" id="balance-number">@if (auth()->user()->gpt_3_turbo_credits == -1) {{ __('Unlimited') }} @else {{ number_format(auth()->user()->gpt_3_turbo_credits + auth()->user()->gpt_3_turbo_credits_prepaid) }} {{ __('GPT 3.5 Turbo') }} {{ __('Words') }} @endif</span></span>
+								<x-balance-template />
 							</div>							
 						</div>	
 						<div class="col-sm-12">
@@ -76,15 +76,18 @@
 						<div class="col-sm-12 mb-5">
 							<div class="form-group">	
 								<h6 class="fs-11 mb-2 font-weight-semibold">{{ __('AI Model') }}</h6>								
-								<select id="model" name="model" class="form-select">
-									<option value="gpt-3.5-turbo-0125">{{ __('GPT 3.5 Turbo') }}</option>
-									@foreach ($models as $model)
-										@if (trim($model) == 'gpt-4')
-											<option value="{{ trim($model) }}">{{ __('GPT 4') }}</option>
+								<select id="model" name="model" class="form-select" onchange="updateModel()">										
+									@foreach ($models as $model)		
+										@if (trim($model) == 'gpt-3.5-turbo-0125')
+											<option value="{{ trim($model) }}" @if (trim($model) == $default_model) selected @endif>{{ __('OpenAI | GPT 3.5 Turbo') }}</option>								
+										@elseif (trim($model) == 'gpt-4')
+											<option value="{{ trim($model) }}" @if (trim($model) == $default_model) selected @endif>{{ __('OpenAI | GPT 4') }}</option>
+										@elseif (trim($model) == 'gpt-4o')
+											<option value="{{ trim($model) }}" @if (trim($model) == $default_model) selected @endif>{{ __('OpenAI | GPT 4o') }}</option>
 										@elseif (trim($model) == 'gpt-4-0125-preview')
-											<option value="{{ trim($model) }}">{{ __('GPT 4 Turbo') }}</option>
+											<option value="{{ trim($model) }}" @if (trim($model) == $default_model) selected @endif>{{ __('OpenAI | GPT 4 Turbo') }}</option>
 										@elseif (trim($model) == 'gpt-4-turbo-2024-04-09')
-											<option value="{{ trim($model) }}">{{ __('GPT 4 Turbo with Vision') }}</option>
+											<option value="{{ trim($model) }}" @if (trim($model) == $default_model) selected @endif>{{ __('OpenAI | GPT 4 Turbo with Vision') }}</option>
 										@else
 											@foreach ($fine_tunes as $fine_tune)
 												@if (trim($model) == $fine_tune->model)
@@ -93,8 +96,8 @@
 											@endforeach
 										@endif
 										
-									@endforeach																	
-								</select>	
+									@endforeach									
+								</select>
 							</div>
 						</div>
 					</div>						
@@ -366,6 +369,26 @@
 		var result = document.execCommand('copy');
 		document.body.removeChild(input);
 		toastr.success('{{ __('Code has been copied successfully') }}');
+	}
+
+	function updateModel() {
+		let model = document.getElementById("model").value;
+
+		$.ajax({
+			headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+			method: 'POST',
+			url: '/user/chat/model',
+			data: { 'model': model},
+			success: function (data) {					
+				let balance = document.getElementById('balance-number');
+				let model = document.getElementById('model-name');
+				balance.innerHTML =  data['balance'];
+				model.innerHTML =  data['model'];
+
+			},
+			error: function(data) {
+			}
+		});
 	}
 </script>
 @endsection

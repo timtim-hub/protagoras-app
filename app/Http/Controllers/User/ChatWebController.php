@@ -49,13 +49,14 @@ class ChatWebController extends Controller
         $fine_tunes = FineTuneModel::all();
         $brands = BrandVoice::where('user_id', auth()->user()->id)->get();
         $brands_feature = \App\Services\HelperService::checkBrandsFeature();
+        $default_model = auth()->user()->default_model_chat;
 
         if (auth()->user()->group == 'user') {
             if (config('settings.chat_web_user_access') != 'allow') {
                 toastr()->warning(__('AI Web Chat feature is not available for free tier users, subscribe to get a proper access'));
                 return redirect()->route('user.plans');
             } else {
-                return view('user.chat_web.index', compact('chats', 'chat_code', 'prompts', 'brands', 'models', 'fine_tunes', 'brands_feature'));
+                return view('user.chat_web.index', compact('chats', 'chat_code', 'prompts', 'brands', 'models', 'fine_tunes', 'brands_feature', 'default_model'));
             }
         } elseif (auth()->user()->group == 'subscriber') {
             $plan = SubscriptionPlan::where('id', auth()->user()->plan_id)->first();
@@ -63,10 +64,10 @@ class ChatWebController extends Controller
                 toastr()->warning(__('Your current subscription plan does not include support for AI Web Chat feature'));
                 return redirect()->back();                   
             } else {
-                return view('user.chat_web.index', compact('chats', 'chat_code', 'prompts', 'brands', 'models', 'fine_tunes', 'brands_feature'));
+                return view('user.chat_web.index', compact('chats', 'chat_code', 'prompts', 'brands', 'models', 'fine_tunes', 'brands_feature', 'default_model'));
             }
         } else {
-            return view('user.chat_web.index', compact('chats', 'chat_code', 'prompts', 'brands', 'models', 'fine_tunes', 'brands_feature'));
+            return view('user.chat_web.index', compact('chats', 'chat_code', 'prompts', 'brands', 'models', 'fine_tunes', 'brands_feature', 'default_model'));
         }
     }
 

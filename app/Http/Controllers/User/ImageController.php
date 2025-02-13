@@ -514,7 +514,7 @@ class ImageController extends Controller
                 if($settings->value != $status['code']){return;}
 
 
-                if ($sd_model != 'core' && $sd_model != 'sd3' && $sd_model != 'sd3-turbo') {
+                if ($sd_model != 'core' && $sd_model != 'ultra' && $sd_model != 'sd3' && $sd_model != 'sd3-turbo') {
                     
                     $url = 'https://api.stability.ai/v1/generation/' . $sd_model;
                     $output = '';
@@ -849,7 +849,9 @@ class ImageController extends Controller
 
                 } else {
 
-                    $url = 'https://api.stability.ai/v2beta/stable-image/generate/' . $sd_model;
+                    $sd_mode = ($sd_model == 'sd3-turbo') ? 'sd3' : $sd_model;
+
+                    $url = 'https://api.stability.ai/v2beta/stable-image/generate/' . $sd_mode;
 
                     $headers = [
                         'Authorization:' . $stable_diffusion,
@@ -857,7 +859,7 @@ class ImageController extends Controller
                         'Accept: application/json',
                     ];
 
-                    if ($sd_model != 'core') {
+                    if ($sd_model == 'sd3') {
 
                         if (request('enable-negative-prompt') == 'on' && $sd_model == 'sd3') {
                             if (!is_null($request->negative_prompt)) {
@@ -865,7 +867,6 @@ class ImageController extends Controller
                                     'prompt' => $prompt,
                                     'model' => $sd_model,
                                     'aspect_ratio' => $request->resolution_sd,
-                                    'mode' => 'text-to-image',
                                     'negative_prompt' => $request->negative_prompt,
                                 ); 
                             } else {
@@ -873,7 +874,6 @@ class ImageController extends Controller
                                     'prompt' => $prompt,
                                     'model' => $sd_model,
                                     'aspect_ratio' => $request->resolution_sd,
-                                    'mode' => 'text-to-image',
                                 ); 
                             }                   
                         } else {
@@ -881,29 +881,31 @@ class ImageController extends Controller
                                 'prompt' => $prompt,
                                 'model' => $sd_model,
                                 'aspect_ratio' => $request->resolution_sd,
-                                'mode' => 'text-to-image',
                             ); 
                         }
 
-                    } else {
+                    } elseif($sd_model == 'core') {
 
                         if ($request->style != 'none') {
                             $postFields = array(
                                 'prompt' => $prompt,
-                                'model' => $sd_model,
                                 'aspect_ratio' => $request->resolution_sd,
                                 'style_preset' => $request->style
                             ); 
                         } else {
                             $postFields = array(
                                 'prompt' => $prompt,
-                                'model' => $sd_model,
                                 'aspect_ratio' => $request->resolution_sd,
                             ); 
                         }
+                    } elseif($sd_model == 'ultra') {
+
+                        $postFields = array(
+                            'prompt' => $prompt,
+                            'aspect_ratio' => $request->resolution_sd,
+                        ); 
                     }
-                    
-    
+ 
                     $ch = curl_init($url); 
                     curl_setopt($ch, CURLOPT_POST, 1);
                     curl_setopt($ch, CURLOPT_POSTFIELDS, $this->build_post_fields($postFields));
@@ -913,7 +915,6 @@ class ImageController extends Controller
                     curl_close($ch);
 
                     $response = json_decode($result , true);
-                    \Log::info($response);
 
                     if (isset($response['finish_reason'])) {
                         if ($response['finish_reason'] == 'SUCCESS' || $response['finish_reason'] == 'CONTENT_FILTERED') {
@@ -1214,6 +1215,7 @@ class ImageController extends Controller
                             case 'sd3': $image_engine = 'Stable Diffusion 3.0'; break;
                             case 'sd3-turbo': $image_engine = 'Stable Diffusion 3.0 Turbo'; break;
                             case 'core': $image_engine = 'Stable Image Core'; break;
+                            case 'ultra': $image_engine = 'Stable Image Ultra'; break;
                             default: $image_engine = 'Dalle 2';
                         }
                     }
@@ -1513,6 +1515,7 @@ class ImageController extends Controller
                 case 'sd3': return 'Stable Diffusion 3.0'; break;
                 case 'sd3-turbo': return 'Stable Diffusion 3.0 Turbo'; break;
                 case 'core': return 'Stable Image Core'; break;
+                case 'ultra': return 'Stable Image Ultra'; break;
             }
         } elseif ($engine != 'none' && $vendor == 'sd') {
             switch ($engine) {
@@ -1523,6 +1526,7 @@ class ImageController extends Controller
                 case 'sd3': return 'Stable Diffusion 3.0'; break;
                 case 'sd3-turbo': return 'Stable Diffusion 3.0 Turbo'; break;
                 case 'core': return 'Stable Image Core'; break;
+                case 'ultra': return 'Stable Image Ultra'; break;
             }
         }
     }

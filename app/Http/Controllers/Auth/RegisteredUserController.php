@@ -187,6 +187,7 @@ class RegisteredUserController extends Controller
         $user->gpt_3_turbo_credits = config('settings.free_gpt_3_turbo_credits');
         $user->gpt_4_turbo_credits = config('settings.free_gpt_4_turbo_credits');
         $user->gpt_4_credits = config('settings.free_gpt_4_credits');
+        $user->gpt_4o_credits = config('settings.free_gpt_4o_credits');
         $user->fine_tune_credits = config('settings.free_fine_tune_credits');
         $user->claude_3_opus_credits = config('settings.free_claude_3_opus_credits');
         $user->claude_3_sonnet_credits = config('settings.free_claude_3_sonnet_credits');
@@ -321,6 +322,7 @@ class RegisteredUserController extends Controller
         $user->gpt_3_turbo_credits = config('settings.free_gpt_3_turbo_credits');
         $user->gpt_4_turbo_credits = config('settings.free_gpt_4_turbo_credits');
         $user->gpt_4_credits = config('settings.free_gpt_4_credits');
+        $user->gpt_4o_credits = config('settings.free_gpt_4o_credits');
         $user->fine_tune_credits = config('settings.free_fine_tune_credits');
         $user->claude_3_opus_credits = config('settings.free_claude_3_opus_credits');
         $user->claude_3_sonnet_credits = config('settings.free_claude_3_sonnet_credits');

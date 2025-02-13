@@ -645,6 +645,35 @@
 									</div>		
 								
 								</div>
+
+								<h6 class="fs-12 font-weight-bold mb-4">{{ __('GA4 for Admin Panel') }}</h6>
+
+								<div class="row">
+									<div class="col-lg-6 col-md-6 col-sm-12">								
+										<!-- ACCESS KEY -->
+										<div class="input-box mt-2">								
+											<h6>{{ __('Google Analytics Property ID') }}</h6>
+											<div class="form-group">							    
+												<input type="text" class="form-control @error('google-property') is-danger @enderror" id="google-property" name="google-property" value="{{ config('services.google.analytics.property') }}" autocomplete="off">
+												@error('google-property')
+													<p class="text-danger">{{ $errors->first('google-property') }}</p>
+												@enderror
+											</div> 
+										</div> <!-- END ACCESS KEY -->
+									</div>		
+									<div class="col-lg-6 col-md-6 col-sm-12">								
+										<!-- ACCESS KEY -->
+										<div class="input-box mt-2">								
+											<h6>{{ __('Google Service Account Credentials') }}</h6>
+											<div class="form-group">							    
+												<input type="text" class="form-control @error('google-credentials') is-danger @enderror" id="google-credentials" name="google-credentials" value="{{ config('services.google.analytics.credentials') }}" autocomplete="off">
+												@error('google-credentials')
+													<p class="text-danger">{{ $errors->first('google-credentials') }}</p>
+												@enderror
+											</div> 
+										</div> <!-- END ACCESS KEY -->
+									</div>
+								</div>
 	
 							</div>
 						</div>

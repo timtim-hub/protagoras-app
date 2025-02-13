@@ -2718,45 +2718,4 @@ class SmartEditorController extends Controller
         }
     }
 
-
-    public function wordpress(Request $request)
-    {
-       
-$username = 'admin';
-$password = 'admin';
-        $client = new Client([                
-            'base_uri' => 'http://localhost:81/berkine/wp-json/wp/v2/',
-            'headers' => [
-                'Authorization' => 'Basic ' . base64_encode($username.":".$password),                
-                'Accept' => 'application/json',
-                'Content-type' => 'application/json'
-            ]
-        ]);
-
-        $response = $client->post('posts', [
-            'form_params' => [
-                'title' => 'oppo',
-                'content' => 'pop'
-            ],
-        ]);
-
-        // WordPress::setServer('http://localhost:81/berkine')
-        //             ->setUsername('admin')
-        //             ->setApplicationPassword('admin');
-        
-        //             $data = [
-        //                 'title' => 'title joker',
-        //                 'parent' => 0,
-        //                 'slug' => 'oph0se-se', //Str::slug('title', '-'),
-        //                 'content' => 'content text',
-        //             ];
-        //             $post = WordPress::post()->create($data);
-
-        // $response = json_decode($post->getBody(), true);
-        \Log::info($response); 
-
-        
-    }
-
-
 }

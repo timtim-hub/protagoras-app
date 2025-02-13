@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\LicenseController;
 use Illuminate\Support\Str;
 use App\Models\PaymentPlatform;
 use Illuminate\Http\Request;
@@ -16,6 +17,13 @@ use Carbon\Carbon;
 
 class PlanController extends Controller
 {   
+    private $api;
+
+    public function __construct()
+    {
+        $this->api = new LicenseController();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -55,15 +63,18 @@ class PlanController extends Controller
 
         $subscriber = Subscriber::where('user_id', auth()->user()->id)->where('status', 'Active')->first();
         if ($subscriber) {
-            $date = Carbon::createFromFormat('Y-m-d H:i:s', $subscriber->active_until)->format('M d');
+            $date = Carbon::createFromFormat('Y-m-d H:i:s', $subscriber->active_until)->format('M d Y');
             $time = Carbon::createFromFormat('Y-m-d H:i:s', $subscriber->active_until)->format('H:i A');
         } else {
             $date = null;
             $time = null;
         }
         
+        $verify = $this->api->verify_license();
+        $type = (isset($verify['type'])) ? $verify['type'] : '';
+        $status = (Carbon::parse($verify['date'])->gte(Carbon::parse('2024-07-01'))) ? true : false;
 
-        return view('user.plans.index', compact('monthly', 'yearly', 'monthly_subscriptions', 'yearly_subscriptions', 'prepaids', 'prepaid', 'lifetime', 'lifetime_subscriptions', 'plan', 'date', 'time', 'subscriber'));
+        return view('user.plans.index', compact('monthly', 'yearly', 'monthly_subscriptions', 'yearly_subscriptions', 'prepaids', 'prepaid', 'lifetime', 'lifetime_subscriptions', 'plan', 'date', 'time', 'subscriber', 'status', 'type'));
     }
 
 
@@ -240,6 +251,7 @@ class PlanController extends Controller
         $user->gpt_3_turbo_credits = $plan->gpt_3_turbo_credits;
         $user->gpt_4_turbo_credits = $plan->gpt_4_turbo_credits;
         $user->gpt_4_credits = $plan->gpt_4_credits;
+        $user->gpt_4o_credits = $plan->gpt_4o_credits;
         $user->claude_3_opus_credits = $plan->claude_3_opus_credits;
         $user->claude_3_sonnet_credits = $plan->claude_3_sonnet_credits;
         $user->claude_3_haiku_credits = $plan->claude_3_haiku_credits;

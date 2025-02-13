@@ -27,30 +27,36 @@
 
 @section('content')	
 	<div class="row">
-		<div class="col-lg-12 col-md-12 col-xm-12">
-			<div class="card border-0">
-				<div class="card-header">
-					<h3 class="card-title">{{ __('All Prepaid Plans') }}</h3>
-				</div>
-				<div class="card-body pt-2">
-					<!-- SET DATATABLE -->
-					<table id='prepaidAdminTable' class='table' width='100%'>
-							<thead>
-								<tr>
-									<th width="10%">{{ __('Plan Name') }}</th>
-									<th width="5%">{{ __('Status') }}</th>																	
-									<th width="22%">{{ __('GPT 4 / GPT 4T / GPT 3.5T') }} / {{ __('DE Images') }} / {{ __('SD Images') }} / {{ __('Characters') }} / {{ __('Minutes') }}</th>																																																																																																																																																																											
-									<th width="5%">{{ __('Pricing Plan') }}</th>
-									<th width="5%">{{ __('Featured') }}</th>
-									<th width="7%">{{ __('Created On') }}</th>
-									<th width="7%">{{ __('Actions') }}</th>
-								</tr>
-							</thead>
-					</table> <!-- END SET DATATABLE -->
+		@if ($type == 'Regular License' && $status)
+			<div class="row text-center justify-content-center">
+				<p class="fs-14" style="background:#FFE2E5; color:#ff0000; padding:1rem 2rem; border-radius: 0.5rem; max-width: 1200px;">{{ __('Extended License is required in order to have access to these features') }}</p>
+			</div>	
+		@else
+			<div class="col-lg-12 col-md-12 col-xm-12">
+				<div class="card border-0">
+					<div class="card-header">
+						<h3 class="card-title">{{ __('All Prepaid Plans') }}</h3>
+					</div>
+					<div class="card-body pt-2">
+						<!-- SET DATATABLE -->
+						<table id='prepaidAdminTable' class='table' width='100%'>
+								<thead>
+									<tr>
+										<th width="10%">{{ __('Plan Name') }}</th>
+										<th width="5%">{{ __('Status') }}</th>																	
+										<th width="22%">{{ __('GPT 4 / GPT 4T / GPT 3.5T') }} / {{ __('DE Images') }} / {{ __('SD Images') }} / {{ __('Characters') }} / {{ __('Minutes') }}</th>																																																																																																																																																																											
+										<th width="5%">{{ __('Pricing Plan') }}</th>
+										<th width="5%">{{ __('Featured') }}</th>
+										<th width="7%">{{ __('Created On') }}</th>
+										<th width="7%">{{ __('Actions') }}</th>
+									</tr>
+								</thead>
+						</table> <!-- END SET DATATABLE -->
 
+					</div>
 				</div>
 			</div>
-		</div>
+		@endif
 	</div>
 @endsection
 

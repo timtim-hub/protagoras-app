@@ -27,12 +27,12 @@ use App\Models\User;
 use App\Models\BrandVoice;
 use App\Models\FineTuneModel;
 use App\Models\Setting;
-use GuzzleHttp\Client;
+use GuzzleHttp\Client as GuzzleClient;
 use App\Services\HelperService;
 use WpAi\Anthropic\Facades\Anthropic;
-use Gemini\Laravel\Facades\Gemini;
-use Gemini\Enums\Role;
-use Gemini\Data\Content;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Gemini\Client;
 use Michelf\Markdown;
 use Exception;
 
@@ -60,11 +60,14 @@ class ChatController extends Controller
         $favorite_chats = Chat::select('chats.*', 'favorite_chats.*')->where('favorite_chats.user_id', auth()->user()->id)->join('favorite_chats', 'favorite_chats.chat_code', '=', 'chats.chat_code')->where('status', true)->orderBy('category', 'asc')->get();    
         $user_chats = FavoriteChat::where('user_id', auth()->user()->id)->pluck('chat_code');     
         $other_chats = Chat::whereNotIn('chat_code', $user_chats)->where('status', true)->orderBy('category', 'asc')->get();  
-        $chat_categories = Chat::where('status', true)->groupBy('group')->pluck('group'); 
-        $categories = ChatCategory::whereIn('code', $chat_categories)->orderBy('name', 'asc')->get();  
+        $original_chat_categories = Chat::where('status', true)->groupBy('group')->pluck('group'); 
+        $custom_chat_categories = CustomChat::where('status', true)->groupBy('group')->pluck('group'); 
+        $all_categories = $original_chat_categories->merge($custom_chat_categories); 
+        $categories = ChatCategory::whereIn('code', $all_categories)->orderBy('name', 'asc')->get();  
         
-        $custom_chats = CustomChat::where('user_id', auth()->user()->id)->where('type', 'private')->where('status', true)->orderBy('group', 'asc')->get();  
-        $public_custom_chats = CustomChat::where('type', 'custom')->where('status', true)->orderBy('group', 'asc')->get();  
+        $favorite_chats_custom = CustomChat::select('custom_chats.*', 'favorite_chats.*')->where('favorite_chats.user_id', auth()->user()->id)->join('favorite_chats', 'favorite_chats.chat_code', '=', 'custom_chats.chat_code')->where('status', true)->orderBy('category', 'asc')->get();    
+        $custom_chats = CustomChat::whereNotIn('chat_code', $user_chats)->where('user_id', auth()->user()->id)->where('type', 'private')->where('status', true)->orderBy('group', 'asc')->get();  
+        $public_custom_chats = CustomChat::whereNotIn('chat_code', $user_chats)->where('type', 'custom')->where('status', true)->orderBy('group', 'asc')->get();  
         
         if (!is_null(auth()->user()->plan_id)) {
             $subscription = SubscriptionPlan::where('id', auth()->user()->plan_id)->first();
@@ -73,7 +76,7 @@ class ChatController extends Controller
             $check = false;
         }
         
-        return view('user.chat.index', compact('favorite_chats', 'other_chats', 'categories', 'custom_chats', 'check', 'public_custom_chats'));
+        return view('user.chat.index', compact('favorite_chats', 'other_chats', 'categories', 'custom_chats', 'check', 'public_custom_chats', 'favorite_chats_custom'));
     }
 
 
@@ -382,7 +385,7 @@ class ChatController extends Controller
                 $main_prompt = $main_chat->prompt . ' ' . $prompt;
                 $model = $chat_message->model;
 
-                if ($model == 'claude-3-opus-20240229' || $model == 'claude-3-sonnet-20240229' || $model == 'claude-3-haiku-20240307') {
+                if ($model == 'claude-3-opus-20240229' || $model == 'claude-3-5-sonnet-20240620' || $model == 'claude-3-haiku-20240307') {
                     $messages = [];
 
                     foreach ($chat_messages as $chat) {
@@ -411,57 +414,49 @@ class ChatController extends Controller
                 }
 
 
-                if ($model == 'claude-3-opus-20240229' || $model == 'claude-3-sonnet-20240229' || $model == 'claude-3-haiku-20240307') {
-                    $response = Anthropic::messages()
-                                ->model($model)
-                                ->maxTokens(4096)
-                                ->system($main_prompt)
-                                ->messages($messages)
-                                ->temperature(1.0)
-                                ->stream();
+                if ($model == 'claude-3-opus-20240229' || $model == 'claude-3-5-sonnet-20240620' || $model == 'claude-3-haiku-20240307') {
 
-                    foreach ($response as $result) {
-                        if ($result['type'] == 'content_block_delta') {
-                            $raw = $result['delta']['text'];
-
-                           // $clean = str_replace(["\r\n", "\r", "\n"], "<br/>", $raw);
-                            $text .= $raw;
-
-                            echo 'data: ' . $raw ."\n\n";
-                            ob_flush();
-                            flush();
-                            usleep(400);
-                        }
-                        
-                        if (connection_aborted()) { break; }
-                        
+                    # Check Claude API key
+                    if (config('settings.personal_claude_api') == 'allow') {
+                        $claude_api = auth()->user()->personal_claude_key;        
+                    } elseif (!is_null(auth()->user()->plan_id)) {
+                        $check_api = SubscriptionPlan::where('id', auth()->user()->plan_id)->first();
+                        if ($check_api->personal_claude_api) {
+                            $claude_api = auth()->user()->personal_claude_key;               
+                        } else {
+                            $claude_api = config('anthropic.api_key');                           
+                       }                       
+                    } else {
+                        $claude_api = config('anthropic.api_key'); 
                     }
 
-                } elseif ($model == 'gemini_pro') {
+                    $anthropic = new \WpAi\Anthropic\AnthropicAPI($claude_api);
 
                     try {
-                        // $chat = Gemini::chat()
-                        //     ->startChat(history: [
-                        //         Content::parse(part: $main_prompt, role: Role::USER),
-                        //         Content::parse(part: 'Sure, I will follow your provided guide during answering your question.', role: Role::MODEL)
-                        //     ]);
+                        $response = $anthropic->messages()
+                                    ->model($model)
+                                    ->maxTokens(4096)
+                                    ->system($main_prompt)
+                                    ->messages($messages)
+                                    ->temperature(1.0)
+                                    ->stream();
 
-                        // $response = $chat->sendMessage($user_prompt);
-                        // $text = $response->text();
-                        // \Log::info($response->text());
-                        // $clean = str_replace(["**", "***"], "", $response->text());
-                        // echo 'data: ' . $response->text();
-                        $prompt = $main_prompt . ' Based on previous information about your role, answer this users question: ' . $user_prompt; 
-                        $response = Gemini::geminiPro()->generateContent($prompt);
+                        foreach ($response as $result) {
+                            if ($result['type'] == 'content_block_delta') {
+                                $raw = $result['delta']['text'];
 
-                        //foreach ($stream as $response) {
-                            //$clean = str_replace(["**", "***"], " ", $response->text());
-                            $clean = Markdown::defaultTransform($response->text());
-                            $text = $clean;
-                            echo 'data: ' . $clean;
-                            // ob_flush();
-                            // flush();
-                       // }
+                            // $clean = str_replace(["\r\n", "\r", "\n"], "<br/>", $raw);
+                                $text .= $raw;
+
+                                echo 'data: ' . $raw ."\n\n";
+                                ob_flush();
+                                flush();
+                                usleep(400);
+                            }
+                            
+                            if (connection_aborted()) { break; }
+                            
+                        }
                     } catch (\Exception $exception) {
                         echo "data: " . $exception->getMessage();
                         echo "\n\n";
@@ -474,8 +469,54 @@ class ChatController extends Controller
                         usleep(50000);
                     }
                     
-                    
 
+                } elseif ($model == 'gemini_pro') {
+
+                    # Check Gemini API key
+                    if (config('settings.personal_gemini_api') == 'allow') {
+                        $gemini_api = auth()->user()->personal_gemini_key;        
+                    } elseif (!is_null(auth()->user()->plan_id)) {
+                        $check_api = SubscriptionPlan::where('id', auth()->user()->plan_id)->first();
+                        if ($check_api->personal_gemini_api) {
+                            $gemini_api = auth()->user()->personal_gemini_key;               
+                        } else {
+                            $gemini_api = config('gemini.api_key');                           
+                       }                       
+                    } else {
+                        $gemini_api = config('gemini.api_key'); 
+                    }
+
+                    $gemini_client = \Gemini::factory()
+                        ->withApiKey($gemini_api)
+                        ->withHttpClient($client = new GuzzleClient())
+                        ->withStreamHandler(fn (RequestInterface $request): ResponseInterface => $client->send($request, ['stream' => true]))
+                      ->make();
+
+                    try {
+                        $prompt = $main_prompt . ' Based on previous information about your role, answer this users question: ' . $user_prompt; 
+                        //$clean = Markdown::defaultTransform($response->text());
+                        $stream = $gemini_client->geminiPro()->streamGenerateContent($prompt);
+
+                        foreach ($stream as $response) {
+                           $clean = str_replace(["\r\n", "\r", "\n"], "<br/>", $response->text());
+                           $text .= $response->text();
+                           echo 'data: ' . $clean ."\n\n";
+                           ob_flush();
+                           flush();
+                        }
+
+                    } catch (\Exception $exception) {
+                        echo "data: " . $exception->getMessage();
+                        echo "\n\n";
+                        ob_flush();
+                        flush();
+                        echo 'data: [DONE]';
+                        echo "\n\n";
+                        ob_flush();
+                        flush();
+                        usleep(50000);
+                    }
+   
                 } else {
 
                     $opts = [
@@ -535,7 +576,7 @@ class ChatController extends Controller
                 
 
             } else {
-                $guzzle_client = new Client();
+                $guzzle_client = new GuzzleClient();
                 $url = 'https://api.openai.com/v1/chat/completions';
                 $model = 'gpt-4-turbo-2024-04-09';
                 $response = $guzzle_client->post($url,
@@ -1023,7 +1064,7 @@ class ChatController extends Controller
                 }
 
                 $response = $this->createThread($open_ai);
-
+\Log::info($response);
                 $vector = $this->createVectorStore($open_ai);
 
                 $chat = new ChatConversation();
@@ -1105,22 +1146,11 @@ class ChatController extends Controller
             }
         }
 
-        # Apply proper model based on role and subsciption
-        if (auth()->user()->group == 'user') {
-            $models = explode(',', config('settings.free_tier_models'));
-        } elseif (!is_null(auth()->user()->plan_id)) {
-            $plan = SubscriptionPlan::where('id', auth()->user()->plan_id)->first();
-            $models = explode(',', $plan->model_chat);
-        } else {            
-            $models = explode(',', config('settings.free_tier_models'));
-        }
-
         $default_model = auth()->user()->default_model_chat;
-        $fine_tunes = FineTuneModel::all();
         $brands = BrandVoice::where('user_id', auth()->user()->id)->get();
         $brands_feature = \App\Services\HelperService::checkBrandsFeature();
 
-        return view('user.chat.view', compact('chat', 'messages', 'categories', 'prompts', 'internet', 'brands', 'models', 'fine_tunes', 'brands_feature', 'default_model'));
+        return view('user.chat.view', compact('chat', 'messages', 'categories', 'prompts', 'internet', 'brands', 'brands_feature', 'default_model'));
 	}
 
 
@@ -1196,7 +1226,7 @@ class ChatController extends Controller
                     return $data;
                 }
             } 
-              
+
         }
 	}
 
@@ -1348,6 +1378,61 @@ class ChatController extends Controller
                 $data['status'] = 'empty';
                 return $data;
             }
+              
+        }
+	}
+
+
+    public function model(Request $request) 
+    {
+        if ($request->ajax()) {
+
+            switch ($request->model) {
+                case 'gpt-3.5-turbo-0125':
+                    $model = 'GPT 3.5 Turbo';
+                    $balance = (auth()->user()->gpt_3_turbo_credits == -1) ? __('Unlimited') : \App\Services\HelperService::userAvailableWords();
+                    break;
+                case 'gpt-4':
+                    $model = 'GPT 4';
+                    $balance = (auth()->user()->gpt_4_credits == -1) ? __('Unlimited') : \App\Services\HelperService::userAvailableGPT4Words();
+                    break;
+                case 'gpt-4o':
+                    $model = 'GPT 4o';
+                    $balance = (auth()->user()->gpt_4o_credits == -1) ? __('Unlimited') : \App\Services\HelperService::userAvailableGPT4oWords();
+                    break;
+                case 'gpt-4-0125-preview':
+                    $model = 'GPT 4 Turbo';
+                    $balance = (auth()->user()->gpt_4_turbo_credits == -1) ? __('Unlimited') : \App\Services\HelperService::userAvailableGPT4TWords();
+                    break;            
+                case 'gpt-4-turbo-2024-04-09':
+                    $model = 'GPT 4 Turbo Vision';
+                    $balance = (auth()->user()->gpt_4_turbo_credits == -1) ? __('Unlimited') : \App\Services\HelperService::userAvailableGPT4TWords();
+                    break;
+                case 'claude-3-opus-20240229':
+                    $model = 'Claude 3 Opus';
+                    $balance = (auth()->user()->claude_3_opus_credits == -1) ? __('Unlimited') : \App\Services\HelperService::userAvailableClaudeOpusWords();
+                    break;
+                case 'claude-3-5-sonnet-20240620':
+                    $model = 'Claude 3.5 Sonnet';
+                    $balance = (auth()->user()->claude_3_sonnet_credits == -1) ? __('Unlimited') : \App\Services\HelperService::userAvailableClaudeSonnetWords();
+                    break;
+                case 'claude-3-haiku-20240307':
+                    $model = 'Claude 3 Haiku';
+                    $balance = (auth()->user()->claude_3_haiku_credits == -1) ? __('Unlimited') : \App\Services\HelperService::userAvailableClaudeHaikuWords();
+                    break;
+                case 'gemini_pro':
+                    $model = 'Gemini Pro';
+                    $balance = (auth()->user()->gemini_pro_credits == -1) ? __('Unlimited') : \App\Services\HelperService::userAvailableGeminiProWords();
+                    break;
+                default:
+                    $model = 'Fine Tune';
+                    $balance = (auth()->user()->fine_tune_credits == -1) ? __('Unlimited') : \App\Services\HelperService::userAvailableFineTuneWords();
+                    break;
+            } 
+
+            $data['model'] = $model;
+            $data['balance'] = $balance;
+            return $data; 
               
         }
 	}

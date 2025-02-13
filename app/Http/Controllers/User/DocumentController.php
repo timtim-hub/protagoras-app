@@ -16,6 +16,7 @@ use App\Models\Image;
 use App\Models\Transcript;
 use App\Models\Code;
 use Yajra\DataTables\DataTables;
+use App\Services\HelperService;
 use DB;
 
 class DocumentController extends Controller
@@ -488,6 +489,38 @@ class DocumentController extends Controller
             
         }
 	}
+
+
+     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function publish(Content $id)
+    {
+        if ($id->user_id == Auth::user()->id){
+
+            return view('user.documents.documents.publish', compact('id'));     
+
+        } else{
+            return redirect()->route('user.documents');
+        }
+    }
+
+
+    public function publishWordpress(Request $request)
+    {
+        $publish = HelperService::wordpress($request->title, $request->slug, request('tinymce-editor'));
+        
+        if ($publish['status'] == 'success') {
+            toastr()->success(__('Post has been successfully published to Wordpress'));
+            return redirect()->back();
+        } else {
+            toastr()->error(__($publish['message']));
+            return redirect()->back();
+        }
+    }
 
 
     /**

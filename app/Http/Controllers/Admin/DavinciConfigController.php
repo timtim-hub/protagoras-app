@@ -83,6 +83,7 @@ class DavinciConfigController extends Controller
             $this->storeConfiguration('DAVINCI_SETTINGS_FREE_TIER_GPT_3_TURBO_CREDITS', request('gpt-3-turbo'));
             $this->storeConfiguration('DAVINCI_SETTINGS_FREE_TIER_GPT_4_TURBO_CREDITS', request('gpt-4-turbo'));
             $this->storeConfiguration('DAVINCI_SETTINGS_FREE_TIER_GPT_4_CREDITS', request('gpt-4'));
+            $this->storeConfiguration('DAVINCI_SETTINGS_FREE_TIER_GPT_4o_CREDITS', request('gpt-4o'));
             $this->storeConfiguration('DAVINCI_SETTINGS_FREE_TIER_FINE_TUNE_CREDITS', request('fine-tune'));
             $this->storeConfiguration('DAVINCI_SETTINGS_FREE_TIER_CLAUDE_3_OPUS_CREDITS', request('claude-3-opus'));
             $this->storeConfiguration('DAVINCI_SETTINGS_FREE_TIER_CLAUDE_3_SONNET_CREDITS', request('claude-3-sonnet'));
@@ -584,6 +585,30 @@ class DavinciConfigController extends Controller
                 $this->storeConfiguration('DAVINCI_SETTINGS_AI_DETECTOR_FREE_TIER_USER', 'deny');
             }
 
+            if (request('integration-user-access') == 'on') {
+                $this->storeConfiguration('DAVINCI_SETTINGS_INTEGRATION_FREE_TIER_USER', 'allow'); 
+            } else {
+                $this->storeConfiguration('DAVINCI_SETTINGS_INTEGRATION_FREE_TIER_USER', 'deny');
+            }
+
+            if (request('integration-feature-user') == 'on') {
+                $this->storeConfiguration('DAVINCI_SETTINGS_INTEGRATION_FEATURE_USER', 'allow'); 
+            } else {
+                $this->storeConfiguration('DAVINCI_SETTINGS_INTEGRATION_FEATURE_USER', 'deny');
+            }
+
+            if (request('photo-studio-user-access') == 'on') {
+                $this->storeConfiguration('DAVINCI_SETTINGS_PHOTO_STUDIO_FREE_TIER_USER', 'allow'); 
+            } else {
+                $this->storeConfiguration('DAVINCI_SETTINGS_PHOTO_STUDIO_FREE_TIER_USER', 'deny');
+            }
+
+            if (request('photo-studio-feature-user') == 'on') {
+                $this->storeConfiguration('DAVINCI_SETTINGS_PHOTO_STUDIO_FEATURE_USER', 'allow'); 
+            } else {
+                $this->storeConfiguration('DAVINCI_SETTINGS_PHOTO_STUDIO_FEATURE_USER', 'deny');
+            }
+
             $data['status'] = 200;                 
             return $data;      
         }
@@ -819,6 +844,7 @@ class DavinciConfigController extends Controller
                 $result = OpenAI::fineTuning()->createJob([
                     "model" => $request->model,
                     "training_file" => $upload->id,
+                    'validation_file' => null,
                 ]);
 
                 FineTune::create([

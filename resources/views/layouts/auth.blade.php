@@ -12,7 +12,8 @@
 	} 
 ?>
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ LaravelLocalization::getCurrentLocale() }}"
+dir="{{ LaravelLocalization::getCurrentLocaleDirection() }}">
 	<head>
 		<!-- Meta data -->
 		<meta charset="utf-8">

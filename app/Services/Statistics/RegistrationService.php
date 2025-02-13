@@ -63,6 +63,35 @@ class RegistrationService
     }
 
 
+    public function getTotalUsers()
+    {
+        $total_users = User::select(DB::raw("count(id) as data"))
+                ->get();  
+        
+        return $total_users[0]['data'];
+    }
+
+
+    public function getTotalSubscribers()
+    {
+        $total_users = User::select(DB::raw("count(id) as data"))
+                ->where('group', 'subscriber')
+                ->get();  
+        
+        return $total_users[0]['data'];
+    }
+
+
+    public function getTotalNonSubscribers()
+    {
+        $total_users = User::select(DB::raw("count(id) as data"))
+                ->where('group', 'user')
+                ->get();  
+        
+        return $total_users[0]['data'];
+    }
+
+
     public function getNewUsersCurrentYear()
     {
         $total_users = User::select(DB::raw("count(id) as data"))

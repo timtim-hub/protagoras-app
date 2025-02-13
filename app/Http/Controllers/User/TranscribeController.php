@@ -98,8 +98,9 @@ class TranscribeController extends Controller
             $plan_type = (Auth::user()->group == 'subscriber') ? 'paid' : 'free';
 
             # Count minutes based on vendor requirements
-            $audio_length = ((float)request('audiolength') / 60);    
+            $audio_length = (is_float(request('audiolength'))) ? ((float)request('audiolength') / 60) : 1;    
             $audio_length = number_format((float)$audio_length, 3, '.', '');
+            $audio_length_record = (is_float(request('audiolength'))) ? (request('audiolength')) : 1; 
 
             # Check if user has access to the template
             if (auth()->user()->group == 'user') {
@@ -198,12 +199,18 @@ class TranscribeController extends Controller
              # Audio Format
              if ($format == 'mp3') {
                 $audio_type = 'audio/mpeg';
-            } elseif ($format == 'ogg') {
-                $audio_type = 'audio/ogg';
             } elseif($format == 'wav') {
                 $audio_type = 'audio/wav';
             } elseif($format == 'webm') {
                 $audio_type = 'audio/webm';
+            } elseif($format == 'mp4') {
+                $audio_type = 'audio/mp4';
+            } elseif($format == 'mpeg') {
+                $audio_type = 'audio/mpeg';
+            } elseif($format == 'mpga') {
+                $audio_type = 'audio/mpeg';
+            } elseif($format == 'm4a') {
+                $audio_type = 'audio/x-m4a';
             }
             
             if (config('settings.whisper_default_storage') == 'local') {
@@ -264,7 +271,7 @@ class TranscribeController extends Controller
                 $transcript->size = $file_size;
                 $transcript->file_name = $file_name;
                 $transcript->temp_name = $name;
-                $transcript->length = request('audiolength');
+                $transcript->length = $audio_length_record;
                 $transcript->plan_type = $plan_type;
                 $transcript->url = $audio_url;
                 $transcript->audio_type = $audio_type;

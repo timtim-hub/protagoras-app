@@ -20,7 +20,7 @@ class CustomTemplateController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = CustomTemplate::orderBy('group', 'asc')->get();
+            $data = CustomTemplate::orderBy('group', 'asc')->where('type', '<>', 'private')->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('actions', function($row){
@@ -118,7 +118,7 @@ class CustomTemplateController extends Controller
             'description' => 'required',
         ]);     
         
-        $template_code = strtoupper(Str::random(5));
+        $template_code = strtoupper(Str::random(7));
         $status = (isset($request->activate)) ? true : false;
         $tone = (isset($request->tone)) ? true : false;
         $model_mode = (isset($request->model_mode)) ? 'fixed' : 'individual';

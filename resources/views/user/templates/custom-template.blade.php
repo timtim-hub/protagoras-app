@@ -47,7 +47,7 @@
 					<div class="row">
 						<div class="col-sm-12">
 							<div class="text-left mb-4" id="balance-status">
-								<span class="fs-11 text-muted pl-3"><i class="fa-sharp fa-solid fa-bolt-lightning mr-2 text-primary"></i>{{ __('Your Balance is') }} <span class="font-weight-semibold" id="balance-number">@if (auth()->user()->gpt_3_turbo_credits == -1) {{ __('Unlimited') }} @else {{ number_format(auth()->user()->gpt_3_turbo_credits + auth()->user()->gpt_3_turbo_credits_prepaid) }} @endif {{ __('GPT 3.5 Turbo') }} {{ __('Words') }}</span></span>
+								<x-balance-template />
 							</div>							
 						</div>		
 						
@@ -171,7 +171,7 @@
 							</div>
 
 							<div class="col-lg-6 col-md-12 col-sm-12">
-								<div id="form-group">
+								<div id="form-group" class="mt-5">
 									<h6 class="fs-11 mb-2 font-weight-semibold">{{ __('Tone of Voice') }} <i class="ml-1 text-dark fs-12 fa-solid fa-circle-info" data-tippy-content="{{ __('Set result tone of the text as needed') }}"></i></h6>
 									<select id="tone" name="tone" class="form-select">
 										<option value="Professional" selected> {{ __('Professional') }}</option>	
@@ -4262,6 +4262,26 @@
 		for(i = L; i >= 0; i--) {
 			selectElement.remove(i);
 		}
+	}
+
+	function updateModel() {
+		let model = document.getElementById("model").value;
+
+		$.ajax({
+			headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+			method: 'POST',
+			url: '/user/chat/model',
+			data: { 'model': model},
+			success: function (data) {					
+				let balance = document.getElementById('balance-number');
+				let model = document.getElementById('model-name');
+				balance.innerHTML =  data['balance'];
+				model.innerHTML =  data['model'];
+
+			},
+			error: function(data) {
+			}
+		});
 	}
 
 </script>

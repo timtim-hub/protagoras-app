@@ -14,7 +14,7 @@
 			<h4 class="page-title mb-0">{{ __('Image Prompt Manager') }}</h4>
 			<ol class="breadcrumb mb-2">
 				<li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}"><i class="fa-solid fa-microchip-ai mr-2 fs-12"></i>{{ __('Admin') }}</a></li>
-				<li class="breadcrumb-item"><a href="{{ route('admin.davinci.dashboard') }}"> {{ __('Davinci Management') }}</a></li>
+				<li class="breadcrumb-item"><a href="{{ route('admin.davinci.dashboard') }}"> {{ __('AI Management') }}</a></li>
 				<li class="breadcrumb-item active" aria-current="page"><a href="#"> {{ __('Image Prompt Manager') }}</a></li>
 			</ol>
 		</div>

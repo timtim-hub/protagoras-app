@@ -31,6 +31,9 @@ class DatabaseSeeder extends Seeder
             ChatCategorySeeder::class,
             ChatPromptSeeder::class,
             EmailsSeeder::class,
+            IntegrationSeeder::class,
+            APISeeder::class,
+            SettingsSeeder::class,
         ]);
     }
 }

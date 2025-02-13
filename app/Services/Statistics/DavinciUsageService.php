@@ -97,6 +97,31 @@ class DavinciUsageService
     }
 
 
+    public function userHoursSavedChart($user = null)
+    {
+        $user_id = (is_null($user)) ? Auth::user()->id : $user;
+
+        $users = Content::select(DB::raw("sum(words) as data"), DB::raw("MONTH(created_at) month"))
+                ->whereYear('created_at', $this->year)
+                ->where('user_id', $user_id)
+                ->groupBy('month')
+                ->get()->toArray();  
+        
+        $data = [];
+
+        for($i = 1; $i <= 12; $i++) {
+            $data[$i] = 0;
+        }
+
+        foreach ($users as $row) {			            
+            $month = $row['month'];
+            $data[$month] = intval($row['data']);
+        }
+        
+        return $data;
+    }
+
+
     /**
      * Chart data - total usage during current year split by month by user id
      */
@@ -680,4 +705,150 @@ class DavinciUsageService
         return $data;
     }
 
+
+    # MODEL USAGE
+    #=================================================================
+    public function gpt3TurboWords($user = null)
+    {
+        $user_id = (is_null($user)) ? Auth::user()->id : $user;
+        $total_words = Content::select(DB::raw("sum(tokens) as data"))
+                ->where('model', 'gpt-3.5-turbo-0125')
+                ->get();          
+        return $total_words[0]['data'];
+    }
+
+    public function gpt3TurboTasks($user = null)
+    {
+        $user_id = (is_null($user)) ? Auth::user()->id : $user;
+        $total_words = Content::select(DB::raw("count(id) as data"))
+                ->where('model', 'gpt-3.5-turbo-0125')
+                ->get();          
+        return $total_words[0]['data'];
+    }
+
+    public function gpt4Words($user = null)
+    {
+        $user_id = (is_null($user)) ? Auth::user()->id : $user;
+        $total_words = Content::select(DB::raw("sum(tokens) as data"))
+                ->where('model', 'gpt-4')
+                ->get();          
+        return $total_words[0]['data'];
+    }
+
+    public function gpt4Tasks($user = null)
+    {
+        $user_id = (is_null($user)) ? Auth::user()->id : $user;
+        $total_words = Content::select(DB::raw("count(id) as data"))
+                ->where('model', 'gpt-4')
+                ->get();          
+        return $total_words[0]['data'];
+    }
+
+    public function gpt4oWords($user = null)
+    {
+        $user_id = (is_null($user)) ? Auth::user()->id : $user;
+        $total_words = Content::select(DB::raw("sum(tokens) as data"))
+                ->where('model', 'gpt-4o')
+                ->get();          
+        return $total_words[0]['data'];
+    }
+
+    public function gpt4oTasks($user = null)
+    {
+        $user_id = (is_null($user)) ? Auth::user()->id : $user;
+        $total_words = Content::select(DB::raw("count(id) as data"))
+                ->where('model', 'gpt-4o')
+                ->get();          
+        return $total_words[0]['data'];
+    }
+
+    public function gpt4TurboWords($user = null)
+    {
+        $user_id = (is_null($user)) ? Auth::user()->id : $user;
+        $total_words = Content::select(DB::raw("sum(tokens) as data"))
+                ->where('model', 'gpt-4-0125-preview')
+                ->get();          
+        return $total_words[0]['data'];
+    }
+
+    public function gpt4TurboTasks($user = null)
+    {
+        $user_id = (is_null($user)) ? Auth::user()->id : $user;
+        $total_words = Content::select(DB::raw("count(id) as data"))
+                ->where('model', 'gpt-4-0125-preview')
+                ->get();          
+        return $total_words[0]['data'];
+    }
+
+    public function opusWords($user = null)
+    {
+        $user_id = (is_null($user)) ? Auth::user()->id : $user;
+        $total_words = Content::select(DB::raw("sum(tokens) as data"))
+                ->where('model', 'claude-3-opus-20240229')
+                ->get();          
+        return $total_words[0]['data'];
+    }
+
+    public function opusTasks($user = null)
+    {
+        $user_id = (is_null($user)) ? Auth::user()->id : $user;
+        $total_words = Content::select(DB::raw("count(id) as data"))
+                ->where('model', 'claude-3-opus-20240229')
+                ->get();          
+        return $total_words[0]['data'];
+    }
+
+    public function sonnetWords($user = null)
+    {
+        $user_id = (is_null($user)) ? Auth::user()->id : $user;
+        $total_words = Content::select(DB::raw("sum(tokens) as data"))
+                ->where('model', 'claude-3-sonnet-20240229')
+                ->get();          
+        return $total_words[0]['data'];
+    }
+
+    public function sonnetTasks($user = null)
+    {
+        $user_id = (is_null($user)) ? Auth::user()->id : $user;
+        $total_words = Content::select(DB::raw("count(id) as data"))
+                ->where('model', 'claude-3-sonnet-20240229')
+                ->get();          
+        return $total_words[0]['data'];
+    }
+
+    public function haikuWords($user = null)
+    {
+        $user_id = (is_null($user)) ? Auth::user()->id : $user;
+        $total_words = Content::select(DB::raw("sum(tokens) as data"))
+                ->where('model', 'claude-3-haiku-20240307')
+                ->get();          
+        return $total_words[0]['data'];
+    }
+
+    public function haikuTasks($user = null)
+    {
+        $user_id = (is_null($user)) ? Auth::user()->id : $user;
+        $total_words = Content::select(DB::raw("count(id) as data"))
+                ->where('model', 'claude-3-haiku-20240307')
+                ->get();          
+        return $total_words[0]['data'];
+    }
+
+    public function geminiWords($user = null)
+    {
+        $user_id = (is_null($user)) ? Auth::user()->id : $user;
+        $total_words = Content::select(DB::raw("sum(tokens) as data"))
+                ->where('model', 'gemini_pro')
+                ->get();          
+        return $total_words[0]['data'];
+    }
+
+    public function geminiTasks($user = null)
+    {
+        $user_id = (is_null($user)) ? Auth::user()->id : $user;
+        $total_words = Content::select(DB::raw("count(id) as data"))
+                ->where('model', 'gemini_pro')
+                ->get();          
+        return $total_words[0]['data'];
+    }
 }

@@ -15,10 +15,10 @@
 						<h3 class="card-title mb-3 ml-2 fs-20 super-strong"><i class="fa-solid fa-microchip-ai mr-2 text-primary"></i>{{ __('AI Writer') }}</h3>
 						<h6 class="text-muted mb-3 ml-2">{{ __('Seeking that perfect content? Look no further! Get ready to explore our fantastic lineup of templates') }}</h6>
 						@if (config('settings.custom_templates') == 'anyone')
-							<a href="{{ route('user.templates.custom') }}" class="btn btn-primary ripple" id="create-ai-button" style="text-transform: none;">{{ __('Create Custom Template') }}</a>
+							<a href="{{ route('user.templates.custom') }}" class="btn btn-primary ripple rtl-main-button" id="create-ai-button" style="text-transform: none;">{{ __('Create Custom Template') }}</a>
 						@else
 							@if ($check)
-								<a href="{{ route('user.templates.custom') }}" class="btn btn-primary ripple" id="create-ai-button" style="text-transform: none;">{{ __('Create Custom Template') }}</a>
+								<a href="{{ route('user.templates.custom') }}" class="btn btn-primary ripple rtl-main-button" id="create-ai-button" style="text-transform: none;">{{ __('Create Custom Template') }}</a>
 							@endif	
 						@endif											
 						<div class="search-template">

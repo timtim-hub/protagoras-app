@@ -49,6 +49,8 @@ class GlobalController extends Controller
 
         $this->storeSettings('GOOGLE_ANALYTICS_ENABLE', request('enable-analytics'));
         $this->storeSettings('GOOGLE_ANALYTICS_ID', request('google-analytics'));
+        $this->storeSettings('GOOGLE_ANALYTICS_PROPERTY_ID', request('google-property'));
+        $this->storeSettings('GOOGLE_SERVICE_ACCOUNT_CREDENTIALS', request('google-credentials'));
 
         if (request('site-name')) {
             $newName = "'". request('site-name') . "'";

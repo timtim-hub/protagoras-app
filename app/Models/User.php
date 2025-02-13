@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Zorb\Promocodes\Traits\AppliesPromocode;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -16,6 +17,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use Notifiable; 
     use HasRoles; 
     use AppliesPromocode;
+    use HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -57,6 +59,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'member_use_credits_speech',
         'member_use_credits_image',
         'personal_openai_key',
+        'personal_claude_key',
+        'personal_gemini_key',
         'personal_sd_key',
         'hidden_plan',
         'used_free_tier',
@@ -113,6 +117,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'gpt_3_turbo_credits',
         'gpt_4_turbo_credits',
         'gpt_4_credits',
+        'gpt_4o_credits',
         'claude_3_opus_credits',
         'claude_3_sonnet_credits',
         'claude_3_haiku_credits',
@@ -120,6 +125,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'gpt_3_turbo_credits_prepaid',
         'gpt_4_turbo_credits_prepaid',
         'gpt_4_credits_prepaid',
+        'gpt_4o_credits_prepaid',
         'claude_3_opus_credits_prepaid',
         'claude_3_sonnet_credits_prepaid',
         'claude_3_haiku_credits_prepaid',

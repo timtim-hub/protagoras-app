@@ -165,7 +165,7 @@
 							
 				
 							<div class="col-md-12 col-sm-12 text-center mb-2">
-								<button type="submit" class="btn btn-primary ripple pl-8 pr-8">{{ __('Create') }}</button>	
+								<button type="submit" class="btn btn-primary ripple pl-8 pr-8">{{ __('Update') }}</button>	
 							</div>	
 							
 						</div>

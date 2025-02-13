@@ -288,6 +288,7 @@ class InstallController extends Controller
             $user->gpt_3_turbo_credits = 100000;
             $user->gpt_4_turbo_credits = 100000;
             $user->gpt_4_credits = 100000;
+            $user->gpt_4o_credits = 100000;
             $user->fine_tune_credits =  100000;
             $user->claude_3_opus_credits =  100000;
             $user->claude_3_sonnet_credits =  100000;

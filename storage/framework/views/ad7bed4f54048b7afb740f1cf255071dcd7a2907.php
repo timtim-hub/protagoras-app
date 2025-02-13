@@ -15,7 +15,8 @@
 	}
 ?>
 <!DOCTYPE html>
-<html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>">
+<html lang="<?php echo e(LaravelLocalization::getCurrentLocale()); ?>"
+dir="<?php echo e(LaravelLocalization::getCurrentLocaleDirection()); ?>">
 	<head>
 		<!-- METADATA -->
 		<meta charset="UTF-8">
@@ -34,7 +35,7 @@
 
 	</head>
 
-	<body class="app sidebar-mini <?php echo $themeClass; ?>">
+	<body class="app sidebar-mini <?php echo $themeClass; ?> <?php echo e(LaravelLocalization::getCurrentLocaleDirection()); ?>">
 
 		<div id="loader-line" class="hidden"></div>
 

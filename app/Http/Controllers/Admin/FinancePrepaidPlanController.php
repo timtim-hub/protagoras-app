@@ -3,12 +3,21 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\LicenseController;
 use Illuminate\Http\Request;
 use App\Models\PrepaidPlan;
 use DataTables;
+use Carbon\Carbon;
 
 class FinancePrepaidPlanController extends Controller
 {
+    private $api;
+
+    public function __construct()
+    {
+        $this->api = new LicenseController();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -65,7 +74,11 @@ class FinancePrepaidPlanController extends Controller
                     
         }
 
-        return view('admin.finance.plans.prepaid.index');
+        $verify = $this->api->verify_license();
+        $type = (isset($verify['type'])) ? $verify['type'] : '';
+        $status = (Carbon::parse($verify['date'])->gte(Carbon::parse('2024-07-01'))) ? true : false;
+
+        return view('admin.finance.plans.prepaid.index', compact('type', 'status'));
     }
 
 
@@ -76,7 +89,11 @@ class FinancePrepaidPlanController extends Controller
      */
     public function create()
     {
-        return view('admin.finance.plans.prepaid.create');
+        $verify = $this->api->verify_license();
+        $type = (isset($verify['type'])) ? $verify['type'] : '';
+        $status = (Carbon::parse($verify['date'])->gte(Carbon::parse('2024-07-01'))) ? true : false;
+
+        return view('admin.finance.plans.prepaid.create', compact('type', 'status'));
     }
 
 
@@ -107,6 +124,7 @@ class FinancePrepaidPlanController extends Controller
             'gpt_3_turbo_credits_prepaid' => request('gpt_3_turbo'),
             'gpt_4_turbo_credits_prepaid' => request('gpt_4_turbo'),
             'gpt_4_credits_prepaid' => request('gpt_4'),
+            'gpt_4o_credits_prepaid' => request('gpt_4o'),
             'claude_3_opus_credits_prepaid' => request('claude_3_opus'),
             'claude_3_sonnet_credits_prepaid' => request('claude_3_sonnet'),
             'claude_3_haiku_credits_prepaid' => request('claude_3_haiku'),
@@ -133,7 +151,11 @@ class FinancePrepaidPlanController extends Controller
      */
     public function show(PrepaidPlan $id)
     {
-        return view('admin.finance.plans.prepaid.show', compact('id'));
+        $verify = $this->api->verify_license();
+        $type = (isset($verify['type'])) ? $verify['type'] : '';
+        $status = (Carbon::parse($verify['date'])->gte(Carbon::parse('2024-07-01'))) ? true : false;
+
+        return view('admin.finance.plans.prepaid.show', compact('id', 'type', 'status'));
     }
 
 
@@ -145,7 +167,11 @@ class FinancePrepaidPlanController extends Controller
      */
     public function edit(PrepaidPlan $id)
     {
-        return view('admin.finance.plans.prepaid.edit', compact('id'));
+        $verify = $this->api->verify_license();
+        $type = (isset($verify['type'])) ? $verify['type'] : '';
+        $status = (Carbon::parse($verify['date'])->gte(Carbon::parse('2024-07-01'))) ? true : false;
+
+        return view('admin.finance.plans.prepaid.edit', compact('id', 'type', 'status'));
     }
 
 
@@ -173,6 +199,7 @@ class FinancePrepaidPlanController extends Controller
             'gpt_3_turbo_credits_prepaid' => request('gpt_3_turbo'),
             'gpt_4_turbo_credits_prepaid' => request('gpt_4_turbo'),
             'gpt_4_credits_prepaid' => request('gpt_4'),
+            'gpt_4o_credits_prepaid' => request('gpt_4o'),
             'claude_3_opus_credits_prepaid' => request('claude_3_opus'),
             'claude_3_sonnet_credits_prepaid' => request('claude_3_sonnet'),
             'claude_3_haiku_credits_prepaid' => request('claude_3_haiku'),

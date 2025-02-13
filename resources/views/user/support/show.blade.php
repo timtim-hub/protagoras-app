@@ -81,8 +81,8 @@
 							<div class="col-12 text-center">
 								<!-- SAVE CHANGES ACTION BUTTON -->
 								<div class="border-0 mb-2">
-									<a href="{{ route('user.support') }}" class="btn btn-cancel mr-2 pl-7 pr-7">{{ __('Return') }}</a>
-									<button type="submit" class="btn btn-primary pl-7 pr-7">{{ __('Reply') }}</button>	
+									<a href="{{ route('user.support') }}" class="btn btn-cancel ripple mr-2 pl-7 pr-7">{{ __('Return') }}</a>
+									<button type="submit" class="btn btn-primary ripple pl-7 pr-7">{{ __('Reply') }}</button>	
 								</div>
 							</div>							
 						</div>	

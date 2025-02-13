@@ -115,7 +115,7 @@
 										</div>			
 									</div>
 									@foreach ($favorite_templates as $template)						
-										<a class="dropdown-item d-flex" href="#"  id="{{ $template->template_code}}" type="{{ $template->type }}" name="{{ $template->name }}" icon="{{ $template->icon }}">
+										<a class="dropdown-item d-flex" href="#"  id="{{ $template->template_code}}" type="{{ $template->type }}" name="{{ __($template->name) }}" icon="{{ $template->icon }}">
 											<span class="dropdown-item-icon mr-3 ml-1">{!! $template->icon !!}</span>
 											<i class="fa-solid fa-star" data-tippy-content="{{ __('Favorite Template') }}"></i>
 											<h6 class="dropdown-item-title fs-14 font-weight-bold">{{ __($template->name) }}</h6>	
@@ -131,7 +131,7 @@
 										</a>												
 									@endforeach	
 									@foreach ($favorite_custom_templates as $template)						
-										<a class="dropdown-item d-flex" href="#"  id="{{ $template->template_code}}" type="{{ $template->type }}" name="{{ $template->name }}" icon="{{ $template->icon }}">
+										<a class="dropdown-item d-flex" href="#"  id="{{ $template->template_code}}" type="{{ $template->type }}" name="{{ __($template->name) }}" icon="{{ $template->icon }}">
 											<span class="dropdown-item-icon mr-3 ml-1">{!! $template->icon !!}</span>
 											<i class="fa-solid fa-star" data-tippy-content="{{ __('Favorite Template') }}"></i>
 											<h6 class="dropdown-item-title fs-14 font-weight-bold">{{ __($template->name) }}</h6>
@@ -147,7 +147,7 @@
 										</a>												
 									@endforeach
 									@foreach ($other_templates as $template)						
-										<a class="dropdown-item d-flex" href="#"  id="{{ $template->template_code}}" type="{{ $template->type }}" name="{{ $template->name }}" icon="{{ $template->icon }}">
+										<a class="dropdown-item d-flex" href="#"  id="{{ $template->template_code}}" type="{{ $template->type }}" name="{{ __($template->name) }}" icon="{{ $template->icon }}">
 											<span class="dropdown-item-icon mr-3 ml-1">{!! $template->icon !!}</span>
 											<h6 class="dropdown-item-title fs-14 font-weight-bold">{{ __($template->name) }}</h6>
 											@if($template->package == 'professional') 
@@ -162,7 +162,7 @@
 										</a>												
 									@endforeach	
 									@foreach ($custom_templates as $template)						
-										<a class="dropdown-item d-flex" href="#"  id="{{ $template->template_code}}" type="{{ $template->type }}" name="{{ $template->name }}" icon="{{ $template->icon }}">
+										<a class="dropdown-item d-flex" href="#"  id="{{ $template->template_code}}" type="{{ $template->type }}" name="{{ __($template->name) }}" icon="{{ $template->icon }}">
 											<span class="dropdown-item-icon mr-3 ml-1">{!! $template->icon !!}</span>
 											<h6 class="dropdown-item-title fs-14 font-weight-bold">{{ __($template->name) }}</h6>
 											@if($template->package == 'professional') 
@@ -183,6 +183,10 @@
 						<form id="openai-form" action="" method="post" enctype="multipart/form-data">
 							@csrf
 							<div id="single-template-view">
+								<div class="text-left mb-4" id="balance-status">
+									<x-balance-template />
+								</div>								
+
 								<div class="single-template-options">
 									<div class="form-group mb-5">	
 										<h6 class="fs-11 text-muted mb-2 font-weight-semibold">{{ __('Language') }}</h6>								
@@ -205,25 +209,7 @@
 									
 									<div class="form-group mb-5">	
 										<h6 class="fs-11 mb-2 text-muted font-weight-semibold">{{ __('AI Model') }}</h6>								
-										<select id="model" name="model" class="form-select" >
-											<option value="gpt-3.5-turbo-0125">{{ __('GPT 3.5 Turbo') }}</option>		
-											@foreach ($models as $model)													
-												@if (trim($model) == 'gpt-4')
-													<option value="{{ trim($model) }}">{{ __('GPT 4') }}</option>
-												@elseif (trim($model) == 'gpt-4-0125-preview')
-													<option value="{{ trim($model) }}">{{ __('GPT 4 Turbo') }}</option>
-												@elseif (trim($model) == 'gpt-4-turbo-2024-04-09')
-													<option value="{{ trim($model) }}">{{ __('GPT 4 Turbo with Vision') }}</option>
-												@else
-													@foreach ($fine_tunes as $fine_tune)
-														@if (trim($model) == $fine_tune->model)
-															<option value="{{ trim($model) }}">{{ $fine_tune->description }} ({{ __('Fine Tune') }})</option>
-														@endif
-													@endforeach
-												@endif
-												
-											@endforeach									
-										</select>	
+										<x-openai-models-template />	
 									</div>									
 									
 									<div class="form-group mb-5">
@@ -311,7 +297,6 @@
 								{{-- <a class="dropdown-item" id="export-pdf" onclick="exportPDFEditor();"><i class="fa-sharp fa-solid fa-file-pdf fs-13 text-muted mr-2"></i>{{ __('PDF Document') }}</a> --}}
 							</div>
 						</div>
-						{{-- <a class="btn btn-primary mt-4" id="wordpress" href="#">{{ __('Push to WordPress') }}</a> --}}
 					</div>
 
 					<div class="templates-wrapper pt-0">						
@@ -319,9 +304,9 @@
 					</div>
 				</div>
 			</div>
-		</div>
-	
+		</div>	
 </div>
+
 @endsection
 
 @section('js')
@@ -4141,34 +4126,6 @@
 		return res
 	}
 
-	$('#wordpress').on('click', function(e) {
-
-		let icon;
-		let formData = new FormData();
-		formData.append("code", active_template);
-
-		$.ajax({
-			headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-			method: 'post',
-			url: '/user/smart-editor/wordpress',
-			data: formData,
-			processData: false,
-			contentType: false,
-			success: function (data) {
-
-				if (data['status'] == 'success') {
-												
-				} else {
-					toastr.error('{{ __('There as an issue with setting favorite status for this template') }}');
-				}      
-			},
-			error: function(data) {
-				Swal.fire('Oops...','Something went wrong!', 'error')
-			}
-		})
-		
-	});
-
 	$('#show-left-menu').on('click', function() {
 		$('#left-tools-top-box').toggleClass('responsive-left-column');
 		$('#main-templates-container').toggleClass('responsive-left-column');
@@ -4193,6 +4150,26 @@
 		$('#meta-container-editor').toggleClass('responsive-right-column');
 		$('#meta-container-editor').toggleClass('show-menu-width');
 	});
+
+	function updateModel() {
+		let model = document.getElementById("model").value;
+
+		$.ajax({
+			headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+			method: 'POST',
+			url: '/user/chat/model',
+			data: { 'model': model},
+			success: function (data) {					
+				let balance = document.getElementById('balance-number');
+				let model = document.getElementById('model-name');
+				balance.innerHTML =  data['balance'];
+				model.innerHTML =  data['model'];
+
+			},
+			error: function(data) {
+			}
+		});
+	}
 
 </script>
 @endsection

@@ -31,6 +31,7 @@ class PrepaidPlan extends Model
         'gpt_3_turbo_credits_prepaid',
         'gpt_4_turbo_credits_prepaid',
         'gpt_4_credits_prepaid',
+        'gpt_4o_credits_prepaid',
         'claude_3_opus_credits_prepaid',
         'claude_3_sonnet_credits_prepaid',
         'claude_3_haiku_credits_prepaid',

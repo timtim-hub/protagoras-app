@@ -22,52 +22,126 @@
 @section('content')
 	<!-- USER PROFILE PAGE -->
 	<div class="row">
-
-		<div class="col-lg-12 col-md-12">
+		<div class="col-lg-5 col-md-12">
 			<div class="card border-0">
-				<div class="card-body pt-5 pb-5">
-					<div class="row mb-6" id="user-dashboard-background">
-						<div class="col-lg-4 col-md-4 col-sm-12">
-							<h4 class="mb-2 mt-2 font-weight-800 fs-24">{{ __('Welcome') }}, {{ auth()->user()->name }}</h4>
+				<div class="card-body pt-4 pb-4 pl-6 pr-6 custom-banner-bg">
+					<div class="custom-banner-bg-image"></div>
+					<div class="row">
+						<div class="col-md-8 col-sm-12">
+							<span class="fs-10"><i class="fa-solid fa-calendar mr-2"></i> {{ now()->format('M d, Y H:i A'); }}</span>
+							<h4 class="mb-4 mt-2 font-weight-800 fs-24">{{ __('Welcome') }}, {{ auth()->user()->name }}</h4>
+							<span class="fs-10 custom-span">{{ __('Current Plan') }}</span>
 							@if (is_null(auth()->user()->plan_id))
-								<h6 class="fs-12">{{ __('Your account is currently part of our') }} <span class=" fs-10 btn btn-cancel-black user-dashboard-button ml-2 pl-5 pr-5"><i class="fa-sharp fa-solid fa-gift text-yellow mr-2"></i>{{ __('Free Trial Plan') }}</span></h6>
-								<h6 class="fs-12">{{ __('Subscribe to one of our plans to get access to all features and benefits') }}</h6>
-								<a href="{{ route('user.plans') }}" class="btn btn-primary yellow mt-2"><i class="fa-solid fa-box-check mr-2"></i>{{ __('Upgrade Now') }}</a>
+								<h4 class="mb-2 mt-2 font-weight-800 fs-24">{{ __('No Active Plan') }}</h4>						
+								<h6 class="fs-12">{{ __('You do not have an active subscription') }}</h6>
 							@else
-								<h6 class="fs-12">{{ __('You are currently subscribed to our') }} <span class=" fs-10 btn btn-primary yellow pl-5 ml-2 pr-5"><i class="fa-sharp fa-solid fa-gem mr-2"></i>{{ $subscription }} {{ __('Plan') }}</span></h6>
+								<h4 class="mb-2 mt-2 font-weight-800 fs-24">{{ $subscription }} {{ __('Plan') }}</h4>
 							@endif
 						</div>
-						<div class="col-lg-8 col-md-8 col-sm-12">
-							<div class="row text-center">
-								<div class="col-lg col-md-6 col-sm-6">
-									<h6 class="fs-12 mt-3 font-weight-bold">{{ __('GPT 3.5 Turbo ') }} {{ __('Words Left') }}</h6>
-									<h4 class="mb-3 font-weight-800 text-primary fs-20">@if(auth()->user()->gpt_3_turbo_credits == -1) {{ __('Unlimited') }} @else {{ number_format(auth()->user()->gpt_3_turbo_credits + auth()->user()->gpt_3_turbo_credits_prepaid) }} @endif</h4>										
-								</div>
-								@role('user|subscriber|admin')
-                    				@if (config('settings.image_feature_user') == 'allow')
-										<div class="col-lg col-md-6 col-sm-6">
-											<h6 class="fs-12 mt-3 font-weight-bold">{{ __('DE/SD Images Left') }}</h6>
-											<h4 class="mb-3 font-weight-800 text-primary fs-20">@if(auth()->user()->available_dalle_images == -1) {{ __('Unlimited') }} @else {{ number_format(auth()->user()->available_dalle_images + auth()->user()->available_dalle_images_prepaid + auth()->user()->available_sd_images + auth()->user()->available_sd_images_prepaid) }} @endif</h4>										
-										</div>	
-									@endif
-								@endrole	
-								@role('user|subscriber|admin')
-                    				@if (config('settings.voiceover_feature_user') == 'allow')				
-										<div class="col-lg col-md-6 col-sm-6">
-											<h6 class="fs-12 mt-3 font-weight-bold">{{ __('Characters Left') }}</h6>
-											<h4 class="mb-3 font-weight-800 text-primary fs-20">@if(auth()->user()->available_chars == -1) {{ __('Unlimited') }} @else {{ number_format(auth()->user()->available_chars + auth()->user()->available_chars_prepaid) }} @endif</h4>										
-										</div>
-									@endif
-								@endrole
-								@role('user|subscriber|admin')
-                    				@if (config('settings.whisper_feature_user') == 'allow')
-										<div class="col-lg col-md-6 col-sm-6">
-											<h6 class="fs-12 mt-3 font-weight-bold">{{ __('Minutes Left') }}</h6>
-											<h4 class="mb-3 font-weight-800 text-primary fs-20">@if(auth()->user()->available_minutes == -1) {{ __('Unlimited') }} @else {{ number_format(auth()->user()->available_minutes + auth()->user()->available_minutes_prepaid) }} @endif</h4>										
-										</div>
-									@endif
-								@endrole
+						<div class="col-md-4 col-sm-12 d-flex align-items-end justify-content-end">
+							<div class="text-center">
+								@if (!is_null($price))
+									@if ($term == 'lifetime')
+										<h4 class="mb-2 mt-2 font-weight-bold fs-18">{{ __('Lifetime Plan') }}</h4>		
+									@else
+										<h4 class="mb-2 mt-2 font-weight-bold fs-18">{!! config('payment.default_system_currency_symbol') !!}{{ $price }} / @if ($term == 'monthly'){{ __('month') }} @else {{ __('year') }} @endif</h4>		
+									@endif									
+								@else
+									<h4 class="mb-2 mt-2 font-weight-bold fs-18">{!! config('payment.default_system_currency_symbol') !!}0 / {{ __('month') }}</h4>
+								@endif								
+								<a href="{{ route('user.plans') }}" class="btn btn-primary yellow mt-2 custom-pricing-plan-button mb-2">{{ __('See Pricing Plans') }} <i class="fa-regular fa-chevron-right fs-8 ml-1"></i></a>
 							</div>
+							
+						</div>
+					</div>
+					
+					
+					
+				</div>
+			</div>
+		</div>
+
+		<div class="col-lg col-md-12 d-flex align-items-stretch">
+			<div class="card border-0">
+				<div class="card-body p-6 align-items-center">
+					<div class="row" style="height: 100%">
+						<div class="col-md-6 col-sm-12 text-left mt-auto">
+							<h6 class="fs-14 text-muted"><i class="fa-solid fa-badge-dollar mr-2"></i>{{ __('Your balance') }}</h6>
+							<h4 class="mt-4 mb-5 font-weight-bold text-muted fs-30">{!! config('payment.default_system_currency_symbol') !!}{{ number_format(auth()->user()->balance) }}</h4>
+							<h6 class="fs-14 text-muted">{{ __('Current referral earnings') }}</h6>	
+						</div>
+						<div class="col-md-6 col-sm-12 d-flex align-items-end justify-content-end">
+							<a href="{{ route('user.referral') }}" class="btn btn-primary yellow mt-2 mb-0 pl-6 pr-6" style="text-transform: none;">{{ __('Invite & Earn') }} <i class="fa-regular fa-chevron-right fs-8 ml-1"></i></a>
+						</div>
+					</div>		
+				</div>
+			</div>
+		</div>
+
+		<div class="col-lg col-md-12 d-flex align-items-stretch">
+			<div class="card border-0">
+				<div class="card-body pr-0 pb-0">
+					<div class="row" style="height: 100%">
+						<div class="col-md-6 col-sm-12 justify-content-center mt-auto mb-auto">
+							<h6 class="fs-14 text-muted"><i class="fa-solid fa-clock mr-2"></i>{{ __('Time Saved') }}</h6>
+							<h4 class="mt-4 mb-5 font-weight-bold text-muted fs-30">{{ number_format($total_words) }}</h4>
+							<h6 class="fs-14 text-muted">{{ __('Total hours you saved') }}</h6>
+						</div>
+						<div class="col-md-6 col-sm-12 d-flex align-items-end justify-content-end" style="margin-bottom: -5px">
+							<canvas id="hoursSavedChart" style="max-height: 130px"></canvas>
+						</div>
+					</div>					
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+
+		<div class="col-lg-12 col-md-12 mt-3">
+			<div class="card border-0">
+				<div class="card-body pt-5 pb-5 pl-6 pr-6">
+					<div class="row text-center mb-4">
+						<div class="col-lg col-md-6 col-sm-6 dashboard-border-right mt-auto mb-auto">
+							<h6 class="fs-12 mt-3 font-weight-bold">{{ App\Services\HelperService::mainPlanModel()}} {{ __('Words Left') }}</h6>
+							<h4 class="mb-0 font-weight-800 text-primary fs-20">{{ App\Services\HelperService::mainPlanBalance()}}</h4>
+							<div class="view-credits mb-3"><a class=" fs-11 text-muted" href="javascript:void(0)" id="view-credits" data-bs-toggle="modal" data-bs-target="#creditsModel"> {{ __('View All Credits') }}</a></div> 										
+						</div>
+						@role('user|subscriber|admin')
+							@if (config('settings.image_feature_user') == 'allow')
+								<div class="col-lg col-md-6 col-sm-6 dashboard-border-right mt-auto mb-auto">
+									<h6 class="fs-12 mt-3 font-weight-bold">{{ __('DE/SD Images Left') }}</h6>
+									<h4 class="mb-3 font-weight-800 text-primary fs-20">@if(auth()->user()->available_dalle_images == -1) {{ __('Unlimited') }} @else {{ number_format(auth()->user()->available_dalle_images + auth()->user()->available_dalle_images_prepaid + auth()->user()->available_sd_images + auth()->user()->available_sd_images_prepaid) }} @endif</h4>										
+								</div>	
+							@endif
+						@endrole	
+						@role('user|subscriber|admin')
+							@if (config('settings.voiceover_feature_user') == 'allow')				
+								<div class="col-lg col-md-6 col-sm-6 dashboard-border-right mt-auto mb-auto">
+									<h6 class="fs-12 mt-3 font-weight-bold">{{ __('Characters Left') }}</h6>
+									<h4 class="mb-3 font-weight-800 text-primary fs-20">@if(auth()->user()->available_chars == -1) {{ __('Unlimited') }} @else {{ number_format(auth()->user()->available_chars + auth()->user()->available_chars_prepaid) }} @endif</h4>										
+								</div>
+							@endif
+						@endrole
+						@role('user|subscriber|admin')
+							@if (config('settings.whisper_feature_user') == 'allow')
+								<div class="col-lg col-md-6 col-sm-6 mt-auto mb-auto">
+									<h6 class="fs-12 mt-3 font-weight-bold">{{ __('Minutes Left') }}</h6>
+									<h4 class="mb-3 font-weight-800 text-primary fs-20">@if(auth()->user()->available_minutes == -1) {{ __('Unlimited') }} @else {{ number_format(auth()->user()->available_minutes + auth()->user()->available_minutes_prepaid) }} @endif</h4>										
+								</div>
+							@endif
+						@endrole
+					</div>
+
+					<div class="row mb-6">
+						<div class="col-md-12">
+							<h6 class="fs-12 font-weight-semibold text-muted">{{ __('Your Documents') }}</h6>
+							<div class="progress">
+								<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: {{ $content_documents * 100  }}%; border-top-left-radius: 10px; border-bottom-left-radius: 10px" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+								<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: {{ $content_images * 100  }}%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+								<div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" style="width: {{ $content_voiceovers * 100  }}%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+								<div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width: {{ $content_transcripts * 100  }}%; border-top-right-radius: 10px; border-bottom-right-radius: 10px" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+							  </div>
 						</div>
 					</div>
 					
@@ -76,11 +150,11 @@
 							<div class="card overflow-hidden user-dashboard-special-box">
 								<div class="card-body d-flex">
 									<div class="usage-info w-100">
-										<p class=" mb-3 fs-12 font-weight-bold">{{ __('Documents Created') }}</p>
-										<h2 class="mb-2 number-font fs-16">{{ number_format($data['contents']) }} <span class="text-muted fs-16">{{ __('contents') }}</span></h2>
+										<p class=" mb-3 fs-12 font-weight-bold">{{ __('Words Generated') }}</p>
+										<h2 class="mb-2 fs-14 font-weight-semibold text-muted">{{ number_format($data['words']) }} <span class="text-muted fs-14">{{ __('words') }}</span></h2>
 									</div>
-									<div class="usage-icon text-right">
-										<i class="fa-solid fa-folder-grid"></i>
+									<div class="usage-icon-dashboard text-muted text-right">
+										<i class="fa-solid fa-microchip-ai"></i>
 									</div>
 								</div>
 							</div>
@@ -89,15 +163,15 @@
 							<div class="card overflow-hidden user-dashboard-special-box">
 								<div class="card-body d-flex">
 									<div class="usage-info w-100">
-										<p class=" mb-3 fs-12 font-weight-bold">{{ __('Words Generated') }}</p>
-										<h2 class="mb-2 number-font fs-16">{{ number_format($data['words']) }} <span class="text-muted fs-16">{{ __('words') }}</span></h2>
+										<p class=" mb-3 fs-12 font-weight-bold">{{ __('Documents Saved') }}</p>
+										<h2 class="mb-2 fs-14 font-weight-semibold text-muted">{{ number_format($data['documents']) }} <span class="text-muted fs-14">{{ __('documents') }}</span></h2>
 									</div>
-									<div class="usage-icon text-right">
-										<i class="fa-solid fa-microchip-ai"></i>
+									<div class="usage-icon-dashboard text-primary text-right">
+										<i class="fa-solid fa-folder-grid"></i>
 									</div>
 								</div>
 							</div>
-						</div>
+						</div>						
 						@role('user|subscriber|admin')
                     		@if (config('settings.image_feature_user') == 'allow')
 								<div class="col-lg col-md-4 col-sm-12">
@@ -105,27 +179,10 @@
 										<div class="card-body d-flex">
 											<div class="usage-info w-100">
 												<p class=" mb-3 fs-12 font-weight-bold">{{ __('Images Created') }}</p>
-												<h2 class="mb-2 number-font fs-16">{{ number_format($data['images']) }} <span class="text-muted fs-16">{{ __('images') }}</span></h2>
+												<h2 class="mb-2 fs-14 font-weight-semibold text-muted">{{ number_format($data['images']) }} <span class="text-muted fs-14">{{ __('images') }}</span></h2>
 											</div>
-											<div class="usage-icon text-right">
+											<div class="usage-icon-dashboard text-success text-right">
 												<i class="fa-solid fa-image-landscape"></i>
-											</div>
-										</div>
-									</div>
-								</div>
-							@endif
-						@endrole
-						@role('user|subscriber|admin')
-           	 				@if (config('settings.code_feature_user') == 'allow')
-								<div class="col-lg col-md-4 col-sm-12">
-									<div class="card overflow-hidden user-dashboard-special-box">
-										<div class="card-body d-flex">
-											<div class="usage-info w-100">
-												<p class=" mb-3 fs-12 font-weight-bold">{{ __('Codes Generated') }}</p>
-												<h2 class="mb-2 number-font fs-16">{{ number_format($data['codes']) }} <span class="text-muted fs-16">{{ __('codes') }}</span></h2>
-											</div>
-											<div class="usage-icon text-right">
-												<i class="fa-solid fa-square-code"></i>
 											</div>
 										</div>
 									</div>
@@ -139,9 +196,9 @@
 										<div class="card-body d-flex">
 											<div class="usage-info w-100">
 												<p class=" mb-3 fs-12 font-weight-bold">{{ __('Voiceover Tasks') }}</p>
-												<h2 class="mb-2 number-font fs-16">{{ number_format($data['synthesized']) }} <span class="text-muted fs-16">{{ __('tasks') }}</span></h2>
+												<h2 class="mb-2 fs-14 font-weight-semibold text-muted">{{ number_format($data['synthesized']) }} <span class="text-muted fs-14">{{ __('tasks') }}</span></h2>
 											</div>
-											<div class="usage-icon text-right">
+											<div class="usage-icon-dashboard text-yellow text-right">
 												<i class="fa-sharp fa-solid fa-waveform-lines"></i>
 											</div>
 										</div>
@@ -156,9 +213,9 @@
 										<div class="card-body d-flex">
 											<div class="usage-info w-100">
 												<p class=" mb-3 fs-12 font-weight-bold">{{ __('Audio Transcribed') }}</p>
-												<h2 class="mb-2 number-font fs-16">{{ number_format($data['transcribed']) }} <span class="text-muted fs-16">{{ __('audio files') }}</span></h2>
+												<h2 class="mb-2 fs-14 font-weight-semibold text-muted">{{ number_format($data['transcribed']) }} <span class="text-muted fs-14">{{ __('audio files') }}</span></h2>
 											</div>
-											<div class="usage-icon text-right">
+											<div class="usage-icon-dashboard text-danger text-right">
 												<i class="fa-sharp fa-solid fa-folder-music"></i>
 											</div>
 										</div>
@@ -171,98 +228,125 @@
 			</div>
 		</div>
 
-		@if (config('settings.chat_feature_user') == 'allow')
-			<div class="col-lg col-md-12 col-sm-12 mt-5">
-				<div class="card border-0" id="user-dashboard-panels">
-					<div class="card-header pt-4 pb-4 border-0">
-						<div class="mt-3">
-							<h3 class="card-title mb-2"><i class="fa-solid fa-stars mr-2 text-yellow"></i>{{ __('Favorite AI Chat Assistants') }}</h3>
-							<h6 class="text-muted">{{ __('Have your favorite AI chat assistants handy anytime you need them') }}</h6>
-						</div>
-					</div>
-					<div class="card-body pt-2 favorite-templates-panel">
-
-						@if ($chat_quantity)
-							<div class="row" id="templates-panel">
-
-								@foreach ($favorite_chats as $chat)
-									<div class="col-lg-6 col-md-6 col-sm-12" id="{{ $chat->chat_code }}">
-										<div class="chat-boxes text-center">
-											<a id="{{ $chat->chat_code }}" @if($chat->favorite) data-tippy-content="{{ __('Remove from favorite') }}" @else data-tippy-content="{{ __('Select as favorite') }}" @endif onclick="favoriteChatStatus(this.id)"><i id="{{ $chat->chat_code }}-icon" class="@if($chat->favorite) fa-solid fa-stars @else fa-regular fa-star @endif star"></i></a>
-											@if($chat->category == 'professional') 
-												<p class="fs-8 btn btn-pro"><i class="fa-sharp fa-solid fa-crown mr-2"></i>{{ __('Pro') }}</p> 
-											@elseif($chat->category == 'free')
-												<p class="fs-8 btn btn-free"><i class="fa-sharp fa-solid fa-gift mr-2"></i>{{ __('Free') }}</p> 
-											@elseif($chat->category == 'premium')
-												<p class="fs-8 btn btn-yellow"><i class="fa-sharp fa-solid fa-gem mr-2"></i>{{ __('Premium') }}</p> 
-											@endif
-											<div class="card @if($chat->category == 'professional') professional @elseif($chat->category == 'premium') premium @elseif($chat->favorite) favorite @else border-0 @endif" id="{{ $chat->chat_code }}-card" onclick="window.location.href='{{ url('user/chats') }}/{{ $chat->chat_code }}'">
-												<div class="card-body pt-3">
-													<div class="widget-user-image overflow-hidden mx-auto mt-3 mb-4"><img alt="User Avatar" class="rounded-circle" src="{{ URL::asset($chat->logo) }}"></div>
-													<div class="template-title">
-														<h6 class="mb-2 fs-15 number-font">{{ __($chat->name) }}</h6>
-													</div>
-													<div class="template-info">
-														<p class="fs-13 text-muted mb-2">{{ __($chat->sub_name) }}</p>
-													</div>							
-												</div>
-											</div>
-										</div>							
-									</div>
-								@endforeach
-
-							</div>
-						@else
-							<div class="row text-center mt-8">
-								<div class="col-sm-12">
-									<h6 class="text-muted">{{ __('To add AI chat assitant as your favorite ones, simply click on the start icon on desired') }} <a href="{{ route('user.chat') }}" class="text-primary internal-special-links font-weight-bold">{{ __('AI Chat Assistants') }}</a></h6>
-								</div>
-							</div>
-						@endif
-						
-					</div>
-				</div>
-			</div>
-		@endif
-
-
-		<div class="col-lg col-md-12 col-sm-12 mt-5">
-			<div class="card border-0" id="user-dashboard-panels">
+		<div class="col-lg col-md-12 col-sm-12 mt-3">
+			<div class="card border-0 pb-5" id="user-dashboard-panels">
 				<div class="card-header pt-4 pb-4 border-0">
 					<div class="mt-3">
-						<h3 class="card-title mb-2"><i class="fa-solid fa-stars mr-2 text-yellow"></i>{{ __('Favorite Templates') }}</h3>
-						<h6 class="text-muted">{{ __('Always have your top favorite templates handy whenever you need them') }}</h6>
+						<h3 class="card-title mb-2"><i class="fa-solid fa-message-captions mr-2 text-muted"></i>{{ __('Favorite AI Chat Assistants') }}</h3>
+						<h6 class="text-muted fs-13">{{ __('Have your favorite AI chat assistants handy anytime you need them') }}</h6>
+						<div class="btn-group dashboard-menu-button">
+							<button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" id="export" data-bs-display="static" aria-expanded="false"><i class="fa-solid fa-ellipsis  table-action-buttons table-action-buttons-big edit-action-button"></i></button>
+							<div class="dropdown-menu" aria-labelledby="export" data-popper-placement="bottom-start">								
+								<a class="dropdown-item" href="{{ route('user.chat') }}">{{ __('View All') }}</a>	
+							</div>
+						</div>
 					</div>
 				</div>
-				<div class="card-body pt-2 favorite-templates-panel">
+				<div class="card-body pt-2 favorite-dashboard-panel">
+
+					@if ($chat_quantity)
+						<div class="row" id="templates-panel">
+
+							@foreach ($favorite_chats as $chat)
+								<div class="col-sm-12" id="{{ $chat->chat_code }}">
+									<div class="chat-boxes-dasboard text-center">
+										<a id="{{ $chat->chat_code }}" @if($chat->favorite) data-tippy-content="{{ __('Remove from favorite') }}" @else data-tippy-content="{{ __('Select as favorite') }}" @endif onclick="favoriteChatStatus(this.id)"><i id="{{ $chat->chat_code }}-icon" class="@if($chat->favorite) fa-solid fa-stars @else fa-regular fa-star @endif star"></i></a>
+										<div class="card @if($chat->category == 'professional') professional @elseif($chat->category == 'premium') premium @endif" id="{{ $chat->chat_code }}-card" onclick="window.location.href='{{ url('user/chats') }}/{{ $chat->chat_code }}'">
+											<div class="card-body pt-2 pb-2 d-flex">
+												<div class="widget-user-image overflow-hidden"><img alt="User Avatar" class="rounded-circle" src="{{ URL::asset($chat->logo) }}"></div>
+												<div class="template-title mt-auto mb-auto d-flex justify-content-center">
+													<h6 class="fs-13 font-weight-bold mb-0 ml-4 mt-auto mb-auto">{{ __($chat->name) }}</h6> <h6 class="mr-2 ml-2 text-muted mt-auto mb-auto">|</h6> <h6 class="fs-13 text-muted mb-0 mt-auto mb-auto">{{ __($chat->sub_name) }}</h6> 
+													@if($chat->category == 'professional') 
+														<h6 class="mr-2 ml-2 text-muted mt-auto mb-auto">|</h6> <p class="fs-8 btn package-badge btn-pro"><i class="fa-sharp fa-solid fa-crown mr-2"></i>{{ __('Pro') }}</p> 
+													@elseif($chat->category == 'free')
+														<h6 class="mr-2 ml-2 text-muted mt-auto mb-auto">|</h6> <p class="fs-8 btn package-badge btn-free"><i class="fa-sharp fa-solid fa-gift mr-2"></i>{{ __('Free') }}</p> 
+													@elseif($chat->category == 'premium')
+														<h6 class="mr-2 ml-2 text-muted mt-auto mb-auto">|</h6> <p class="fs-8 btn package-badge btn-premium"><i class="fa-sharp fa-solid fa-gem mr-2"></i>{{ __('Premium') }}</p> 
+													@endif
+												</div>						
+											</div>
+										</div>
+									</div>							
+								</div>
+							@endforeach
+
+							@foreach ($custom_chats as $chat)
+								<div class="col-sm-12" id="{{ $chat->chat_code }}">
+									<div class="chat-boxes-dasboard text-center">
+										<a id="{{ $chat->chat_code }}" @if($chat->favorite) data-tippy-content="{{ __('Remove from favorite') }}" @else data-tippy-content="{{ __('Select as favorite') }}" @endif onclick="favoriteChatStatus(this.id)"><i id="{{ $chat->chat_code }}-icon" class="@if($chat->favorite) fa-solid fa-stars @else fa-regular fa-star @endif star"></i></a>
+										<div class="card @if($chat->category == 'professional') professional @elseif($chat->category == 'premium') premium @endif" id="{{ $chat->chat_code }}-card" onclick="window.location.href='{{ url('user/chats/custom') }}/{{ $chat->chat_code }}'">
+											<div class="card-body pt-2 pb-2 d-flex">
+												<div class="widget-user-image overflow-hidden"><img alt="User Avatar" class="rounded-circle" src="{{ URL::asset($chat->logo) }}"></div>
+												<div class="template-title mt-auto mb-auto d-flex justify-content-center">
+													<h6 class="fs-13 font-weight-bold mb-0 ml-4 mt-auto mb-auto">{{ __($chat->name) }}</h6> <h6 class="mr-2 ml-2 text-muted mt-auto mb-auto">|</h6> <h6 class="fs-13 text-muted mb-0 mt-auto mb-auto">{{ __($chat->sub_name) }}</h6> 
+													@if($chat->category == 'professional') 
+														<h6 class="mr-2 ml-2 text-muted mt-auto mb-auto">|</h6> <p class="fs-8 btn package-badge btn-pro"><i class="fa-sharp fa-solid fa-crown mr-2"></i>{{ __('Pro') }}</p> 
+													@elseif($chat->category == 'free')
+														<h6 class="mr-2 ml-2 text-muted mt-auto mb-auto">|</h6> <p class="fs-8 btn package-badge btn-free"><i class="fa-sharp fa-solid fa-gift mr-2"></i>{{ __('Free') }}</p> 
+													@elseif($chat->category == 'premium')
+														<h6 class="mr-2 ml-2 text-muted mt-auto mb-auto">|</h6> <p class="fs-8 btn package-badge btn-premium"><i class="fa-sharp fa-solid fa-gem mr-2"></i>{{ __('Premium') }}</p> 
+													@endif
+												</div>						
+											</div>
+										</div>
+									</div>							
+								</div>
+							@endforeach
+
+						</div>
+					@else
+						<div class="row text-center mt-8">
+							<div class="col-sm-12">
+								<h6 class="text-muted">{{ __('To add AI chat assitant as your favorite ones, simply click on the start icon on desired') }} <a href="{{ route('user.chat') }}" class="text-primary internal-special-links font-weight-bold">{{ __('AI Chat Assistants') }}</a></h6>
+							</div>
+						</div>
+					@endif
+					
+				</div>
+			</div>
+		</div>
+		
+		<div class="col-lg col-md-12 col-sm-12 mt-3">
+			<div class="card border-0 pb-5" id="user-dashboard-panels">
+				<div class="card-header pt-4 pb-4 border-0">
+					<div class="mt-3">
+						<h3 class="card-title mb-2"><i class="fa-solid fa-microchip-ai mr-2 text-muted"></i>{{ __('Favorite AI Writer Templates') }}</h3>
+						<h6 class="text-muted fs-13">{{ __('Always have your top favorite templates handy whenever you need them') }}</h6>
+						<div class="btn-group dashboard-menu-button">
+							<button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" id="export" data-bs-display="static" aria-expanded="false"><i class="fa-solid fa-ellipsis  table-action-buttons table-action-buttons-big edit-action-button"></i></button>
+							<div class="dropdown-menu" aria-labelledby="export" data-popper-placement="bottom-start">								
+								<a class="dropdown-item" href="{{ route('user.templates') }}">{{ __('View All') }}</a>	
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="card-body pt-2 favorite-dashboard-panel">
 
 					@if ($template_quantity)
 						<div class="row" id="templates-panel">
 
 							@foreach ($templates as $template)
-								<div class="col-lg-6 col-md-6 col-sm-12" id="{{ $template->template_code }}">
-									<div class="template">
+								<div class="col-sm-12" id="{{ $template->template_code }}">
+									<div class="template-dashboard">
 										<a id="{{ $template->template_code }}" @if($template->favorite) data-tippy-content="{{ __('Remove from favorite') }}" @else data-tippy-content="{{ __('Select as favorite') }}" @endif onclick="favoriteStatus(this.id)"><i class="@if($template->favorite) fa-solid fa-stars @else fa-regular fa-star @endif star"></i></a>
-										<div class="card @if($template->package == 'professional') professional @elseif($template->package == 'premium') premium @elseif($template->favorite) favorite @else border-0 @endif" onclick="window.location.href='{{ url('user/templates/original-template') }}/{{ $template->slug }}'">
-											<div class="card-body pt-5">
-												<div class="template-icon mb-4">
+										<div class="card @if($template->package == 'professional') professional @elseif($template->package == 'premium') premium @endif" onclick="window.location.href='{{ url('user/templates/original-template') }}/{{ $template->slug }}'">
+											<div class="card-body d-flex">
+												<div class="template-icon">
 													{!! $template->icon !!}													
 												</div>
-												<div class="template-title">
-													<h6 class="mb-2 fs-15 number-font">{{ __($template->name) }}</h6>
+												<div class="template-title ml-4">
+													<div class="d-flex">
+														<h6 class="fs-13 number-font mt-auto mb-auto">{{ __($template->name) }}</h6>
+														@if($template->package == 'professional') 
+															<h6 class="mr-2 ml-2 text-muted mt-auto mb-auto">|</h6> <p class="fs-8 btn package-badge btn-pro mb-0 mt-0"><i class="fa-sharp fa-solid fa-crown mr-2"></i>{{ __('Pro') }}</p> 
+														@elseif($template->package == 'free')
+															<h6 class="mr-2 ml-2 text-muted mt-auto mb-auto">|</h6> <p class="fs-8 btn package-badge btn-free mb-0 mt-0"><i class="fa-sharp fa-solid fa-gift mr-2"></i>{{ __('Free') }}</p> 
+														@elseif($template->package == 'premium')
+															<h6 class="mr-2 ml-2 text-muted mt-auto mb-auto">|</h6> <p class="fs-8 btn package-badge btn-premium mb-0 mt-0"><i class="fa-sharp fa-solid fa-gem mr-2"></i>{{ __('Premium') }}</p> 
+														@endif
+													</div>
+													<p class="fs-12 mb-0 text-muted">{{ __($template->description) }}</p>
 												</div>
-												<div class="template-info">
-													<p class="fs-13 text-muted mb-2">{{ __($template->description) }}</p>
-												</div>
-												@if($template->package == 'professional') 
-													<p class="fs-8 btn btn-pro mb-0"><i class="fa-sharp fa-solid fa-crown mr-2"></i>{{ __('Pro') }} @if($template->new) <p class="fs-8 btn btn-new mb-0 btn-new-pro"><i class="fa-sharp fa-solid fa-sparkles mr-2"></i>{{ __('New') }}</p> @endif</p> 
-												@elseif($template->package == 'free')
-													<p class="fs-8 btn btn-free mb-0"><i class="fa-sharp fa-solid fa-gift mr-2"></i>{{ __('Free') }} @if($template->new) <p class="fs-8 btn btn-new mb-0 btn-new-free"><i class="fa-sharp fa-solid fa-sparkles mr-2"></i>{{ __('New') }}</p> @endif</p> 
-												@elseif($template->package == 'premium')
-													<p class="fs-8 btn btn-yellow mb-0"><i class="fa-sharp fa-solid fa-gem mr-2"></i>{{ __('Premium') }} @if($template->new) <p class="fs-8 btn btn-new mb-0 btn-new-premium"><i class="fa-sharp fa-solid fa-sparkles mr-2"></i>{{ __('New') }}</p> @endif</p> 
-												@elseif($template->new)
-													<span class="fs-8 btn btn-new mb-0"><i class="fa-sharp fa-solid fa-sparkles mr-2"></i>{{ __('New') }}</span>
-												@endif	
 											</div>
 										</div>
 									</div>							
@@ -270,27 +354,27 @@
 							@endforeach
 
 							@foreach ($custom_templates as $template)
-								<div class="col-lg-6 col-md-6 col-sm-12" id="{{ $template->template_code }}">
-									<div class="template">
+								<div class="col-sm-12" id="{{ $template->template_code }}">
+									<div class="template-dashboard">
 										<a id="{{ $template->template_code }}" @if($template->favorite) data-tippy-content="{{ __('Remove from favorite') }}" @else data-tippy-content="{{ __('Select as favorite') }}" @endif onclick="favoriteStatusCustom(this.id)"><i class="@if($template->favorite) fa-solid fa-stars @else fa-regular fa-star @endif star"></i></a>
-										<div class="card @if($template->package == 'professional') professional @elseif($template->package == 'premium') premium @elseif($template->favorite) favorite @else border-0 @endif" onclick="window.location.href='{{ url('user/templates') }}/{{ $template->slug }}/{{ $template->template_code }}'">
-											<div class="card-body pt-5">
-												<div class="template-icon mb-4">
+										<div class="card @if($template->package == 'professional') professional @elseif($template->package == 'premium') premium @endif" onclick="window.location.href='{{ url('user/templates') }}/{{ $template->slug }}/{{ $template->template_code }}'">
+											<div class="card-body d-flex">
+												<div class="template-icon">
 													{!! $template->icon !!}													
 												</div>
-												<div class="template-title">
-													<h6 class="mb-2 fs-15 number-font">{{ __($template->name) }}</h6>
+												<div class="template-title ml-4">
+													<div class="d-flex">
+														<h6 class="fs-13 number-font mt-auto mb-auto">{{ __($template->name) }}</h6>
+														@if($template->package == 'professional') 
+															<h6 class="mr-2 ml-2 text-muted mt-auto mb-auto">|</h6> <p class="fs-8 btn package-badge btn-pro mb-0 mt-0"><i class="fa-sharp fa-solid fa-crown mr-2"></i>{{ __('Pro') }}</p> 
+														@elseif($template->package == 'free')
+															<h6 class="mr-2 ml-2 text-muted mt-auto mb-auto">|</h6> <p class="fs-8 btn package-badge btn-free mb-0 mt-0"><i class="fa-sharp fa-solid fa-gift mr-2"></i>{{ __('Free') }}</p> 
+														@elseif($template->package == 'premium')
+															<h6 class="mr-2 ml-2 text-muted mt-auto mb-auto">|</h6> <p class="fs-8 btn package-badge btn-premium mb-0 mt-0"><i class="fa-sharp fa-solid fa-gem mr-2"></i>{{ __('Premium') }}</p> 
+														@endif
+													</div>
+													<p class="fs-12 mb-0 text-muted">{{ __($template->description) }}</p>
 												</div>
-												<div class="template-info">
-													<p class="fs-13 text-muted mb-2">{{ __($template->description) }}</p>
-												</div>
-												@if($template->package == 'professional') 
-													<p class="fs-8 btn btn-pro"><i class="fa-sharp fa-solid fa-crown mr-2"></i>{{ __('Pro') }}</p> 
-												@elseif($template->package == 'free')
-													<p class="fs-8 btn btn-free"><i class="fa-sharp fa-solid fa-gift mr-2"></i>{{ __('Free') }}</p> 
-												@elseif($template->package == 'premium')
-													<p class="fs-8 btn btn-yellow"><i class="fa-sharp fa-solid fa-gem mr-2"></i>{{ __('Premium') }}</p> 
-												@endif
 											</div>
 										</div>
 									</div>							
@@ -310,23 +394,150 @@
 			</div>
 		</div>
 
-		<div class="col-lg-12 col-md-12 col-xm-12 mt-5">
+		<div class="col-lg-12 col-md-12 col-sm-12 mt-3">
 			<div class="card border-0">
-				<div class="card-header pt-4 border-0">
+				<div class="card-header pt-4 pb-0 border-0">
 					<div class="mt-3">
-						<h3 class="card-title mb-2"><i class="fa-solid fa-scroll-old mr-2 text-info"></i>{{ __('Word Generation') }} <span class="text-muted">({{ __('Current Month') }})</span></h3>
-						<h6 class="text-muted">{{ __('Monitor your daily word generation closely') }}</h6>
-					</div>
-				</div>
-				<div class="card-body pt-2">
-					<div class="row">
-						<div class="col-lg-12 col-md-12 col-sm-12">
-							<div class="">
-								<canvas id="chart-monthly-usage" class="h-330"></canvas>
+						<h3 class="card-title mb-2"><i class="fa-solid fa-folder-bookmark mr-2 text-muted"></i>{{ __('Recent Documents') }}</h3>
+						<div class="btn-group dashboard-menu-button">
+							<button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" id="export" data-bs-display="static" aria-expanded="false"><i class="fa-solid fa-ellipsis  table-action-buttons table-action-buttons-big edit-action-button"></i></button>
+							<div class="dropdown-menu" aria-labelledby="export" data-popper-placement="bottom-start">								
+								<a class="dropdown-item" href="{{ route('user.documents') }}">{{ __('View All') }}</a>	
 							</div>
 						</div>
 					</div>
 				</div>
+				<div class="card-body pt-2 responsive-dashboard-table">
+					<table class="table table-hover" id="database-backup">
+						<thead>
+							<tr role="row">
+								<th class="fs-12 font-weight-700 border-top-0">{{ __('Document Name') }}</th>
+								<th class="fs-12 font-weight-700 border-top-0 text-right">{{ __('Words') }}</th>
+								<th class="fs-12 font-weight-700 border-top-0 text-right">{{ __('Workbook') }}</th>
+								<th class="fs-12 font-weight-700 border-top-0 text-right">{{ __('Category') }}</th>
+								<th class="fs-12 font-weight-700 border-top-0 text-right">{{ __('Last Activity') }}</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach ($documents as $data)
+							<tr class="relative">
+								<td><div class="d-flex">
+										<div class="mr-2 rtl-small-icon">{!! $data->icon !!}</div>
+										<div><a class="font-weight-bold document-title" href="{{ route("user.documents.show", $data->id ) }}">{{ ucfirst($data->title) }}</a><br><span class="text-muted">{{ ucfirst($data->template_name) }}</span><div>
+									</div>
+								</td>
+								<td class="text-right text-muted">{{ $data->words }}</td>
+								<td class="text-right text-muted">{{ ucfirst($data->workbook) }}</td>
+								<td class="text-right"><span class="cell-box category-{{ $data->group }}">{{ __(ucfirst($data->group)) }}</span></td>
+								<td class="text-right text-muted">{{ \Carbon\Carbon::parse($data->updated_at)->diffForHumans() }}</td>
+								<td class="w-0 p-0" colspan="0">
+									<a class="strage-things" style="position: absolute; inset: 0px; width: 100%" href="{{ route("user.documents.show", $data->id ) }}"><span class="sr-only">{{ __('View') }}</span></a>
+								</td>
+							</tr>
+							@endforeach
+						</tbody>
+					</table>					
+				</div>
+			</div>
+		</div>
+
+		<div class="col-lg-12 col-sm-12 mt-3">
+			<div class="row">
+				<div class="col-lg-2 col-md-2 col-sm-12 mt-5">                        
+					<div class="title text-center dashboard-title">
+						<h3 class="fs-24">{{ __('Need Help?') }}</h3>     
+						<h6 class="text-muted fs-14 mb-4">{{ __('Got questions? We have you covered') }}</h6>                    
+						<a href="{{ route('user.support') }}" class="btn btn-primary pl-6 pr-6 mb-2" style="text-transform: none">{{ __('Create Suppport Ticket') }}</a>
+						<h6 class="text-muted fs-10 mb-4">{{ __('Available from') }} <span class="font-weight-bold">{{ __('9am till 5pm') }}</span></h6> 
+					</div>                                               
+				</div>
+
+				<div class="col-lg-5 col-md-5 col-sm-12 mb-5">
+					<div class="card border-0 pb-4">
+						<div class="card-header pt-4 pb-0 border-0">
+							<div class="mt-3">
+								<h3 class="card-title mb-2"><i class="fa-solid fa-headset mr-2 text-muted"></i>{{ __('Support Tickets') }}</h3>
+								<div class="btn-group dashboard-menu-button">
+									<button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" id="export" data-bs-display="static" aria-expanded="false"><i class="fa-solid fa-ellipsis  table-action-buttons table-action-buttons-big edit-action-button"></i></button>
+									<div class="dropdown-menu" aria-labelledby="export" data-popper-placement="bottom-start">								
+										<a class="dropdown-item" href="{{ route('user.support') }}">{{ __('View All') }}</a>	
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="card-body pt-2 dashboard-panel-500">
+							<table class="table table-hover" id="database-backup">
+								<thead>
+									<tr role="row">
+										<th class="fs-12 font-weight-700 border-top-0">{{ __('Ticket ID') }}</th>
+										<th class="fs-12 font-weight-700 border-top-0 text-left">{{ __('Subject') }}</th>
+										<th class="fs-12 font-weight-700 border-top-0 text-center">{{ __('Category') }}</th>
+										<th class="fs-12 font-weight-700 border-top-0 text-center">{{ __('Status') }}</th>
+										<th class="fs-12 font-weight-700 border-top-0 text-right">{{ __('Last Updated') }}</th>
+									</tr>
+								</thead>
+								<tbody>
+									@foreach ($tickets as $data)
+									<tr class="relative" style="height: 60px">
+										<td><a class="font-weight-bold text-primary" href="{{ route("user.support.show", $data->ticket_id ) }}">{{ $data->ticket_id }}</a>
+										</td>
+										<td class="text-left text-muted">{{ ucfirst($data->subject) }}</td>
+										<td class="text-center text-muted">{{ ucfirst($data->category) }}</td>
+										<td class="text-center"><span class="cell-box support-{{ strtolower($data->status) }}">{{ __(ucfirst($data->status)) }}</span></td>
+										<td class="text-right text-muted">{{ \Carbon\Carbon::parse($data->updated_at)->diffForHumans() }}</td>
+										<td class="w-0 p-0" colspan="0">
+											<a class="strage-things" style="position: absolute; inset: 0px; width: 100%" href="{{ route("user.support.show", $data->ticket_id ) }}"><span class="sr-only">{{ __('View') }}</span></a>
+										</td>
+									</tr>
+									@endforeach
+								</tbody>
+							</table>					
+						</div>
+					</div>                      
+				</div>     
+				
+				<div class="col-lg-5 col-md-5 col-sm-12 mb-5">
+					<div class="card border-0 pb-4">
+						<div class="card-header pt-4 pb-0 border-0">
+							<div class="mt-3">
+								<h3 class="card-title mb-2"><i class="fa-solid fa-solid fa-message-exclamation mr-2 text-muted"></i>{{ __('News & Notifications') }}</h3>
+								<div class="btn-group dashboard-menu-button">
+									<button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" id="export" data-bs-display="static" aria-expanded="false"><i class="fa-solid fa-ellipsis  table-action-buttons table-action-buttons-big edit-action-button"></i></button>
+									<div class="dropdown-menu" aria-labelledby="export" data-popper-placement="bottom-start">								
+										<a class="dropdown-item" href="{{ route('user.notifications') }}">{{ __('View All') }}</a>	
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="card-body pt-2 dashboard-timeline dashboard-panel-500">					
+							<div class="vertical-timeline vertical-timeline--animate vertical-timeline--one-column">
+								@foreach ($notifications as $notification)
+									<div class="vertical-timeline-item vertical-timeline-element">
+										<div>
+											<span class="vertical-timeline-element-icon">
+												@if ($notification->data['type'] == 'Warning')
+													<i class="badge badge-dot badge-dot-xl badge-secondary"> </i>
+												@elseif ($notification->data['type'] == 'Info')
+													<i class="badge badge-dot badge-dot-xl badge-primary"> </i>
+												@elseif ($notification->data['type'] == 'Announcement')
+													<i class="badge badge-dot badge-dot-xl badge-success"> </i>
+												@else
+													<i class="badge badge-dot badge-dot-xl badge-warning"> </i>
+												@endif
+												
+											</span>
+											<div class="vertical-timeline-element-content">
+												<h4 class="fs-13"><a href="{{ route("user.notifications.show", $notification->id)  }}"><b>{{ __($notification->data['type']) }}:</b></a> {{ __($notification->data['subject']) }}</h4>
+												<p>@if ($notification->data['action'] == 'Action Required') <span class="text-danger">{{ __('Action Required') }}</span> @else <span class="text-muted fs-12">{{ __('No Action Required') }}</span> @endif</p>
+												<span class="vertical-timeline-element-date text-center">{{ \Carbon\Carbon::parse($notification->created_at)->format('M d, Y') }} <br> {{ \Carbon\Carbon::parse($notification->created_at)->format('H:i A') }}</span>
+											</div>
+										</div>
+									</div>
+								@endforeach
+							</div>											  					
+						</div>
+					</div>                      
+				</div>  
 			</div>
 		</div>
 
@@ -336,7 +547,8 @@
 
 @section('js')
 	<!-- Chart JS -->
-	<script src="{{URL::asset('plugins/chart/chart.min.js')}}"></script>
+	{{-- <script src="{{URL::asset('plugins/chart/chart.min.js')}}"></script> --}}
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
 	<script src="{{URL::asset('plugins/sweetalert/sweetalert2.all.min.js')}}"></script>
 	<script>
 		$(function() {
@@ -346,93 +558,100 @@
 			// Total New User Analysis Chart
 			var userMonthlyData = JSON.parse(`<?php echo $chart_data['user_monthly_usage']; ?>`);
 			var userMonthlyDataset = Object.values(userMonthlyData);
-			var ctx = document.getElementById('chart-monthly-usage');
-			let delayed1;
 
-			new Chart(ctx, {
-				type: 'bar',
-				data: {
-					labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'],
-					datasets: [{
-						label: '{{ __('Words Generated') }} ',
-						data: userMonthlyDataset,
-						backgroundColor: '#007bff',
-						borderWidth: 1,
-						borderRadius: 20,
-						barPercentage: 0.7,
-						fill: true
-					}]
-				},
-				options: {
-					maintainAspectRatio: false,
+			let chartColor = "#FFFFFF";
+			let gradientChartOptionsConfiguration = {
+				maintainAspectRatio: false,
+				plugins: {
 					legend: {
 						display: false,
-						labels: {
-							display: false
+					},
+					tooltip: {
+						titleAlign: 'center',
+						bodySpacing: 4,
+						mode: "nearest",
+						intersect: 0,
+						position: "nearest",
+						xPadding: 20,
+						yPadding: 20,
+						caretPadding: 20
+					},
+				},			
+				responsive: true,
+				scales: {
+					y: {
+						display: 0,
+						grid: 0,
+						ticks: {
+							display: false,
+							padding: 0,
+							beginAtZero: true,
+						},
+						grid: {
+							zeroLineColor: "transparent",
+							drawTicks: false,
+							display: false,
+							drawBorder: false,
 						}
 					},
-					responsive: true,
-					animation: {
-						onComplete: () => {
-							delayed1 = true;
+					x: {
+						display: 0,
+						grid: 0,
+						ticks: {
+							display: false,
+							padding: 0,
+							beginAtZero: true,
 						},
-						delay: (context) => {
-							let delay = 0;
-							if (context.type === 'data' && context.mode === 'default' && !delayed1) {
-								delay = context.dataIndex * 50 + context.datasetIndex * 5;
-							}
-							return delay;
-						},
-					},
-					scales: {
-						y: {
-							stacked: true,
-							ticks: {
-								beginAtZero: true,
-								font: {
-									size: 10
-								},
-								stepSize: 50000,
-							},
-							grid: {
-								color: '#ebecf1',
-								borderDash: [3, 2]                            
-							}
-						},
-						x: {
-							stacked: true,
-							ticks: {
-								font: {
-									size: 10
-								}
-							},
-							grid: {
-								color: '#ebecf1',
-								borderDash: [3, 2]                            
-							}
-						}
-					},
-					plugins: {
-						tooltip: {
-							cornerRadius: 10,
-							xPadding: 10,
-							yPadding: 10,
-							backgroundColor: '#000000',
-							titleColor: '#FF9D00',
-							yAlign: 'bottom',
-							xAlign: 'center',
-						},
-						legend: {
-							position: 'bottom',
-							labels: {
-								boxWidth: 10,
-								font: {
-									size: 10
-								}
-							}
+						grid: {
+							zeroLineColor: "transparent",
+							drawTicks: false,
+							display: false,
+							drawBorder: false,
 						}
 					}
-				}
+				},
+				layout: {
+					padding: {
+						left: 0,
+						right: -10,
+						top: 0,
+						bottom: -10
+					}
+				},
+				elements: {
+					line: {
+						tension : 0.4
+					},
+				},
+			};
+
+			let ctx2 = document.getElementById('hoursSavedChart').getContext("2d");
+			let gradientStroke = ctx2.createLinearGradient(500, 0, 100, 0);
+			gradientStroke.addColorStop(0, '#18ce0f');
+			gradientStroke.addColorStop(1, chartColor);
+			let gradientFill = ctx2.createLinearGradient(0, 170, 0, 50);
+			gradientFill.addColorStop(0, "rgba(128, 182, 244, 0)");
+			gradientFill.addColorStop(1, "rgba(24,206,15, 0.4)");
+			let myChart = new Chart(ctx2, {
+				type: 'line',
+				data: {
+					labels: ['{{ __('Jan') }}', '{{ __('Feb') }}', '{{ __('Mar') }}', '{{ __('Apr') }}', '{{ __('May') }}', '{{ __('Jun') }}', '{{ __('Jul') }}', '{{ __('Aug') }}', '{{ __('Sep') }}', '{{ __('Oct') }}', '{{ __('Nov') }}', '{{ __('Dec') }}'],
+					datasets: [{
+						label: "{{ __('Words Generated') }}",
+						borderColor: "#18ce0f",
+						pointBorderColor: "#FFF",
+						pointBackgroundColor: "#18ce0f",
+						pointBorderWidth: 1,
+						pointHoverRadius: 4,
+						pointHoverBorderWidth: 1,
+						pointRadius: 3,
+						fill: true,
+						backgroundColor: gradientFill,
+						borderWidth: 2,
+						data: userMonthlyDataset
+					}]
+				},
+				options: gradientChartOptionsConfiguration
 			});
 
 		});

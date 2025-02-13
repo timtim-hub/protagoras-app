@@ -11,9 +11,6 @@
             </a>
 
             <!-- MENU BAR -->
-            <div class="" id="balance">
-                <span class="fs-11 text-muted"><i class="fa-sharp fa-solid fa-bolt-lightning mr-2 text-primary"></i>{{ __('You have') }} <span class="font-weight-semibold text-white" id="balance-number">@if (auth()->user()->gpt_3_turbo_credits == -1) {{ __('Unlimited') }} @else {{ number_format(auth()->user()->gpt_3_turbo_credits + auth()->user()->gpt_3_turbo_credits_prepaid) }}@endif</span> {{ __('words') }}</span>
-            </div> 
             <div class="dropdown items-center flex">
                 <a href="#" class="nav-link icon btn-theme-toggle">
                     <span class="header-icon fa-sharp fa-solid text-white"></span>

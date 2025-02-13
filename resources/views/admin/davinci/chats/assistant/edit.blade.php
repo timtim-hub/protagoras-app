@@ -115,6 +115,7 @@
 									<select class="form-select" name="model">									
 										<option value='gpt-3.5-turbo-0125'  @if ($id->model == 'gpt-3.5-turbo-0125') selected @endif>{{ __('GPT 3.5 Turbo') }}</option>																																																																																																																																																																																																																																																																																																																																																		
 										<option value='gpt-4-0125-preview'  @if ($id->model == 'gpt-4-0125-preview') selected @endif>{{ __('GPT 4 Turbo') }}</option>																																																																																																																											
+										<option value='gpt-4o'  @if ($id->model == 'gpt-4o') selected @endif>{{ __('GPT 4o') }}</option>																																																																																																																											
 										<option value='gpt-4-turbo-2024-04-09'  @if ($id->model == 'gpt-4-turbo-2024-04-09') selected @endif>{{ __('GPT 4 Turbo with Vision') }}</option>																																																																																																																											
 										@foreach ($fine_tunes as $fine_tune)
 											<option value="{{ $fine_tune->model }}"  @if ($id->model == 'gpt-4-turbo-2024-04-09') selected @endif>{{ $fine_tune->description }}</option>										

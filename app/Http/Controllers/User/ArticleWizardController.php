@@ -154,7 +154,7 @@ class ArticleWizardController extends Controller
                     'model' => $request->model,
                     'messages' => [[
                         'role' => 'user',
-                        'content' => "Generate $request->keywords_numbers keywords (simple words or 2 words, not phrase, not person name) about '$request->topic'. Must resut as a comma separated string without any extra details. Result format is: keyword1, keyword2, ..., keywordN. Must not write ```json."
+                        'content' => "You're an SEO Expert. Generate $request->keywords_numbers keywords in $request->language about '$request->topic'. Must result as a comma separated string without any extra details. Result format is: keyword1, keyword2, ..., keywordN. Must not write ```json."
                     ]]
                 ]);
 
@@ -322,9 +322,9 @@ class ArticleWizardController extends Controller
             try {
 
                 if (!is_null($request->keywords) || $request->keywords != '') {
-                    $prompt = "The keywords of article are $request->keywords. Generate different outlines related to $request->title (Each outline must has only $request->outline_subtitles subtitles (Without number for order, subtitles are not keywords)) $request->outline_number times. Provide response in the exat same language as the title. Use $request->tone writing tone. The depth is 1.  Must not write any description. Result must be array json data. Every subtitle is sentence or phrase string. This is result format: [[subtitle1(string), subtitle2(string), subtitle3(string), ... , subtitle-$request->outline_subtitles(string)]]. Must not write ```json.";
+                    $prompt = "The keywords of article are $request->keywords. Generate different outlines related to $request->title (Each outline must has only $request->outline_subtitles subtitles (Without number for order, subtitles are not keywords)) $request->outline_number times. Provide response in the exat same language as the title. Avoid long sentences and complicated words. Aim for a Flesch-Reading-Ease Score of about 70. The depth is 1.  Must not write any description. Result must be array json data. Every subtitle is sentence or phrase string. This is result format: [[subtitle1(string), subtitle2(string), subtitle3(string), ... , subtitle-$request->outline_subtitles(string)]]. Must not write ```json.";
                 } else {
-                    $prompt = "Generate different outlines related to $request->title (Each outline must has only $request->outline_subtitles subtitles (Without number for order, subtitles are not keywords)) $request->outline_number times. Provide response in the exat same language as the title. Use $request->tone writing tone. The depth is 1.  Must not write any description. Result must be array json data. Every subtitle is sentence or phrase string. This is result format: [[subtitle1(string), subtitle2(string), subtitle3(string), ... , subtitle-$request->outline_subtitles(string)]]. Must not write ```json.";
+                    $prompt = "Generate different outlines related to $request->title (Each outline must has only $request->outline_subtitles subtitles (Without number for order, subtitles are not keywords)) $request->outline_number times. Provide response in the exat same language as the title. Avoid long sentences and complicated words. Aim for a Flesch-Reading-Ease Score of about 70. The depth is 1.  Must not write any description. Result must be array json data. Every subtitle is sentence or phrase string. This is result format: [[subtitle1(string), subtitle2(string), subtitle3(string), ... , subtitle-$request->outline_subtitles(string)]]. Must not write ```json.";
                 }
 
                 $response = OpenAI::chat()->create([
@@ -414,9 +414,9 @@ class ArticleWizardController extends Controller
                         continue;
                     } else {
                         if (!is_null($request->keywords)) {
-                            $prompt = "Generate $request->points_number talking points for this outline: $outline. It must be also relevant to this title: $request->title. Provide talking points in the exact same language as the outline. Use following keywords in the talking points: $request->keywords. The depth is 1.  Must not write any description. Use $request->tone writing tone. Strictly create in json array of objects. This is result format: [talking_point1(string), talking_point2(string), talking_point3(string), ...]. Maximum length of each talking point must be $request->points_length words. Must not write ```json.";
+                            $prompt = "Generate $request->points_number talking points for this outline: $outline. It must be also relevant to this title: $request->title. Provide talking points in the exact same language as the outline. Use following keywords in the talking points: $request->keywords. The depth is 1.  Must not write any description. Avoid long sentences and complicated words. Aim for a Flesch-Reading-Ease Score of about 70. Strictly create in json array of objects. This is result format: [talking_point1(string), talking_point2(string), talking_point3(string), ...]. Maximum length of each talking point must be $request->points_length words. Must not write ```json.";
                         } else {
-                            $prompt = "Generate $request->points_number talking points for this outline: $outline. It must be also relevant to this title: $request->title. Provide talking points in the exact same language as the outline. The depth is 1.  Must not write any description. Use $request->tone writing tone. Strictly create in json array of objects. This is result format: [talking_point1(string), talking_point2(string), talking_point3(string), ...]. Maximum length of each talking point must be $request->points_length words. Must not write ```json.";
+                            $prompt = "Generate $request->points_number talking points for this outline: $outline. It must be also relevant to this title: $request->title. Provide talking points in the exact same language as the outline. The depth is 1.  Must not write any description. Avoid long sentences and complicated words. Aim for a Flesch-Reading-Ease Score of about 70. Strictly create in json array of objects. This is result format: [talking_point1(string), talking_point2(string), talking_point3(string), ...]. Maximum length of each talking point must be $request->points_length words. Must not write ```json.";
                         }
     
                         $response = OpenAI::chat()->create([
@@ -948,7 +948,7 @@ class ArticleWizardController extends Controller
                     //when research content is not empty short summerize it using OpenAI
                     $sum_research_content = "";
                     if ($research_content != "") {
-                        $prompt = "Summarize the following research content: $research_content. Write the summary in the exact same language as the research content. Use $input->tone writing tone. Keep the links.";
+                        $prompt = "Summarize the following research content: $research_content. Write the summary in the exact same language as the research content. Avoid long sentences and complicated words. Aim for a Flesch-Reading-Ease Score of about 70. Keep the links and cite them as sources.";
                         $response = OpenAI::chat()->create([
                             'model' => $model,
                             'messages' => [[
@@ -969,12 +969,12 @@ class ArticleWizardController extends Controller
                 \Log::info('Subheadings: ', ['subheadings' => $subheadings]);
                 $final_article = "";
                 if ($internet_access) {
-                    $prompt = "Write the introduction paragraph for the following blog post title: $input->selected_title. Important: Write in the exact same language as the blog post title. Make use of <p>, <strong>, <em>, <blockquote>, <mark>, <small> in HTML. Make the text easy to read and understand. Avoid complicated words and sentences. Use Emojis in Unicode whenever needed. Tone of the article must be: $input->tone. Write the article in the view point of $input->view_point person. These are additional information for the text: $additional_information. If possible and only if it makes sense take into account the following reasearch: $sum_research_content."; 
+                    $prompt = "As a seasoned SEO professional and blogger, write the introduction paragraph for the following blog post title: $input->selected_title. Do not repeat the title! Important: Write in the exact same language as the blog post title. Use HTML elements such as tables, lists, bullet points, <p>, <bold>, <strong>, <em>, <blockquote>, <mark>, <small>, and <table> only when they enhance the content's readability and value. Use no other HTML! Make the text easy to read and understand. Avoid complicated words and sentences. $input->tone in Unicode. Avoid long sentences and complicated words. Aim for a Flesch-Reading-Ease Score of about 70. Write the article in the view point of $input->view_point person. These are additional information for the text: $additional_information. If possible and only if it makes sense take into account the following reasearch, but don't quote or link to the sources:: $sum_research_content."; 
                 //log prompt to the log file
                 \Log::info('Prompt: ', ['prompt' => $prompt]);
                 }
                 else {
-                    $prompt = "Write the introduction paragraph for the following blog post title: $input->selected_title. Important: Write in the exact same language as the blog post title. Make use of <p>, <strong>, <em>, <blockquote>, <mark>, <small> in HTML. Make the text easy to read and understand. Avoid complicated words and sentences. Use Emojis in Unicode whenever needed. Tone of the article must be: $input->tone. These are additional information for the text: $additional_information. Write the article in the view point of $input->view_point person.";
+                    $prompt = "As a seasoned SEO professional and blogger, write the introduction paragraph for the following blog post title: $input->selected_title. Do not repeat the title! Important: Write in the exact same language as the blog post title. Use HTML elements such as tables, lists, bullet points, <p>, <bold>, <strong>, <em>, <blockquote>, <mark>, <small>, and <table> only when they enhance the content's readability and value. Use no other HTML! Make the text easy to read and understand. Avoid complicated words and sentences. $input->tone in Unicode. Avoid long sentences and complicated words. Aim for a Flesch-Reading-Ease Score of about 70. These are additional information for the text: $additional_information. Write the article in the view point of $input->view_point person.";
                 }
                 $intro = OpenAI::chat()->create([
                     'model' => $model,
@@ -987,6 +987,13 @@ class ArticleWizardController extends Controller
                 ]);
                 $intro_text = $intro->choices[0]->message->content;
                 $final_text .= $intro_text;
+                $stream_text .= str_replace(
+                    ["\r\n", "\r", "\n", "```html", "```"],
+                    [" ", " ", " ", "", ""],
+                    $intro_text
+                );
+                //log intro text to log file
+                \Log::info('Intro Text: ', ['intro_text' => $intro_text]);
                 $context = $intro_text;
 
                 foreach ($subheadings as $subheading) {
@@ -994,11 +1001,11 @@ class ArticleWizardController extends Controller
                     //echo "data: " .$additional_information;
                     //when internet
                     if ($internet_access) {
-                        $prompt = "Write paragraph about this outline subheading: $subheading. Never write intro or outro, as it is part of an article. Wrap the subheading in html with <H2></H2>. Strip the word Outline from it. Tone of the article must be: $input->tone. Write the article in the view point of $input->view_point person. Each outline talking point must be written with as much words as possible to reach the provided maximum word limit. Use tables, lists, bullet points, <p>, <strong>, <em>, <blockquote>, <mark>, <small>, <table> in HTML. Make the text easy to read and understand. Avoid long complicated words and long sentences. Use Emojis in Unicode whenever needed. This is the paragraph before. PARAGRAPH BEFORE START: $context. PAGAGRAPH BEFORE END. Important: Don't repeat any of it! If possible and only if it makes sense take into account the following reasearch. RESEARCH START: $sum_research_content. RESEARCH END. You can cite the research content in the article with links in HTML, but only when it is relevant to the content.";
+                        $prompt = "As a seasoned SEO professional and blogger, write a paragraph based on this outline subheading: '$subheading'. Do not include an introduction or conclusion, as this is part of a larger article. Enclose the subheading in HTML <H2></H2> tags and remove the word 'Outline'. Aim for a Flesch-Reading-Ease Score of about 70 by avoiding long sentences and complex words. Write from the viewpoint of $input->view_point person. Use HTML elements such as tables, lists, bullet points, <p>, <bold>, <strong>, <em>, <blockquote>, <mark>, <small>, and <table> only when they enhance the content's readability and value. Use no other HTML! Focus on creating high-quality, engaging, and easy-to-understand content that optimizes SEO. $input->tone in Unicode. Here is the content before your section: CONTENT BEFORE START: $context. CONTENT BEFORE END. Important: Do not repeat any of this content or the structure of the content! Always avoid repetations! If relevant and beneficial, incorporate the following research, but don't link to the sources: RESEARCH START: $sum_research_content. RESEARCH END. Only respond with the content.";
                         //log prompt to the log file
                         \Log::info('Prompt: ', ['prompt' => $prompt]);                                                   
                     } else {
-                        $prompt = "Write paragraph about this outline subheading: $subheading. Never write intro or outro, as it is part of an article. Wrap the subheading in html with <H2></H2>. Strip the word Outline from it. Tone of the article must be: $input->tone. Write the article in the view point of $input->view_point person. Each outline talking point must be written with as much words as possible to reach the provided maximum word limit. Use tables, lists, bullet points, <p>, <strong>, <em>, <blockquote>, <mark>, <small>, <table> in HTML. Make the text easy to read and understand. Avoid long complicated words and long sentences. Use Emojis in Unicode whenever needed. his is the paragraph before. PARAGRAPH BEFORE START: $context. PAGAGRAPH BEFORE END. Important: Don't repeat any of it! If possible and only if it makes sense take into account the following reasearch. RESEARCH START: $sum_research_content. RESEARCH END. You can cite the research content in the article with links in HTML, but only when it is relevant to the content.";                          
+                        $prompt = "As a seasoned SEO professional and blogger, write a paragraph based on this outline subheading: '$subheading'. Do not include an introduction or conclusion, as this is part of a larger article. Enclose the subheading in HTML <H2></H2> tags and remove the word 'Outline'. Aim for a Flesch-Reading-Ease Score of about 70 by avoiding long sentences and complex words. Write from the viewpoint of $input->view_point person. Use HTML elements such as tables, lists, bullet points, <p>, <bold>, <strong>, <em>, <blockquote>, <mark>, <small>, and <table> only when they enhance the content's readability and value. Use no other HTML! Focus on creating high-quality, engaging, and easy-to-understand content that optimizes SEO. $input->tone in Unicode. Here is the content before your section: CONTENT BEFORE START: $context. CONTENT BEFORE END. Important: Do not repeat any of this content or the structure of the content! Always avoid repetations!";                          
                     }
                     //if additional_information is not empty append it to the prompt
                     if ($additional_information != "") {
@@ -1019,7 +1026,11 @@ class ArticleWizardController extends Controller
        
                         if (isset($result['choices'][0]['delta']['content'])) {
                             $raw = $result['choices'][0]['delta']['content'];
-                            $clean = str_replace(["\r\n", "\r", "\n"], " ", $raw);
+                            $clean = str_replace(
+                                ["\r\n", "\r", "\n", "```html", "```"],
+                                [" ", " ", " ", "", ""],
+                                $raw
+                            );
                             $text .= $raw;
                             $final_text .= $clean;
                             $stream_text .= $clean;
@@ -1033,7 +1044,7 @@ class ArticleWizardController extends Controller
                         if (connection_aborted()) { break; }
                     }
                     echo 'data: ' . $stream_text ."\n\n";
-                    $context = $stream_text;
+                    $context = $final_text;
                     $stream_text="";
                 }
             //translate the word Sources to the selected language by using $request->language with OpenAI and append it to the final text following the $links line by line from the array.
@@ -1053,7 +1064,7 @@ class ArticleWizardController extends Controller
                         'temperature' => (float)$input->creativity,
                     ]);
                     $translation = $response['choices'][0]['message']['content'];
-                    echo 'data: ' .":</br>". $translation .":</br>";
+                    echo 'data: ' ."</br>". $translation .":</br>";
                     $final_text .=  $translation . ":</br>";
                     #loop through the links array and append each link to the final text
                 }

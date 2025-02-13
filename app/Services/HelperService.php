@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use App\Services\Statistics\UserService;
 use App\Models\CustomTemplate;
 use App\Models\Template;
 use App\Models\SubscriptionPlan;
@@ -10,6 +12,9 @@ use App\Models\PrepaidPlan;
 use App\Models\Subscriber;
 use App\Models\Payment;
 use App\Models\User;
+use App\Models\UserIntegration;
+use App\Models\MainSetting;
+use App\Models\Setting;
 use Carbon\Carbon;
 
 class HelperService 
@@ -85,6 +90,12 @@ class HelperService
     public static function userAvailableGPT4Words()
     {   
         $value = self::numberFormat(auth()->user()->gpt_4_credits + auth()->user()->gpt_4_credits_prepaid);
+        return $value;
+    }
+
+    public static function userAvailableGPT4oWords()
+    {   
+        $value = self::numberFormat(auth()->user()->gpt_4o_credits + auth()->user()->gpt_4o_credits_prepaid);
         return $value;
     }
 
@@ -265,6 +276,26 @@ class HelperService
     }
 
 
+    public static function checkIntegrationFeature()
+    {   
+        if (!is_null(auth()->user()->plan_id)) {
+            $plan = SubscriptionPlan::where('id', auth()->user()->plan_id)->first();
+            if (!is_null($plan->integration_feature)) {
+                return $plan->integration_feature;
+            } else {
+                return false;
+            }
+            
+        } else {
+            if (config('settings.integration_user_access') == 'allow') {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+
     /**
 	*
 	* Check if user has sufficient credits for each model
@@ -323,6 +354,30 @@ class HelperService
                     } 
                 }
             }
+        } elseif ($model == 'gpt-4o') {
+                if (auth()->user()->gpt_4o_credits != -1) {
+                    if ((auth()->user()->gpt_4o_credits + auth()->user()->gpt_4o_credits_prepaid) < $max_tokens) {
+                        if (!is_null(auth()->user()->member_of)) {
+                            if (auth()->user()->member_use_credits_template) {
+                                $member = User::where('id', auth()->user()->member_of)->first();
+                                if (($member->gpt_4o_credits + $member->gpt_4o_credits_prepaid) < $max_tokens) {
+                                    $data['status'] = 'error';
+                                    $data['message'] = __('Not enough balance to proceed for GPT 4o model, upgrade or top up');
+                                    return $data;
+                                }
+                            } else {
+                                $data['status'] = 'error';
+                                $data['message'] = __('Not enough balance to proceed for GPT 4o model, upgrade or top up');
+                                return $data;
+                            }
+                            
+                        } else {
+                            $data['status'] = 'error';
+                            $data['message'] = __('Not enough balance to proceed for GPT 4o model, upgrade or top up');
+                            return $data;
+                        } 
+                    }
+                }
         } elseif ($model == 'gpt-4-0125-preview' || $model == 'gpt-4-turbo-2024-04-09') {
             if (auth()->user()->gpt_4_turbo_credits != -1) {
                 if ((auth()->user()->gpt_4_turbo_credits + auth()->user()->gpt_4_turbo_credits_prepaid) < $max_tokens) {
@@ -371,7 +426,7 @@ class HelperService
                     } 
                 }
             }
-        } elseif ($model == 'claude-3-sonnet-20240229') {
+        } elseif ($model == 'claude-3-5-sonnet-20240620') {
             if (auth()->user()->claude_3_sonnet_credits != -1) {
                 if ((auth()->user()->claude_3_sonnet_credits + auth()->user()->claude_3_sonnet_credits_prepaid) < $max_tokens) {
                     if (!is_null(auth()->user()->member_of)) {
@@ -379,18 +434,18 @@ class HelperService
                             $member = User::where('id', auth()->user()->member_of)->first();
                             if (($member->claude_3_sonnet_credits + $member->claude_3_sonnet_credits_prepaid) < $max_tokens) {
                                 $data['status'] = 'error';
-                                $data['message'] = __('Not enough balance to proceed for Claude 3 Sonnet model, upgrade or top up');
+                                $data['message'] = __('Not enough balance to proceed for Claude 3.5 Sonnet model, upgrade or top up');
                                 return $data;
                             }
                         } else {
                             $data['status'] = 'error';
-                            $data['message'] = __('Not enough balance to proceed for Claude 3 Sonnet model, upgrade or top up');
+                            $data['message'] = __('Not enough balance to proceed for Claude 3.5 Sonnet model, upgrade or top up');
                             return $data;
                         }
                         
                     } else {
                         $data['status'] = 'error';
-                        $data['message'] = __('Not enough balance to proceed for Claude 3 Sonnet model, upgrade or top up');
+                        $data['message'] = __('Not enough balance to proceed for Claude 3.5 Sonnet model, upgrade or top up');
                         return $data;
                     } 
                 }
@@ -678,6 +733,71 @@ class HelperService
 
             return true;
 
+        } elseif ($model == 'gpt-4o') {
+            if (auth()->user()->gpt_4o_credits != -1) {
+
+                if (Auth::user()->gpt_4o_credits > $words) {
+
+                    $total_words = Auth::user()->gpt_4o_credits - $words;
+                    $user->gpt_4o_credits = ($total_words < 0) ? 0 : $total_words;
+                    $user->update();
+        
+                } elseif (Auth::user()->gpt_4o_credits_prepaid > $words) {
+        
+                    $total_words_prepaid = Auth::user()->gpt_4o_credits_prepaid - $words;
+                    $user->gpt_4o_credits_prepaid = ($total_words_prepaid < 0) ? 0 : $total_words_prepaid;
+                    $user->update();
+        
+                } elseif ((Auth::user()->gpt_4o_credits + Auth::user()->gpt_4o_credits_prepaid) == $words) {
+        
+                    $user->gpt_4o_credits = 0;
+                    $user->gpt_4o_credits_prepaid = 0;
+                    $user->update();
+        
+                } else {
+        
+                    if (!is_null(Auth::user()->member_of)) {
+        
+                        $member = User::where('id', Auth::user()->member_of)->first();
+        
+                        if ($member->gpt_4o_credits > $words) {
+        
+                            $total_words = $member->gpt_4o_credits - $words;
+                            $member->gpt_4o_credits = ($total_words < 0) ? 0 : $total_words;
+                
+                        } elseif ($member->gpt_4o_credits_prepaid > $words) {
+                
+                            $total_words_prepaid = $member->gpt_4o_credits_prepaid - $words;
+                            $member->gpt_4o_credits_prepaid = ($total_words_prepaid < 0) ? 0 : $total_words_prepaid;
+                
+                        } elseif (($member->gpt_4o_credits + $member->gpt_4o_credits_prepaid) == $words) {
+                
+                            $member->gpt_4o_credits = 0;
+                            $member->gpt_4o_credits_prepaid = 0;
+                
+                        } else {
+                            $remaining = $words - $member->gpt_4o_credits;
+                            $member->gpt_4o_credits = 0;
+            
+                            $prepaid_left = $member->gpt_4o_credits_prepaid - $remaining;
+                            $member->gpt_4o_credits_prepaid = ($prepaid_left < 0) ? 0 : $prepaid_left;
+                        }
+        
+                        $member->update();
+        
+                    } else {
+                        $remaining = $words - Auth::user()->gpt_4o_credits;
+                        $user->gpt_4o_credits = 0;
+        
+                        $prepaid_left = Auth::user()->gpt_4o_credits_prepaid - $remaining;
+                        $user->gpt_4o_credits_prepaid = ($prepaid_left < 0) ? 0 : $prepaid_left;
+                        $user->update();
+                    }
+                }
+            } 
+
+            return true;
+
         } elseif ($model == 'claude-3-opus-20240229') {
             if (auth()->user()->claude_3_opus_credits != -1) {
 
@@ -743,7 +863,7 @@ class HelperService
 
             return true;
 
-        } elseif ($model == 'claude-3-sonnet-20240229') {
+        } elseif ($model == 'claude-3-5-sonnet-20240620') {
             if (auth()->user()->claude_3_sonnet_credits != -1) {
 
                 if (Auth::user()->claude_3_sonnet_credits > $words) {
@@ -1111,6 +1231,7 @@ class HelperService
             $user->gpt_3_turbo_credits = $plan->gpt_3_turbo_credits;
             $user->gpt_4_turbo_credits = $plan->gpt_4_turbo_credits;
             $user->gpt_4_credits = $plan->gpt_4_credits;
+            $user->gpt_4o_credits = $plan->gpt_4o_credits;
             $user->claude_3_opus_credits = $plan->claude_3_opus_credits;
             $user->claude_3_sonnet_credits = $plan->claude_3_sonnet_credits;
             $user->claude_3_haiku_credits = $plan->claude_3_haiku_credits;
@@ -1125,6 +1246,7 @@ class HelperService
             $user->gpt_3_turbo_credits_prepaid = ($user->gpt_3_turbo_credits_prepaid + $plan->gpt_3_turbo_credits_prepaid);
             $user->gpt_4_turbo_credits_prepaid = ($user->gpt_4_turbo_credits_prepaid + $plan->gpt_4_turbo_credits_prepaid);
             $user->gpt_4_credits_prepaid = ($user->gpt_4_credits_prepaid + $plan->gpt_4_credits_prepaid);
+            $user->gpt_4o_credits_prepaid = ($user->gpt_4o_credits_prepaid + $plan->gpt_4o_credits_prepaid);
             $user->fine_tune_credits_prepaid = ($user->fine_tune_credits_prepaid + $plan->fine_tune_credits_prepaid);
             $user->claude_3_opus_credits_prepaid = ($user->claude_3_opus_credits_prepaid + $plan->claude_3_opus_credits_prepaid);
             $user->claude_3_sonnet_credits_prepaid = ($user->claude_3_sonnet_credits_prepaid + $plan->claude_3_sonnet_credits_prepaid);
@@ -1190,7 +1312,13 @@ class HelperService
         $total_value = $tax_value + $id->price;
 
         $record_payment = new Payment();
-        $record_payment->user_id = ($gateway == 'BankTransfer') ? auth()->user()->id : $user->id;
+
+        if ($user) {
+            $record_payment->user_id = $user->id;
+        } else {
+            $record_payment->user_id = auth()->user()->id;  
+        }
+        
         $record_payment->plan_id = $id->id;
         $record_payment->order_id = $orderID;
         $record_payment->plan_name = $id->plan_name;
@@ -1236,6 +1364,7 @@ class HelperService
             $user->gpt_3_turbo_credits_prepaid = ($user->gpt_3_turbo_credits_prepaid + $plan->gpt_3_turbo_credits_prepaid);
             $user->gpt_4_turbo_credits_prepaid = ($user->gpt_4_turbo_credits_prepaid + $plan->gpt_4_turbo_credits_prepaid);
             $user->gpt_4_credits_prepaid = ($user->gpt_4_credits_prepaid + $plan->gpt_4_credits_prepaid);
+            $user->gpt_4o_credits_prepaid = ($user->gpt_4o_credits_prepaid + $plan->gpt_4o_credits_prepaid);
             $user->fine_tune_credits_prepaid = ($user->fine_tune_credits_prepaid + $plan->fine_tune_credits_prepaid);
             $user->claude_3_opus_credits_prepaid = ($user->claude_3_opus_credits_prepaid + $plan->claude_3_opus_credits_prepaid);
             $user->claude_3_sonnet_credits_prepaid = ($user->claude_3_sonnet_credits_prepaid + $plan->claude_3_sonnet_credits_prepaid);
@@ -1253,6 +1382,7 @@ class HelperService
             $user->gpt_3_turbo_credits = $plan->gpt_3_turbo_credits;
             $user->gpt_4_turbo_credits = $plan->gpt_4_turbo_credits;
             $user->gpt_4_credits = $plan->gpt_4_credits;
+            $user->gpt_4o_credits = $plan->gpt_4o_credits;
             $user->claude_3_opus_credits = $plan->claude_3_opus_credits;
             $user->claude_3_sonnet_credits = $plan->claude_3_sonnet_credits;
             $user->claude_3_haiku_credits = $plan->claude_3_haiku_credits;
@@ -1267,4 +1397,183 @@ class HelperService
 
         $user->save();
     }
+
+
+    public static function wordpress($title, $slug, $content)
+    {
+        $user = new UserService();
+        $settings = Setting::where('name', 'license')->first(); 
+        $verify = $user->verify_license();
+        if($settings->value != $verify['code']){return;}
+
+        $current = UserIntegration::where('integration_id', 1)->where('user_id', auth()->user()->id)->first();
+
+        if ($current) {
+            if ($current->status) {
+                $credentials = json_decode($current->credentials);
+                $process = curl_init($credentials->domain . '/wp-json/wp/v2/posts');
+
+                $data = array('slug' => $slug, 'title' => $title, 'content' => $content, 'excerpt' => 'Short excerpt' );
+                $data_string = json_encode($data);
+
+                curl_setopt($process, CURLOPT_USERPWD, $credentials->username . ":" . $credentials->password);
+                curl_setopt($process, CURLOPT_TIMEOUT, 60);
+                curl_setopt($process, CURLOPT_POST, 1);
+                curl_setopt($process, CURLOPT_CUSTOMREQUEST, "POST");
+                curl_setopt($process, CURLOPT_POSTFIELDS, $data_string);
+                curl_setopt($process, CURLOPT_RETURNTRANSFER, TRUE);
+                curl_setopt($process, CURLOPT_HTTPHEADER, [                                                                         
+                    'Content-Type: application/json',                                                                                
+                    'Content-Length: ' . strlen($data_string),
+                    'Authorization: Bearer ' .  $credentials->jwt_token,   
+                    ]                                                                  
+                );
+
+                $return = curl_exec($process);
+                $result = json_decode($return, true);
+                curl_close($process);
+
+                $data['status'] = 'success';
+                $data['message'] = $result;
+                return $data;
+
+            } else {
+                $data['status'] = 'error';
+                $data['message'] = __('You have deactivate Wordpress integration, make sure to enable it first');
+                return $data;
+            }
+        } else {
+            $data['status'] = 'error';
+            $data['message'] = __('Make sure to setup your Wordpress credentials first and enable this integration');
+            return $data;
+        }
+    }
+
+
+    public static function checkWordpress($domain, $username, $password)
+    {
+
+        $process = curl_init($domain . '/wp-json/api/v1/token');
+
+        $data = array('username' => $username, 'password' => $password);
+        $data_string = json_encode($data);
+
+        curl_setopt($process, CURLOPT_TIMEOUT, 60);
+        curl_setopt($process, CURLOPT_POST, 1);
+        curl_setopt($process, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($process, CURLOPT_POSTFIELDS, $data_string);
+        curl_setopt($process, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($process, CURLOPT_HTTPHEADER, array(                                                                          
+            'Content-Type: application/json',                                                                                
+            'Content-Length: ' . strlen($data_string))                                                                       
+        );
+
+        $return = curl_exec($process);
+        $result = json_decode($return, true);
+        curl_close($process);
+
+        return $result;
+    }
+
+
+    public static function mainPlanModel()
+    {
+        $default = auth()->user()->default_model_template;
+
+        switch ($default) {
+            case 'gpt-3.5-turbo-0125':
+                $model = 'GPT 3.5 Turbo';
+                break;
+            case 'gpt-4':
+                $model = 'GPT 4';
+                break;
+            case 'gpt-4o':
+                $model = 'GPT 4o';
+                break;
+            case 'gpt-4-0125-preview':
+                $model = 'GPT 4 Turbo';
+                break;            
+            case 'gpt-4-turbo-2024-04-09':
+                $model = 'GPT 4 Turbo Vision';
+                break;
+            case 'claude-3-opus-20240229':
+                $model = 'Claude 3 Opus';
+                break;
+            case 'claude-3-5-sonnet-20240620':
+                $model = 'Claude 3.5 Sonnet';
+                break;
+            case 'claude-3-haiku-20240307':
+                $model = 'Claude 3 Haiku';
+                break;
+            case 'gemini_pro':
+                $model = 'Gemini Pro';
+                break;
+            default:
+                $model = 'Fine Tune';
+                break;
+        }
+
+        return $model;
+    }
+
+
+    public static function mainPlanBalance()
+    {
+        $default = auth()->user()->default_model_template;
+
+        switch ($default) {
+            case 'gpt-3.5-turbo-0125':
+                $balance = (auth()->user()->gpt_3_turbo_credits == -1) ? __('Unlimited') : \App\Services\HelperService::userAvailableWords();
+                break;
+            case 'gpt-4':
+                $balance = (auth()->user()->gpt_4_credits == -1) ? __('Unlimited') : \App\Services\HelperService::userAvailableGPT4Words();
+                break;
+            case 'gpt-4o':
+                $balance = (auth()->user()->gpt_4o_credits == -1) ? __('Unlimited') : \App\Services\HelperService::userAvailableGPT4oWords();
+                break;
+            case 'gpt-4-0125-preview':
+                $balance = (auth()->user()->gpt_4_turbo_credits == -1) ? __('Unlimited') : \App\Services\HelperService::userAvailableGPT4TWords();
+                break;            
+            case 'gpt-4-turbo-2024-04-09':
+                $balance = (auth()->user()->gpt_4_turbo_credits == -1) ? __('Unlimited') : \App\Services\HelperService::userAvailableGPT4TWords();
+                break;
+            case 'claude-3-opus-20240229':
+                $balance = (auth()->user()->claude_3_opus_credits == -1) ? __('Unlimited') : \App\Services\HelperService::userAvailableClaudeOpusWords();
+                break;
+            case 'claude-3-5-sonnet-20240620':
+                $balance = (auth()->user()->claude_3_sonnet_credits == -1) ? __('Unlimited') : \App\Services\HelperService::userAvailableClaudeSonnetWords();
+                break;
+            case 'claude-3-haiku-20240307':
+                $balance = (auth()->user()->claude_3_haiku_credits == -1) ? __('Unlimited') : \App\Services\HelperService::userAvailableClaudeHaikuWords();
+                break;
+            case 'gemini_pro':
+                $balance = (auth()->user()->gemini_pro_credits == -1) ? __('Unlimited') : \App\Services\HelperService::userAvailableGeminiProWords();
+                break;
+            default:
+                $balance = (auth()->user()->fine_tune_credits == -1) ? __('Unlimited') : \App\Services\HelperService::userAvailableFineTuneWords();
+                break;
+        }
+
+        return $balance;
+    }
+
+
+    public static function checkDBStatus(): bool
+    {
+        try {
+            DB::connection()->getPdo();
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    public static function checkField(string $key, $default = null)
+    {
+        $setting = MainSetting::query()->first();
+        return $setting?->getAttribute($key) ?? $default;
+    }
+
+    
 }
+

@@ -142,18 +142,26 @@ class UserSupportController extends Controller
             
             $image = request()->file('attachment');
 
-            $name = Str::random(10);
+            $imageTypes = ['jpg', 'jpeg', 'png', 'webp'];
+            if (!in_array(Str::lower($image->getClientOriginalExtension()), $imageTypes)) {
+                toastr()->error(__('Included image must be in png, jpeg or webp formats'));
+                return redirect()->back();
+
+            } else {
+
+                $name = Str::random(10);
          
-            $folder = '/uploads/img/support/';
-          
-            $filePath = $folder . $name . '.' . $image->getClientOriginalExtension();
+                $folder = '/uploads/img/support/';
             
-            $this->uploadImage($image, $folder, 'public', $name);
+                $filePath = $folder . $name . '.' . $image->getClientOriginalExtension();
+                
+                $this->uploadImage($image, $folder, 'public', $name);
 
-            $message->attachment = $filePath;
+                $message->attachment = $filePath;
 
-            $message->save();
-        
+                $message->save();
+            }
+
         } else {
             $message->save();
         }
@@ -212,18 +220,25 @@ class UserSupportController extends Controller
             
             $image = request()->file('attachment');
 
-            $name = Str::random(10);
+            $imageTypes = ['jpg', 'jpeg', 'png', 'webp'];
+            if (!in_array(Str::lower($image->getClientOriginalExtension()), $imageTypes)) {
+                toastr()->error(__('Included image must be in png, jpeg or webp formats'));
+                return redirect()->back();
+
+            } else {
+                $name = Str::random(10);
          
-            $folder = '/uploads/img/support/';
-          
-            $filePath = $folder . $name . '.' . $image->getClientOriginalExtension();
+                $folder = '/uploads/img/support/';
             
-            $this->uploadImage($image, $folder, 'public', $name);
+                $filePath = $folder . $name . '.' . $image->getClientOriginalExtension();
+                
+                $this->uploadImage($image, $folder, 'public', $name);
 
-            $message->attachment = $filePath;
+                $message->attachment = $filePath;
 
-            $message->save();
-        
+                $message->save();
+            }
+
         } else {
             $message->save();
         }

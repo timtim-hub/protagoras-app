@@ -44,7 +44,7 @@
 									<tr>	
 										<th width="10%">{{ __('User') }}</th> 		
 										<th width="5%">{{ __('Group') }}</th>								
-										<th width="22%">{{ __('GPT 4 / GPT 4T / GPT 3.5T') }} / {{ __('DE Images') }} / {{ __('SD Images') }} / {{ __('Characters') }} / {{ __('Minutes') }}</th>       	        	       	    						           	     	       	    						           	        	       	    						           	     	       	    						           	       	        	       	    						           	     	       	    						           	        	       	    						           	     	       	    						           	
+										<th width="22%">{{ __('GPT 4o') }} / {{ __('DE Images') }} / {{ __('SD Images') }} / {{ __('Characters') }} / {{ __('Minutes') }}</th>       	        	       	    						           	     	       	    						           	        	       	    						           	     	       	    						           	       	        	       	    						           	     	       	    						           	        	       	    						           	     	       	    						           	
 										<th width="2%">{{ __('Country') }}</th>    
 										<th width="2%">{{ __('Status') }}</th> 						           	
 										<th width="5%">{{ __('Created On') }}</th> 							    						           								    						           	

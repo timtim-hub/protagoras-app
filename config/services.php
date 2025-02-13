@@ -149,10 +149,12 @@ return [
             'enable' => env('GOOGLE_MAPS_ENABLE'),
             'key' => env('GOOGLE_MAPS_KEY'),   
         ],   
-        /* Google Analytics Tracking ID */
+        /* Google Analytics*/
         'analytics' => [
             'enable' => env('GOOGLE_ANALYTICS_ENABLE'),
             'id' => env('GOOGLE_ANALYTICS_ID'),   
+            'property' => env('GOOGLE_ANALYTICS_PROPERTY_ID'),   
+            'credentials' => env('GOOGLE_SERVICE_ACCOUNT_CREDENTIALS'),   
         ],
     ],
 

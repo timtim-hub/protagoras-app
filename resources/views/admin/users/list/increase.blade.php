@@ -40,6 +40,7 @@
 										<p class="fs-12 mb-2">{{ __('Available GPT 3.5 Turbo Model Words') }}: <span class="font-weight-bold ml-2">@if ($user->gpt_3_turbo_credits == -1) {{ __('Unlimited') }} @else {{ number_format($user->gpt_3_turbo_credits) }} @endif</span></p>
 										<p class="fs-12 mb-2">{{ __('Available GPT 4 Turbo Model Words') }}: <span class="font-weight-bold ml-2">@if ($user->gpt_4_turbo_credits == -1) {{ __('Unlimited') }} @else {{ number_format($user->gpt_4_turbo_credits) }} @endif</span></p>
 										<p class="fs-12 mb-2">{{ __('Available GPT 4 Model Words') }}: <span class="font-weight-bold ml-2">@if ($user->gpt_4_credits == -1) {{ __('Unlimited') }} @else {{ number_format($user->gpt_4_credits) }} @endif</span></p>
+										<p class="fs-12 mb-2">{{ __('Available GPT 4o Model Words') }}: <span class="font-weight-bold ml-2">@if ($user->gpt_4o_credits == -1) {{ __('Unlimited') }} @else {{ number_format($user->gpt_4o_credits) }} @endif</span></p>
 										<p class="fs-12 mb-2">{{ __('Available Fine Tune Model Words') }}: <span class="font-weight-bold ml-2">@if ($user->fine_tune_credits == -1) {{ __('Unlimited') }} @else {{ number_format($user->fine_tune_credits) }} @endif</span></p>
 										<p class="fs-12 mb-2">{{ __('Available Claude 3 Opus Model Words') }}: <span class="font-weight-bold ml-2">@if ($user->claude_3_opus_credits == -1) {{ __('Unlimited') }} @else {{ number_format($user->claude_3_opus_credits) }} @endif</span></p>
 										<p class="fs-12 mb-2">{{ __('Available Claude 3 Sonnet Model Words') }}: <span class="font-weight-bold ml-2">@if ($user->claude_3_sonnet_credits == -1) {{ __('Unlimited') }} @else {{ number_format($user->claude_3_sonnet_credits) }} @endif</span></p>
@@ -54,6 +55,7 @@
 										<p class="fs-12 mb-2">{{ __('Available Prepaid GPT 3.5 Turbo Model Words') }}: <span class="font-weight-bold ml-2">{{ number_format($user->gpt_3_turbo_credits_prepaid) }}</span></p>
 										<p class="fs-12 mb-2">{{ __('Available Prepaid GPT 4 Turbo Model Words') }}: <span class="font-weight-bold ml-2">{{ number_format($user->gpt_4_turbo_credits_prepaid) }}</span></p>
 										<p class="fs-12 mb-2">{{ __('Available Prepaid GPT 4 Model Words') }}: <span class="font-weight-bold ml-2">{{ number_format($user->gpt_4_credits_prepaid) }}</span></p>
+										<p class="fs-12 mb-2">{{ __('Available Prepaid GPT 4o Model Words') }}: <span class="font-weight-bold ml-2">{{ number_format($user->gpt_4o_credits_prepaid) }}</span></p>
 										<p class="fs-12 mb-2">{{ __('Available Prepaid Fine Tune Model Words') }}: <span class="font-weight-bold ml-2">{{ number_format($user->fine_tune_credits_prepaid) }}</span></p>
 										<p class="fs-12 mb-2">{{ __('Available Prepaid Claude 3 Opus Model Words') }}: <span class="font-weight-bold ml-2">{{ number_format($user->claude_3_opus_credits_prepaid) }}</span></p>
 										<p class="fs-12 mb-2">{{ __('Available Prepaid Claude 3 Sonnet Model Words') }}: <span class="font-weight-bold ml-2">{{ number_format($user->claude_3_sonnet_credits_prepaid) }}</span></p>
@@ -120,6 +122,25 @@
 									<div class="form-group">
 										<label class="form-label fs-12 font-weight-bold"><i class="fa-solid fa-scroll-old mr-2 text-info"></i>{{ __('User Prepaid GPT 4 Credits') }}</label>
 										<input type="number" class="form-control @error('gpt-4-prepaid') is-danger @enderror" value={{ $user->gpt_4_credits_prepaid }} name="gpt-4-prepaid">								
+									</div>
+								</div>
+							</div>
+
+							<div class="col-sm-12 col-md-6 mt-3">
+								<div class="input-box mb-4">
+									<div class="form-group">
+										<label class="form-label fs-12 font-weight-bold"><i class="fa-solid fa-scroll-old mr-2 text-info"></i>{{ __('User GPT 4o Credits') }}</label>
+										<input type="number" class="form-control @error('gpt-4o') is-danger @enderror" value={{ $user->gpt_4o_credits }} name="gpt-4o">
+										<span class="text-muted fs-10">{{ __('Set as -1 for unlimited words') }}</span>									
+									</div>
+								</div>
+							</div>
+
+							<div class="col-sm-12 col-md-6 mt-3">
+								<div class="input-box mb-4">
+									<div class="form-group">
+										<label class="form-label fs-12 font-weight-bold"><i class="fa-solid fa-scroll-old mr-2 text-info"></i>{{ __('User Prepaid GPT 4o Credits') }}</label>
+										<input type="number" class="form-control @error('gpt-4o-prepaid') is-danger @enderror" value={{ $user->gpt_4o_credits_prepaid }} name="gpt-4o-prepaid">								
 									</div>
 								</div>
 							</div>

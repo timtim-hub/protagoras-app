@@ -8,7 +8,7 @@
 @section('content')					
 	<div class="row justify-content-center mt-24">
 		<div class="col-sm-12 text-center">
-			<h3 class="card-title fs-20 mb-3 super-strong"><i class="fa-solid fa-microchip-ai mr-2 text-primary"></i>{{ __('Davinci Settings') }}</h3>
+			<h3 class="card-title fs-20 mb-3 super-strong"><i class="fa-solid fa-microchip-ai mr-2 text-primary"></i>{{ __('AI Settings') }}</h3>
 			<h6 class="mb-6 fs-12 text-muted">{{ __('Control all AI settings from one place') }}</h6>
 		</div>
 
@@ -47,10 +47,11 @@
 											<select id="default-model-admin" name="default-model-admin" class="form-select" data-placeholder="{{ __('Select Default Model') }}:">			
 												<option value="gpt-3.5-turbo-0125" @if ( config('settings.default_model_admin')  == 'gpt-3.5-turbo-0125') selected @endif>{{ __('GPT 3.5 Turbo') }}</option>												
 												<option value="gpt-4" @if ( config('settings.default_model_admin')  == 'gpt-4') selected @endif>{{ __('GPT 4') }}</option>
+												<option value="gpt-4o" @if ( config('settings.default_model_admin')  == 'gpt-4o') selected @endif>{{ __('GPT 4o') }}</option>
 												<option value="gpt-4-0125-preview" @if ( config('settings.default_model_admin')  == 'gpt-4-0125-preview') selected @endif>{{ __('GPT 4 Turbo') }}</option>
 												<option value="gpt-4-turbo-2024-04-09" @if ( config('settings.default_model_admin')  == 'gpt-4-turbo-2024-04-09') selected @endif>{{ __('GPT 4 Turbo with Vision') }}</option>
 												<option value="claude-3-opus-20240229" @if ( config('settings.default_model_admin')  == 'claude-3-opus-20240229') selected @endif>{{ __('Claude 3 Opus') }}</option>
-												<option value="claude-3-sonnet-20240229" @if ( config('settings.default_model_admin')  == 'claude-3-sonnet-20240229') selected @endif>{{ __('Claude 3 Sonnet') }}</option>
+												<option value="claude-3-5-sonnet-20240620" @if ( config('settings.default_model_admin')  == 'claude-3-5-sonnet-20240620') selected @endif>{{ __('Claude 3.5 Sonnet') }}</option>
 												<option value="claude-3-haiku-20240307" @if ( config('settings.default_model_admin')  == 'claude-3-haiku-20240307') selected @endif>{{ __('Claude 3 Haiku') }}</option>
 												<option value="gemini_pro" @if ( config('settings.default_model_admin')  == 'gemini_pro') selected @endif>{{ __('Gemini Pro') }}</option>
 												@foreach ($models as $model)
@@ -313,10 +314,11 @@
 													<select id="default-model-user-bot" name="default-model-user-bot" class="form-select">			
 														<option value="gpt-3.5-turbo-0125" @if ( config('settings.default_model_user_bot')  == 'gpt-3.5-turbo-0125') selected @endif>{{ __('GPT 3.5 Turbo') }}</option>												
 														<option value="gpt-4" @if ( config('settings.default_model_user_bot')  == 'gpt-4') selected @endif>{{ __('GPT 4') }}</option>
+														<option value="gpt-4o" @if ( config('settings.default_model_user_bot')  == 'gpt-4o') selected @endif>{{ __('GPT 4o') }}</option>
 														<option value="gpt-4-0125-preview" @if ( config('settings.default_model_user_bot')  == 'gpt-4-0125-preview') selected @endif>{{ __('GPT 4 Turbo') }}</option>
 														<option value="gpt-4-turbo-2024-04-09" @if ( config('settings.default_model_user_bot')  == 'gpt-4-turbo-2024-04-09') selected @endif>{{ __('GPT 4 Turbo with Vision') }}</option>
 														<option value="claude-3-opus-20240229" @if ( config('settings.default_model_user_bot')  == 'claude-3-opus-20240229') selected @endif>{{ __('Claude 3 Opus') }}</option>
-														<option value="claude-3-sonnet-20240229" @if ( config('settings.default_model_user_bot')  == 'claude-3-sonnet-20240229') selected @endif>{{ __('Claude 3 Sonnet') }}</option>
+														<option value="claude-3-5-sonnet-20240620" @if ( config('settings.default_model_user_bot')  == 'claude-3-5-sonnet-20240620') selected @endif>{{ __('Claude 3.5 Sonnet') }}</option>
 														<option value="claude-3-haiku-20240307" @if ( config('settings.default_model_user_bot')  == 'claude-3-haiku-20240307') selected @endif>{{ __('Claude 3 Haiku') }}</option>
 														<option value="gemini_pro" @if ( config('settings.default_model_user_bot')  == 'gemini_pro') selected @endif>{{ __('Gemini Pro') }}</option>
 														@foreach ($models as $model)
@@ -332,10 +334,11 @@
 													<select id="default-model-user-template" name="default-model-user-template" class="form-select">	
 														<option value="gpt-3.5-turbo-0125" @if ( config('settings.default_model_user_template')  == 'gpt-3.5-turbo-0125') selected @endif>{{ __('GPT 3.5 Turbo') }}</option>												
 														<option value="gpt-4" @if ( config('settings.default_model_user_template')  == 'gpt-4') selected @endif>{{ __('GPT 4') }}</option>
+														<option value="gpt-4o" @if ( config('settings.default_model_user_template')  == 'gpt-4o') selected @endif>{{ __('GPT 4o') }}</option>
 														<option value="gpt-4-0125-preview" @if ( config('settings.default_model_user_template')  == 'gpt-4-0125-preview') selected @endif>{{ __('GPT 4 Turbo') }}</option>
 														<option value="gpt-4-turbo-2024-04-09" @if ( config('settings.default_model_user_template')  == 'gpt-4-turbo-2024-04-09') selected @endif>{{ __('GPT 4 Turbo with Vision') }}</option>														
 														<option value="claude-3-opus-20240229" @if ( config('settings.default_model_user_template')  == 'claude-3-opus-20240229') selected @endif>{{ __('Claude 3 Opus') }}</option>
-														<option value="claude-3-sonnet-20240229" @if ( config('settings.default_model_user_template')  == 'claude-3-sonnet-20240229') selected @endif>{{ __('Claude 3 Sonnet') }}</option>
+														<option value="claude-3-5-sonnet-20240620" @if ( config('settings.default_model_user_template')  == 'claude-3-5-sonnet-20240620') selected @endif>{{ __('Claude 3.5 Sonnet') }}</option>
 														<option value="claude-3-haiku-20240307" @if ( config('settings.default_model_user_template')  == 'claude-3-haiku-20240307') selected @endif>{{ __('Claude 3 Haiku') }}</option>
 														<option value="gemini_pro" @if ( config('settings.default_model_user_template')  == 'gemini_pro') selected @endif>{{ __('Gemini Pro') }}</option>
 														@foreach ($models as $model)
@@ -351,10 +354,11 @@
 													<select class="form-select" id="models-list" name="models_list[]" multiple>
 														<option value='gpt-3.5-turbo-0125' @foreach ($all_models as $key=>$value) @if($value == 'gpt-3.5-turbo-0125') selected @endif @endforeach>{{ __('GPT 3.5 Turbo') }}</option>																															
 														<option value='gpt-4' @foreach ($all_models as $key=>$value) @if($value == 'gpt-4') selected @endif @endforeach>{{ __('GPT 4') }}</option>																																																																																																																																																																																																																		
+														<option value='gpt-4o' @foreach ($all_models as $key=>$value) @if($value == 'gpt-4o') selected @endif @endforeach>{{ __('GPT 4o') }}</option>																																																																																																																																																																																																																		
 														<option value='gpt-4-0125-preview' @foreach ($all_models as $key=>$value) @if($value == 'gpt-4-0125-preview') selected @endif @endforeach>{{ __('GPT 4 Turbo') }}</option>																																																																																																																											
 														<option value='gpt-4-turbo-2024-04-09' @foreach ($all_models as $key=>$value) @if($value == 'gpt-4-turbo-2024-04-09') selected @endif @endforeach>{{ __('GPT 4 Turbo with Vision') }}</option>																																																																																																																											
 														<option value="claude-3-opus-20240229" @foreach ($all_models as $key=>$value) @if($value == 'claude-3-opus-20240229') selected @endif @endforeach>{{ __('Claude 3 Opus') }}</option>
-														<option value="claude-3-sonnet-20240229" @foreach ($all_models as $key=>$value) @if($value == 'claude-3-sonnet-20240229') selected @endif @endforeach>{{ __('Claude 3 Sonnet') }}</option>
+														<option value="claude-3-5-sonnet-20240620" @foreach ($all_models as $key=>$value) @if($value == 'claude-3-5-sonnet-20240620') selected @endif @endforeach>{{ __('Claude 3.5 Sonnet') }}</option>
 														<option value="claude-3-haiku-20240307" @foreach ($all_models as $key=>$value) @if($value == 'claude-3-haiku-20240307') selected @endif @endforeach>{{ __('Claude 3 Haiku') }}</option>
 														<option value="gemini_pro" @foreach ($all_models as $key=>$value) @if($value == 'gemini_pro') selected @endif @endforeach>{{ __('Gemini Pro') }}</option>
 														@foreach ($models as $model)
@@ -520,6 +524,16 @@
 														</div>
 													</div>
 												</div>
+
+												<div class="col-sm-12 col-md-6">
+													<div class="input-box">
+														<h6>{{ __('Number of GPT 4o Credits as a Gift upon Registration') }} <span class="text-muted">({{ __('One Time') }})<span class="text-required"><i class="fa-solid fa-asterisk"></i></span> </span></h6>
+														<div class="form-group">															
+															<input type="number" class="form-control @error('gpt-4o') is-danger @enderror" value={{ config('settings.free_gpt_4o_credits') }} name="gpt-4o">
+															<span class="text-muted fs-10">{{ __('Set as -1 for unlimited words') }}</span>									
+														</div>
+													</div>
+												</div>
 					
 												<div class="col-sm-12 col-md-6">
 													<div class="input-box">
@@ -553,7 +567,7 @@
 
 												<div class="col-sm-12 col-md-6">
 													<div class="input-box">
-														<h6>{{ __('Number of Claude 3 Sonnet Credits as a Gift upon Registration') }} <span class="text-muted">({{ __('One Time') }})<span class="text-required"><i class="fa-solid fa-asterisk"></i></span> </span></h6>
+														<h6>{{ __('Number of Claude 3.5 Sonnet Credits as a Gift upon Registration') }} <span class="text-muted">({{ __('One Time') }})<span class="text-required"><i class="fa-solid fa-asterisk"></i></span> </span></h6>
 														<div class="form-group">															
 															<input type="number" class="form-control @error('claude-3-sonnet') is-danger @enderror" value={{ config('settings.free_claude_3_sonnet_credits') }} name="claude-3-sonnet">
 															<span class="text-muted fs-10">{{ __('Set as -1 for unlimited words') }}</span>									
@@ -816,6 +830,7 @@
 														<option value='sd3' @if (config('settings.image_stable_diffusion_engine') == 'sd3') selected @endif> {{ __('Stable Diffusion 3.0') }}</option>		
 														<option value='sd3-turbo' @if (config('settings.image_stable_diffusion_engine') == 'sd3-turbo') selected @endif> {{ __('Stable Diffusion 3.0 Turbo') }}</option>		
 														<option value='core' @if (config('settings.image_stable_diffusion_engine') == 'core') selected @endif> {{ __('Stable Image Core') }}</option>		
+														<option value='ultra' @if (config('settings.image_stable_diffusion_engine') == 'ultra') selected @endif> {{ __('Stable Image Ultra') }}</option>		
 													</select>
 												</div>
 											</div>
@@ -1922,7 +1937,7 @@
 										</div>
 									</div>
 
-									<div class="card shadow-0 mt-0">							
+									<div class="card shadow-0 mt-0 mb-7">							
 										<div class="card-body">
 
 											<h6 class="fs-12 font-weight-bold mb-4"><i class="fa-sharp fa-solid fa-user-secret text-danger fs-14 mr-2"></i>{{ __('AI Content Detector Settings') }} <span class="text-muted">({{ __('For All Groups') }}) (Plagiarism Check Org)</span></h6>
@@ -1947,6 +1962,74 @@
 														<div class="form-group mt-3">
 															<label class="custom-switch">
 																<input type="checkbox" name="ai-detector-user-access" class="custom-switch-input" @if ( config('settings.ai_detector_user_access')  == 'allow') checked @endif>
+																<span class="custom-switch-indicator"></span>
+															</label>
+														</div>
+													</div>
+												</div>				
+											</div>		
+										</div>
+									</div>
+
+									<div class="card shadow-0 mt-0 mb-7">							
+										<div class="card-body">
+
+											<h6 class="fs-12 font-weight-bold mb-4"><i class="fa-sharp fa-solid fa-rectangles-mixed text-danger fs-14 mr-2"></i>{{ __('Integrations Settings') }} <span class="text-muted">({{ __('For All Groups') }}) (Wordpress)</span></h6>
+
+											<div class="row">
+
+												<div class="col-lg-6 col-md-6 col-sm-12">
+													<div class="input-box">
+														<h6>{{ __('Integration Feature') }} <span class="text-muted">({{ __('For All Groups') }})</span> <span class="text-required"><i class="fa-solid fa-asterisk"></i></span></h6>
+														<div class="form-group mt-3">
+															<label class="custom-switch">
+																<input type="checkbox" name="integration-feature-user" class="custom-switch-input" @if ( config('settings.integration_feature_user')  == 'allow') checked @endif>
+																<span class="custom-switch-indicator"></span>
+															</label>
+														</div>
+													</div>
+												</div>
+
+												<div class="col-lg-6 col-md-6 col-sm-12">
+													<div class="input-box">
+														<h6>{{ __('Integration Feature Access') }} <span class="text-muted">({{ __('For Non-Subscribers') }})</span> <span class="text-required"><i class="fa-solid fa-asterisk"></i></span></h6>
+														<div class="form-group mt-3">
+															<label class="custom-switch">
+																<input type="checkbox" name="integration-user-access" class="custom-switch-input" @if ( config('settings.integration_user_access')  == 'allow') checked @endif>
+																<span class="custom-switch-indicator"></span>
+															</label>
+														</div>
+													</div>
+												</div>				
+											</div>		
+										</div>
+									</div>
+
+									<div class="card shadow-0 mt-0">							
+										<div class="card-body">
+
+											<h6 class="fs-12 font-weight-bold mb-4"><i class="fa-sharp fa-solid fa-photo-film text-danger fs-14 mr-2"></i>{{ __('AI Photo Studio Settings') }} <span class="text-muted">({{ __('For All Groups') }})</span></h6>
+
+											<div class="row">
+
+												<div class="col-lg-6 col-md-6 col-sm-12">
+													<div class="input-box">
+														<h6>{{ __('AI Photo Studio Feature') }} <span class="text-muted">({{ __('For All Groups') }})</span> <span class="text-required"><i class="fa-solid fa-asterisk"></i></span></h6>
+														<div class="form-group mt-3">
+															<label class="custom-switch">
+																<input type="checkbox" name="photo-studio-feature-user" class="custom-switch-input" @if ( config('settings.photo_studio_feature_user')  == 'allow') checked @endif>
+																<span class="custom-switch-indicator"></span>
+															</label>
+														</div>
+													</div>
+												</div>
+
+												<div class="col-lg-6 col-md-6 col-sm-12">
+													<div class="input-box">
+														<h6>{{ __('AI Photo Studio Feature Access') }} <span class="text-muted">({{ __('For Non-Subscribers') }})</span> <span class="text-required"><i class="fa-solid fa-asterisk"></i></span></h6>
+														<div class="form-group mt-3">
+															<label class="custom-switch">
+																<input type="checkbox" name="photo-studio-user-access" class="custom-switch-input" @if ( config('settings.photo_studio_user_access')  == 'allow') checked @endif>
 																<span class="custom-switch-indicator"></span>
 															</label>
 														</div>

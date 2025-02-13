@@ -1257,7 +1257,7 @@ class VoiceoverController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function config(Request $request)
+    public function configuration(Request $request)
     {   
         if ($request->ajax()) { 
 

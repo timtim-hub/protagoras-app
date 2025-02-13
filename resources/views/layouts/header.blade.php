@@ -29,7 +29,6 @@
 
 <!-- All Styles -->
 <link href="{{URL::asset('css/app.css')}}" rel="stylesheet" />
-<!-- Custom Styles -->
-<link href="{{URL::asset('css/appcustom.css')}}" rel="stylesheet" />
+
 
 	

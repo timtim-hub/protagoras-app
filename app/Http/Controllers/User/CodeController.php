@@ -45,8 +45,9 @@ class CodeController extends Controller
         }
 
         $fine_tunes = FineTuneModel::all();
+        $default_model = auth()->user()->default_model_template;
 
-        return view('user.codex.index', compact('models', 'fine_tunes'));
+        return view('user.codex.index', compact('models', 'fine_tunes', 'default_model'));
     }
 
 

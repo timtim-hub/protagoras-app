@@ -5,7 +5,8 @@
 @else
 
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ LaravelLocalization::getCurrentLocale() }}"
+dir="{{ LaravelLocalization::getCurrentLocaleDirection() }}">
 	<head>
 		<!-- Meta data -->
 		<meta charset="utf-8">
@@ -137,31 +138,8 @@
 
 					<!-- COPYRIGHT INFORMATION -->
 					<div id="copyright" class="container pl-0 pr-0">	
-						
-						<div class="row no-gutters">
-							<div class="col-lg-4 col-md-4 col-sm-12">
-								<div class="dropdown header-locale" id="frontend-local">
-									<a class="nav-link icon" data-bs-toggle="dropdown">
-										<span class="fs-12">{{ Config::get('locale')[App::getLocale()]['display'] }}</span>
-									</a>
-									<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow animated">
-										<div class="local-menu">
-											@foreach (Config::get('locale') as $lang => $language)
-												@if ($lang != App::getLocale())
-													<a href="{{ route('locale', $lang) }}" class="dropdown-item d-flex">
-														<div class="text-info"><i class="flag flag-{{ $language['flag'] }} mr-3"></i></div>
-														<div>
-															<span class="font-weight-normal fs-12">{{ $language['display'] }}</span>
-														</div>
-													</a>                                        
-												@endif
-											@endforeach
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="col-lg-4 col-md-4 col-sm-12 d-flex justify-content-center">
+						<div class="row no-gutters text-center">
+							<div class="col-sm-12 d-flex justify-content-center">
 								<ul id="footer-icons" class="list-inline">
 									@if (config('frontend.social_linkedin'))
 										<a href="{{ config('frontend.social_linkedin') }}" target="_blank"><li class="list-inline-item"><i class="footer-icon fa-brands fa-linkedin"></i></li></a>
@@ -185,8 +163,8 @@
 								</ul>
 							</div>
 
-							<div class="col-lg-4 col-md-4 col-sm-12">
-								<p class="text-right" id="frontend-copyright">© {{ date("Y") }} <a href="{{ config('app.url') }}">{{ config('app.name') }}</a>. {{ __('All rights reserved') }}.</p>
+							<div class="col-sm-12 justify-content-center mt-5 mb-4">
+								<p id="frontend-copyright">© {{ date("Y") }} <a href="{{ config('app.url') }}">{{ config('app.name') }}</a>. {{ __('All rights reserved') }}.</p>
 							</div>
 						</div>
 					

@@ -25,6 +25,9 @@ use App\Models\FineTuneModel;
 use App\Services\HelperService;
 use WpAi\Anthropic\Facades\Anthropic;
 use Gemini\Laravel\Facades\Gemini;
+use GuzzleHttp\Client as GuzzleClient;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use Exception;
 
 
@@ -745,8 +748,25 @@ class TemplateController extends Controller
                     $prompt .='. Create seperate distinct ' . $max_results . ' results.';
                 }
 
-                if ($model == 'claude-3-opus-20240229' || $model == 'claude-3-sonnet-20240229' || $model == 'claude-3-haiku-20240307') {
-                    $response = Anthropic::messages()
+                if ($model == 'claude-3-opus-20240229' || $model == 'claude-3-5-sonnet-20240620' || $model == 'claude-3-haiku-20240307') {
+
+                    # Check Claude API key
+                    if (config('settings.personal_claude_api') == 'allow') {
+                        $claude_api = auth()->user()->personal_claude_key;        
+                    } elseif (!is_null(auth()->user()->plan_id)) {
+                        $check_api = SubscriptionPlan::where('id', auth()->user()->plan_id)->first();
+                        if ($check_api->personal_claude_api) {
+                            $claude_api = auth()->user()->personal_claude_key;               
+                        } else {
+                            $claude_api = config('anthropic.api_key');                           
+                       }                       
+                    } else {
+                        $claude_api = config('anthropic.api_key'); 
+                    }
+
+                    $anthropic = new \WpAi\Anthropic\AnthropicAPI($claude_api);
+
+                    $response = $anthropic->messages()
                                 ->model($model)
                                 ->maxTokens($max_words)
                                 ->messages([
@@ -775,7 +795,27 @@ class TemplateController extends Controller
                 } elseif ($model == 'gemini_pro') { 
                     try {
 
-                        $stream = Gemini::geminiPro()->streamGenerateContent($prompt);
+                        # Check Gemini API key
+                    if (config('settings.personal_gemini_api') == 'allow') {
+                        $gemini_api = auth()->user()->personal_gemini_key;        
+                    } elseif (!is_null(auth()->user()->plan_id)) {
+                        $check_api = SubscriptionPlan::where('id', auth()->user()->plan_id)->first();
+                        if ($check_api->personal_gemini_api) {
+                            $gemini_api = auth()->user()->personal_gemini_key;               
+                        } else {
+                            $gemini_api = config('gemini.api_key');                           
+                       }                       
+                    } else {
+                        $gemini_api = config('gemini.api_key'); 
+                    }
+
+                    $gemini_client = \Gemini::factory()
+                        ->withApiKey($gemini_api)
+                        ->withHttpClient($client = new GuzzleClient())
+                        ->withStreamHandler(fn (RequestInterface $request): ResponseInterface => $client->send($request, ['stream' => true]))
+                      ->make();
+
+                        $stream = $gemini_client->geminiPro()->streamGenerateContent($prompt);
 
                         foreach ($stream as $response) {
                             $clean = str_replace(["\r\n", "\r", "\n"], "<br/>", $response->text());
@@ -1196,6 +1236,14 @@ class TemplateController extends Controller
             }
         }
 
+        
+        $verify = HelperService::creditCheck($request->model, 100);
+        if (isset($verify['status'])) {
+            if ($verify['status'] == 'error') {
+                return $verify;
+            }
+        }
+
 
         # Verify if user has enough credits
         if (auth()->user()->available_words != -1) {
@@ -1337,29 +1385,31 @@ class TemplateController extends Controller
 	*/
 	public function save(Request $request) 
     {
-        if ($request->ajax()) {
-
-            $uploading = new UserService();
-            $upload = $uploading->prompt();
-            if($upload['dota']!=622220){return;}     
+        if ($request->ajax()) {  
 
             $document = Content::where('id', request('id'))->first(); 
 
-            if ($document->user_id == Auth::user()->id){
+            if ($document) {
+                if ($document->user_id == auth()->user()->id){
 
-                $document->result_text = $request->text;
-                $document->title = $request->title;
-                $document->workbook = $request->workbook;
-                $document->save();
-
-                $data['status'] = 'success';
-                return $data;  
+                    $document->result_text = $request->text;
+                    $document->title = $request->title;
+                    $document->workbook = $request->workbook;
+                    $document->save();
     
-            } else{
-
+                    $data['status'] = 'success';
+                    return $data;  
+        
+                } else{
+    
+                    $data['status'] = 'error';
+                    return $data;
+                }  
+            } else {
                 $data['status'] = 'error';
                 return $data;
-            }  
+            }
+           
         }
 	}
 

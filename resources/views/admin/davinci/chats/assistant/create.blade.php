@@ -114,6 +114,7 @@
 									<select class="form-select" name="model">									
 										<option value='gpt-3.5-turbo-0125' selected>{{ __('GPT 3.5 Turbo') }}</option>																																																																																																																																																																																																																																																																																																																																																		
 										<option value='gpt-4-0125-preview'>{{ __('GPT 4 Turbo') }}</option>																																																																																																																											
+										<option value='gpt-4o'>{{ __('GPT 4o') }}</option>																																																																																																																											
 										<option value='gpt-4-turbo-2024-04-09'>{{ __('GPT 4 Turbo with Vision') }}</option>			
 										@foreach ($fine_tunes as $fine_tune)
 											<option value="{{ $fine_tune->model }}">{{ $fine_tune->description }}</option>										

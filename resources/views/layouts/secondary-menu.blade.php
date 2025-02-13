@@ -34,20 +34,19 @@
             </div>
             @if (Route::has('login'))
                     <div id="login-buttons">
-                        <div class="dropdown header-locale" id="frontend-local">
+                        <div class="dropdown header-languages" id="frontend-local">
                             <a class="icon" data-bs-toggle="dropdown">
-                                <span class="fs-12 mr-4"><i class="fa-solid text-black fs-16 mr-2 fa-globe"></i>{{ ucfirst(Config::get('locale')[App::getLocale()]['code']) }}</span>
+                                <span class="header-icon fa-solid fa-globe mr-4 fs-15"></span>
                             </a>
-                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow animated">
+                            <div class="dropdown-menu animated">
                                 <div class="local-menu">
-                                    @foreach (Config::get('locale') as $lang => $language)
-                                        @if ($lang != App::getLocale())
-                                            <a href="{{ route('locale', $lang) }}" class="dropdown-item d-flex">
-                                                <div class="text-info"><i class="flag flag-{{ $language['flag'] }} mr-3"></i></div>
+                                    @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                        @if (in_array($localeCode, explode(',', $settings->languages)))
+                                            <a href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}" class="dropdown-item d-flex pl-4" hreflang="{{ $localeCode }}">
                                                 <div>
-                                                    <span class="font-weight-normal fs-12">{{ $language['display'] }}</span>
+                                                    <span class="font-weight-normal fs-12">{{ ucfirst($properties['native']) }}</span> <span class="fs-10 text-muted">{{ $localeCode }}</span>
                                                 </div>
-                                            </a>                                        
+                                            </a>   
                                         @endif
                                     @endforeach
                                 </div>

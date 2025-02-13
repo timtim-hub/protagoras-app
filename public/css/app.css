@@ -5264,7 +5264,7 @@ i.fa.round {
 }
 
 .h-100vh {
-  height: 100vh !important;
+  height: 750px !important;
 }
 
 .h-100 {
@@ -26319,7 +26319,6 @@ body.dark-theme *::-webkit-scrollbar-track {
     font-size: 30px !important;
   }
   #main-wrapper .text-container p {
-    display: none !important;
     font-size: 14px !important;
   }
   #main-wrapper .text-container a {

@@ -69,7 +69,7 @@ class UserCustomTemplateController extends Controller
             'description' => 'required',
         ]);     
         
-        $template_code = strtoupper(Str::random(5));
+        $template_code = strtoupper(Str::random(7));
         $status = (isset($request->activate)) ? true : false;
         $icon = ($request->category == 'text') ? str_replace('"></i>', ' main-icon"></i>', $request->icon) : str_replace('"></i>', ' ' . $request->category . '-icon"></i>', $request->icon);
 

@@ -78,9 +78,10 @@ class AdminUserController extends Controller
     public function listUsers(Request $request)
     {  
         if ($request->ajax()) {
-            $data = User::latest()->get();
+            $data = User::select('id', 'profile_photo_path', 'name', 'email', 'created_at', 'status', 'group', 'created_at', 'country', 'gpt_4o_credits', 'gpt_4o_credits_prepaid', 'available_dalle_images', 'available_dalle_images_prepaid', 'available_sd_images', 'available_sd_images_prepaid', 'available_chars_prepaid', 'available_chars', 'available_minutes_prepaid', 'available_minutes')->get();
+            \Log::info($data);
             return Datatables::of($data)
-                    ->addIndexColumn()
+
                     ->addColumn('actions', function($row){
                         $actionBtn ='<div>
                                         <a href="'. route("admin.user.show", $row["id"] ). '"><i class="fa-solid fa-clipboard-user table-action-buttons view-action-button" title="'. __('View User') .'"></i></a>
@@ -129,14 +130,12 @@ class AdminUserController extends Controller
                         return $custom_group;
                     })
                     ->addColumn('custom-credits', function($row){
-                        $gpt3t = ($row["gpt_3_turbo_credits"] == -1) ? 'Unlimited' : number_format($row["gpt_3_turbo_credits"] + $row['gpt_3_turbo_credits_prepaid']);
-                        $gpt4t = ($row["gpt_4_turbo_credits"] == -1) ? 'Unlimited' : number_format($row["gpt_4_turbo_credits"] + $row['gpt_4_turbo_credits_prepaid']);
-                        $gpt4 = ($row["gpt_4_credits"] == -1) ? 'Unlimited' : number_format($row["gpt_4_credits"] + $row['gpt_4_credits_prepaid']);
+                        $gpt4 = ($row["gpt_4o_credits"] == -1) ? 'Unlimited' : number_format($row["gpt_4o_credits"] + $row['gpt_4o_credits_prepaid']);
                         $dalle_images = ($row["available_dalle_images"] == -1) ? 'Unlimited' : number_format($row["available_dalle_images"] + $row["available_dalle_images_prepaid"]);
                         $sd_images = ($row["available_sd_images"] == -1) ? 'Unlimited' : number_format($row["available_sd_images"] + $row["available_sd_images_prepaid"]);
                         $characters = ($row["available_chars"] == -1) ? 'Unlimited' : number_format($row["available_chars"] + $row['available_chars_prepaid']);
                         $minutes = ($row["available_minutes"] == -1) ? 'Unlimited' : number_format($row["available_minutes"] + $row['available_minutes_prepaid']);
-                        $custom_credits = '<span class="font-weight-bold">'. $gpt4 .' / '. $gpt4t .' / ' . $gpt3t .' / '. $characters . ' / ' . $minutes . ' / ' . $dalle_images . ' / '. $sd_images . '</span>';
+                        $custom_credits = '<span class="font-weight-bold">'. $gpt4 . ' / '. $dalle_images . ' / '. $sd_images . ' / '. $characters . ' / ' . $minutes . '</span>';
                         return $custom_credits;
                     })
                     ->rawColumns(['actions', 'custom-status', 'custom-group', 'created-on', 'user', 'custom-credits'])
@@ -214,6 +213,7 @@ class AdminUserController extends Controller
         $user->gpt_3_turbo_credits = config('settings.free_gpt_3_turbo_credits');
         $user->gpt_4_turbo_credits = config('settings.free_gpt_4_turbo_credits');
         $user->gpt_4_credits = config('settings.free_gpt_4_credits');
+        $user->gpt_4o_credits = config('settings.free_gpt_4o_credits');
         $user->fine_tune_credits = config('settings.free_fine_tune_credits');
         $user->claude_3_opus_credits = config('settings.free_claude_3_opus_credits');
         $user->claude_3_sonnet_credits = config('settings.free_claude_3_sonnet_credits');
@@ -326,6 +326,7 @@ class AdminUserController extends Controller
         $user->gpt_3_turbo_credits = request('gpt-3-turbo');
         $user->gpt_4_turbo_credits = request('gpt-4-turbo');
         $user->gpt_4_credits = request('gpt-4');
+        $user->gpt_4o_credits = request('gpt-4o');
         $user->fine_tune_credits = request('fine-tune');
         $user->claude_3_opus_credits = request('claude-3-opus');
         $user->claude_3_sonnet_credits = request('claude-3-sonnet');
@@ -342,6 +343,7 @@ class AdminUserController extends Controller
         $user->gpt_3_turbo_credits_prepaid = request('gpt-3-turbo-prepaid');
         $user->gpt_4_turbo_credits_prepaid = request('gpt-4-turbo-prepaid');
         $user->gpt_4_credits_prepaid = request('gpt-4-prepaid');
+        $user->gpt_4o_credits_prepaid = request('gpt-4o-prepaid');
         $user->fine_tune_credits_prepaid = request('fine-tune-prepaid');
         $user->claude_3_opus_credits_prepaid = request('claude-3-opus-prepaid');
         $user->claude_3_sonnet_credits_prepaid = request('claude-3-sonnet-prepaid');
@@ -434,6 +436,7 @@ class AdminUserController extends Controller
         $user->gpt_3_turbo_credits = $plan->gpt_3_turbo_credits;
         $user->gpt_4_turbo_credits = $plan->gpt_4_turbo_credits;
         $user->gpt_4_credits = $plan->gpt_4_credits;
+        $user->gpt_4o_credits = $plan->gpt_4o_credits;
         $user->fine_tune_credits = $plan->fine_tune_credits;
         $user->claude_3_opus_credits = $plan->claude_3_opus_credits;
         $user->claude_3_sonnet_credits = $plan->claude_3_sonnet_credits;

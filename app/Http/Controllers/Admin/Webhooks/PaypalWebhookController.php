@@ -177,6 +177,7 @@ class PaypalWebhookController extends Controller
                     $user->gpt_3_turbo_credits = $plan->gpt_3_turbo_credits;
                     $user->gpt_4_turbo_credits = $plan->gpt_4_turbo_credits;
                     $user->gpt_4_credits = $plan->gpt_4_credits;
+                    $user->gpt_4o_credits = $plan->gpt_4o_credits;
                     $user->claude_3_opus_credits = $plan->claude_3_opus_credits;
                     $user->claude_3_sonnet_credits = $plan->claude_3_sonnet_credits;
                     $user->claude_3_haiku_credits = $plan->claude_3_haiku_credits;

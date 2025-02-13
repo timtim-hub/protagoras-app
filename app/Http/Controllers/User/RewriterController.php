@@ -73,13 +73,14 @@ class RewriterController extends Controller
         }
 
         $fine_tunes = FineTuneModel::all();
+        $default_model = auth()->user()->default_model_template;
 
         if (auth()->user()->group == 'user') {
             if (config('settings.rewriter_user_access') != 'allow') {
                 toastr()->warning(__('AI ReWriter feature is not available for free tier users, subscribe to get a proper access'));
                 return redirect()->route('user.plans');
             } else {
-                return view('user.rewriter.index', compact('languages', 'workbooks', 'brands', 'brand_feature', 'models', 'fine_tunes'));
+                return view('user.rewriter.index', compact('languages', 'workbooks', 'brands', 'brand_feature', 'models', 'fine_tunes', 'default_model'));
             }
         } elseif (auth()->user()->group == 'subscriber') {
             $plan = SubscriptionPlan::where('id', auth()->user()->plan_id)->first();
@@ -87,10 +88,10 @@ class RewriterController extends Controller
                 toastr()->warning(__('Your current subscription plan does not include support for AI ReWriter feature'));
                 return redirect()->back();                   
             } else {
-                return view('user.rewriter.index', compact('languages', 'workbooks', 'brands', 'brand_feature', 'models', 'fine_tunes'));
+                return view('user.rewriter.index', compact('languages', 'workbooks', 'brands', 'brand_feature', 'models', 'fine_tunes', 'default_model'));
             }
         } else {
-            return view('user.rewriter.index', compact('languages', 'workbooks', 'brands', 'brand_feature', 'models', 'fine_tunes'));
+            return view('user.rewriter.index', compact('languages', 'workbooks', 'brands', 'brand_feature', 'models', 'fine_tunes', 'default_model'));
         }
     }
 

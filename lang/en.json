@@ -5,10 +5,8 @@
     "Disable": "Disable",
     "Free Tier Options": "Free Tier Options",
     "User Group": "User Group",
-
     "Current Month": "Current Month",
     "Current Year": "Current Year",
-
     "User": "User",
     "File Name": "File Name",
     "Format": "Format",
@@ -22,7 +20,6 @@
     "User Email": "User Email",
     "Uploaded On": "Uploaded On",
     "Return": "Return",
-
     "Admin Dashboard": "Admin Dashboard",
     "Dashboard": "Dashboard",
     "Total New Users": "Total New Users",
@@ -45,7 +42,6 @@
     "New Registered Users": "New Registered Users",
     "Registered Users Current Month": "Registered Users Current Month",
     "Total New Registered Users": "Total New Registered Users",
-
     "Company Name": "Company Name",
     "Company Website": "Company Website",
     "Business Address": "Business Address",
@@ -57,7 +53,6 @@
     "VAT Number": "VAT Number",
     "Cancel": "Cancel",
     "Save": "Save",
-
     "Monthly": "Monthly",
     "Yearly": "Yearly",
     "Yes": "Yes",
@@ -67,7 +62,6 @@
     "Created Date": "Created Date",
     "Confirm": "Confirm",
     "Update": "Update",
-
     "Appearance Settings": "Appearance Settings",
     "Frontend Management": "Frontend Management",
     "Setup Appearance Settings": "Setup Appearance Settings",
@@ -78,7 +72,6 @@
     "Secondary Minimized Logo": "Secondary Minimized Logo",
     "Browse": "Browse",
     "Select Favicon": "Select Favicon",
-
     "New Blog Post": "New Blog Post",
     "Blogs Manager": "Blogs Manager",
     "Create New Blog Post": "Create New Blog Post",
@@ -100,7 +93,6 @@
     "Blog post has been successfully deleted": "Blog post has been successfully deleted",
     "Blog Deletion Failed": "Blog Deletion Failed",
     "There was an error while deleting this blog post": "There was an error while deleting this blog post",
-
     "New FAQ Answer": "New FAQ Answer",
     "Create New FAQ Answer": "Create New FAQ Answer",
     "Question": "Question",
@@ -115,7 +107,6 @@
     "FAQ Deleted": "FAQ Deleted",
     "FAQ has been successfully deleted": "FAQ has been successfully deleted",
     "There was an error while deleting this FAQ": "There was an error while deleting this FAQ",
-
     "Frontend Settings": "Frontend Settings",
     "Setup Frontend Settings": "Setup Frontend Settings",
     "Maintenance Mode": "Maintenance Mode",
@@ -132,12 +123,10 @@
     "CSS File Path": "CSS File Path",
     "JS File Path": "JS File Path",
     "Footer Social Media Information": "Footer Social Media Information",
-
     "Pages Manager": "Pages Manager",
     "Create Privacy & Terms Pages Contents": "Create Privacy & Terms Pages Contents",
     "Privacy Policy Page": "Privacy Policy Page",
     "Terms & Conditions Page": "Terms & Conditions Page",
-
     "New Customer Review": "New Customer Review",
     "Create New Customer Review": "Create New Customer Review",
     "Customer Name": "Customer Name",
@@ -150,7 +139,6 @@
     "Created Customer Reviews List": "Created Customer Reviews List",
     "Review": "Review",
     "Image File Name": "Image File Name",
-
     "New Mass Notification": "New Mass Notification",
     "Mass Notifications": "Mass Notifications",
     "Create New Notification": "Create New Notification",
@@ -176,7 +164,6 @@
     "Notification has been successfully deleted": "Notification has been successfully deleted",
     "There was an error while deleting this notification": "There was an error while deleting this notification",
     "View System Notification": "View System Notification",
-
     "Are you sure you want to deactivate the script? You will not be able to access the admin panel": "Are you sure you want to deactivate the script? You will not be able to access the admin panel",
     "Confirm License Code Deletion": "Confirm License Code Deletion",
     "Manual License Activation": "Manual License Activation",
@@ -197,7 +184,6 @@
     "Congratulations! Application Successfully Activated!": "Congratulations! Application Successfully Activated!",
     "Application is Not Activated": "Application is Not Activated",
     "Deactivate": "Deactivate",
-
     "Global Settings": "Global Settings",
     "Setup Global Settings": "Setup Global Settings",
     "Site Name": "Site Name",
@@ -209,13 +195,11 @@
     "User Notifications Panel": "User Notifications Panel",
     "User Support Request Panel": "User Support Request Panel",
     "Login via Social Media": "Login via Social Media",
-
     "Registration Settings": "Registration Settings",
     "Setup Registration Settings": "Setup Registration Settings",
     "New User Registration": "New User Registration",
     "New User Email Verification": "New User Email Verification",
     "Default Country": "Default Country",
-
     "SMTP Settings": "SMTP Settings",
     "Setup SMTP Settings": "Setup SMTP Settings",
     "Sender Name": "Sender Name",
@@ -230,7 +214,6 @@
     "To Email Address": "To Email Address",
     "Email Subject": "Email Subject",
     "Email Message": "Email Message",
-
     "Upgrade Software": "Upgrade Software",
     "Software Upgrade": "Software Upgrade",
     "Current Installed Software Version": "Current Installed Software Version",
@@ -241,7 +224,6 @@
     "You have the latest version installed": "You have the latest version installed",
     "Download & Install Upgrade": "Download & Install Upgrade",
     "Check New Version": "Check New Version",
-
     "User Support Requests": "User Support Requests",
     "Support Request List": "Support Request List",
     "Priority": "Priority",
@@ -267,7 +249,6 @@
     "Response Status": "Response Status",
     "Response": "Response",
     "Respond": "Respond",
-
     "Welcome to": "Welcome to",
     "This is a secure area of the application. Please confirm your password before continuing.": "This is a secure area of the application. Please confirm your password before continuing.",
     "Password": "Password",
@@ -295,11 +276,9 @@
     "Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you did not receive the email, we will gladly send you another.": "Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you did not receive the email, we will gladly send you another.",
     "Resend Verification Email": "Resend Verification Email",
     "Logout": "Logout",
-
     "Blogs": "Blogs",
     "Contact Us": "Contact Us",
     "Social Media": "Social Media",
-
     "Start a Free Trial": "Start a Free Trial",
     "Unmatched durability and scalability": "Unmatched durability and scalability",
     "Benefits": "Benefits",
@@ -328,10 +307,8 @@
     "Reach out to us for additional information": "Reach out to us for additional information",
     "Send Message": "Send Message",
     "Last Updated": "Last Updated",
-    
     "My Dashboard": "My Dashboard",
     "Used": "Used",
-    
     "Notifications": "Notifications",
     "My Notifications": "My Notifications",
     "Received On": "Received On",
@@ -355,18 +332,15 @@
     "Personal Details": "Personal Details",
     "Website": "Website",
     "Phone": "Phone",
-
     "Search Results Data": "Search Results Data",
     "Search Results": "Search Results",
     "Search Keyword": "Search Keyword",
-
     "New Support Request": "New Support Request",
     "Create Support Request": "Create Support Request",
     "Support Message": "Support Message",
     "My Support Request List": "My Support Request List",
     "Last Updated Date": "Last Updated Date",
     "Resolved By": "Resolved By",
-
     "Total Registered Users": "Total Registered Users",
     "Online Users": "Online Users",
     "Visitors Today": "Visitors Today",
@@ -383,7 +357,6 @@
     "Age": "Age",
     "Upload": "Upload",
     "Edit Password": "Edit Password",
-
     "Register Now": "Register Now",
     "Long Term": "Long Term",
     "Information": "Information",
@@ -392,7 +365,6 @@
     "Follow up on social media to find out the latest updates": "Follow up on social media to find out the latest updates",
     "Get Started Today": "Get Started Today",
     "Sign Up Now": "Sign Up Now",
-
     "Images": "Images",
     "Expires On": "Expires On",
     "For Admin Group": "For Admin Group",
@@ -428,7 +400,6 @@
     "Setup Key": "Setup Key",
     "In order to enable enhanced security measures, setup Google Two Factor Authentication for Login.": "In order to enable enhanced security measures, setup Google Two Factor Authentication for Login.",
     "Scan the QR code below or use setup key on your Google Authenticator app to add your account.": "Scan the QR code below or use setup key on your Google Authenticator app to add your account.",
-
     "Try Now": "Try Now",
     "Plan": "Plan",
     "Pricing Plan": "Pricing Plan",
@@ -446,7 +417,6 @@
     "Subscribe to our Monthly Subscription Plans and enjoy ton of benefits": "Subscribe to our Monthly Subscription Plans and enjoy ton of benefits",
     "Subscribe to our Yearly Subscription Plans and enjoy ton of benefits": "Subscribe to our Yearly Subscription Plans and enjoy ton of benefits",
     "Affiliate Program": "Affiliate Program",
-
     "Product Description": "Product Description",
     "Write the description about your product and why it worth it": "Write the description about your product and why it worth it",
     "Language": "Language",
@@ -541,7 +511,6 @@
     "What is the question you are generating answers for?": "What is the question you are generating answers for?",
     "Testimonials / Reviews": "Testimonials / Reviews",
     "Create customer reviews or user testimonials easily": "Create customer reviews or user testimonials easily",
-    
     "Templates": "Templates",
     "All Templates": "All Templates",
     "Got some ideas to generate? We got you covered! Checkout list of templates that you can use.": "Got some ideas to generate? We got you covered! Checkout list of templates that you can use.",
@@ -568,7 +537,6 @@
     "Generated Images": "Generated Images",
     "Available Words": "Available Words",
     "Available Images": "Available Images",
-    
     "Words Left": "Words Left",
     "Images Left": "Images Left",
     "Free Trial": "Free Trial",
@@ -583,7 +551,6 @@
     "Always have your top favorite templates handy whenever you need them": "Always have your top favorite templates handy whenever you need them",
     "Word Generation": "Word Generation",
     "Monitor your daily word generation closely": "Monitor your daily word generation closely",
-    
     "Purchase History": "Purchase History",
     "All Purchase History": "All Purchase History",
     "Words": "Words",
@@ -608,7 +575,6 @@
     "Package": "Package",
     "Updated On": "Updated On",
     "Template Name": "Template Name",
-   
     "The Future of Writing": "The Future of Writing",
     "Meet": "Meet",
     "Let AI create content for blogs, articles, websites, social media and more": "Let AI create content for blogs, articles, websites, social media and more",
@@ -619,10 +585,7 @@
     "Export Text Results in PDF & Word": "Export Text Results in PDF & Word",
     "2FA Account Protection": "2FA Account Protection",
     "Generate AI Images by Using Text": "Generate AI Images by Using Text",
-    "A lot of AI templates that will allow you generate any text within seconds": "A lot of AI templates that will allow you generate any text within seconds",
-
-    "UPDATE FROM V1.2": "___DO NOT TRANSLATE THIS LINE___",
-    
+    "A lot of AI templates that will allow you generate any text within seconds": "A lot of AI templates that will allow you generate any text within seconds",    
     "Write short, simple and informative points for the subheadings of your article":"Write short, simple and informative points for the subheadings of your article",
     "Write the pros and cons of a product, service or website for your blog article":"Write the pros and cons of a product, service or website for your blog article",
     "Nobody wants to read boring blog titles, generate catchy blog titles with this tool":"Nobody wants to read boring blog titles, generate catchy blog titles with this tool",
@@ -701,9 +664,6 @@
     "To add templates as your favorite ones, simply click on the start icon on desired":"To add templates as your favorite ones, simply click on the start icon on desired",
     "templates": "templates",
     "My Referrals": "My Referrals",
-
-    "UPDATES FROM V1.3": "___DO NOT TRANSLATE THIS LINE___",
-
     "words left": "words left",
     "Export as Word Document": "Export as Word Document",
     "Export as PDF Document": "Export as PDF Document",
@@ -830,9 +790,6 @@
     "Include your text to summarize": "Include your text to summarize",
     "What is your video about?": "What is your video about?",
     "Product Name": "Product Name",
-
-    "UPDATES FROM V1.4": "___DO NOT TRANSLATE THIS LINE___",
-
     "There was an error while retrieving this image":"There was an error while retrieving this image",
     "Image was not found":"Image was not found",
     "There was an error while deleting the image":"There was an error while deleting the image",
@@ -1118,9 +1075,6 @@
     "Happy": "Happy",
     "Dark": "Dark",
     "Neutral": "Neutral",
-
-    "UPDATES FROM V1.5": "___DO NOT TRANSLATE THIS LINE___",
-
     "First Successful Payment by Referred Person": "First Successful Payment by Referred Person",
     "Every Successful Payment by Referred Person": "Every Successful Payment by Referred Person",
     "Provide Function Instructions": "Provide Function Instructions",
@@ -1260,9 +1214,6 @@
     "All Voiceovers": "All Voiceovers",
     "All Transcripts": "All Transcripts",
     "Subscribe to our Yearly Subscription Plans and enjoy your of benefits": "Subscribe to our Yearly Subscription Plans and enjoy your of benefits",
-
-    "UPDATES FROM V1.6": "___DO NOT TRANSLATE THIS LINE___",
-
     "Code Generation Error": "Code Generation Error",
     "You do not have any words left to proceed with your next chat message request, subscribe or top up to get more words": "You do not have any words left to proceed with your next chat message request, subscribe or top up to get more words",
     "You do not have sufficient words left to proceed with your next chat message request, subscribe or top up to get more words": "You do not have sufficient words left to proceed with your next chat message request, subscribe or top up to get more words",
@@ -1278,9 +1229,6 @@
     "Chat Notification": "Chat Notification",
     "Characters Included": "Characters Included",
     "Minutes Included": "Minutes Included",
-
-    "UPDATES FROM V1.7": "___DO NOT TRANSLATE THIS LINE___",
-
     "Your account has been successfully deleted": "Your account has been successfully deleted",
     "Please activate the checkbox to confirm account deletion": "Please activate the checkbox to confirm account deletion",
     "Delete Account": "Delete Account",
@@ -1305,9 +1253,6 @@
     "Minutes Left": "Minutes Left",
     "Characters Left": "Characters Left",
     "Promocodes": "Promocodes",
-
-    "UPDATES FROM V1.8": "___DO NOT TRANSLATE THIS LINE___",
-
     "Specify what kind of function or piece of code you want to generate": "Specify what kind of function or piece of code you want to generate",
     "Specify Your Programming Language": "Specify Your Programming Language",
     "Programming Language": "Programming Language",
@@ -1429,9 +1374,6 @@
     "Lunatic": "Lunatic",
     "Social Media Influencer": "Social Media Influencer",
     "General AI Bot": "General AI Bot",
-
-    "UPDATES FROM V2.0": "___DO NOT TRANSLATE THIS LINE___",
-
     "Audio Files Transcribed": "Audio Files Transcribed",
     "audio files": "audio files",
     "tasks": "tasks",
@@ -1531,9 +1473,6 @@
     "Width": "Width",
     "Height": "Height",
     "There was an issue generating your AI Image, please try again or contact support team": "There was an issue generating your AI Image, please try again or contact support team",
-
-    "UPDATES FROM V2.1": "___DO NOT TRANSLATE THIS LINE___",
-
     "Blog Posts": "Blog Posts",
     "Emails": "Emails",
     "Contents": "Contents",
@@ -1553,9 +1492,6 @@
     "Content for the generating articles, blog post": "Content for the generating articles, blog post",
     "Seeking that perfect content? Look no further! Get ready to explore our fantastic lineup of templates": "Seeking that perfect content? Look no further! Get ready to explore our fantastic lineup of templates",
     "Search for your template...": "Search for your template...",
-
-    "UPDATES FROM V2.2": "___DO NOT TRANSLATE THIS LINE___",
-
     "No API Keys stored yet": "No API Keys stored yet",
     "Miscellaneous": "Miscellaneous",
     "Comma Separated": "Comma Separated",
@@ -1596,10 +1532,7 @@
     "API Key has been deactivated successfully": "API Key has been deactivated successfully",
     "API Key Deactivated": "API Key Deactivated",
     "Find your AI assistant quickly! Get ready to explore our fantastic lineup of AI chat assistants": "Find your AI assistant quickly! Get ready to explore our fantastic lineup of AI chat assistants",
-    "Search for your AI assistant...": "Search for your AI assistant...",
-
-    "UPDATES FROM V2.3": "___DO NOT TRANSLATE THIS LINE___",
-    
+    "Search for your AI assistant...": "Search for your AI assistant...",    
     "We apologize for the inconvenience but": "We apologize for the inconvenience but",
     "We are just tuning up a few things": "We are just tuning up a few things",
     "is currently undergoing planned maintenance": "is currently undergoing planned maintenance",
@@ -1748,9 +1681,6 @@
     "Account": "Account",
     "Next Renewal": "Next Renewal",
     "No Renewal": "No Renewal",
-
-    "UPDATES FROM V2.4": "___DO NOT TRANSLATE THIS LINE___",
-
     "Image Medium": "Image Medium",
     "Manage your team members and review their credit usage": "Manage your team members and review their credit usage",
     "Members": "Members",
@@ -1792,9 +1722,6 @@
     "Team Management": "Team Management",
     "Number of Team Members": "Number of Team Members",
     "Define how many team members a user is allowed to create under this subscription plan": "Define how many team members a user is allowed to create under this subscription plan",
-    
-    "UPDATES FROM V2.5": "___DO NOT TRANSLATE THIS LINE___",
-
     "You are already a team member of ": "You are already a team member of ",
     "team": "team",
     "There was an error while leaving this team": "There was an error while leaving this team",
@@ -1813,9 +1740,6 @@
     "Confirm Team Member Removal": "Confirm Team Member Removal",
     "Your team subscription does not include support for this chat assistant category": "Your team subscription does not include support for this chat assistant category",
     "Your team subscription plan does not include support for this template category": "Your team subscription plan does not include support for this template category",
-
-    "UPDATES FROM V2.6": "___DO NOT TRANSLATE THIS LINE___",
-
     "Features": "Features",
     "Pricing": "Pricing",
     "Sign In": "Sign In",
@@ -1933,9 +1857,6 @@
     "New to ": "New to ",
     "Already have an account?": "Already have an account?",
     "Continue With Your Social Media Account": "Continue With Your Social Media Account",
-
-    "UPDATES FROM V2.8": "___DO NOT TRANSLATE THIS LINE___",
-
     "Show More": "Show More",
     "Show Less": "Show Less",
     "Read More": "Read More",
@@ -2485,9 +2406,6 @@
     "Type your message here...": "Type your message here...",
     "Press Shift + Enter to send": "Press Shift + Enter to send",
     "Type your message first before sending": "Type your message first before sending",
-
-    "UPDATES FROM V2.9": "___DO NOT TRANSLATE THIS LINE___",
-
     "Business": "Business",
     "Coach": "Coach",
     "Health": "Health",
@@ -2531,9 +2449,6 @@
     "Search for prompts...": "Search for prompts...",
     "You must include your personal Openai API key in your profile settings first": "You must include your personal Openai API key in your profile settings first",
     "You must include your personal Stable Diffusion API key in your profile settings first": "You must include your personal Stable Diffusion API key in your profile settings first",
-
-    "UPDATES FROM V3.0": "___DO NOT TRANSLATE THIS LINE___",
-
     "Update Credits": "Update Credits",
     "Characters Synthesized": "Characters Synthesized",
     "Minutes Transcribed": "Minutes Transcribed",
@@ -2570,16 +2485,10 @@
     "Free Plans Only": "Free Plans Only",
     "Free subscription plan added successfully": "Free subscription plan added successfully",
     "You can only apply once to Free subscription plans": "You can only apply once to Free subscription plans",
-
-    "UPDATES FROM V3.1": "___DO NOT TRANSLATE THIS LINE___",
-
     "Default OpenAI Dalle Engine": "Default OpenAI Dalle Engine",
     "Make sure that AI Image Feature is Enabled first and also that this AI Image vendor is enabled in your Davinci Settings page": "Make sure that AI Image Feature is Enabled first and also that this AI Image vendor is enabled in your Davinci Settings page",
     "Your subscription plan does not cover Dalle models": "Your subscription plan does not cover Dalle models",
     "Your subscription plan does not cover Stable Diffusion models": "Your subscription plan does not cover Stable Diffusion models",
-
-    "UPDATES FROM v3.2": "___DO NOT TRANSLATE THIS LINE___",
-
     "Not Allowed": "Not Allowed",
     "Stable Diffusion Image Engine": "Stable Diffusion Image Engine",
     "OpenAI Image Engine": "OpenAI Image Engine",
@@ -2589,9 +2498,6 @@
     "OpenAI Voiceover Settings": "OpenAI Voiceover Settings",
     "Activate OpenAI Standard Voices": "Activate OpenAI Standard Voices",
     "Activate OpenAI Neural Voices": "Activate OpenAI Neural Voices",
-
-    "UPDATES FROM v3.3": "___DO NOT TRANSLATE THIS LINE___",
-
     "You do not have sufficent balance in your Stable Diffusion account to generate new images": "You do not have sufficent balance in your Stable Diffusion account to generate new images",
     "For AI Templates and AI Chat features": "For AI Templates and AI Chat features",
     "Words / Images / Characters / Minutes": "Words / Images / Characters / Minutes",
@@ -2616,13 +2522,10 @@
     "Square PNG Images": "Square PNG Images",
     "openai-image-variations": "openai-image-variations",
     "Please include both target and mask images for OpenAI image masking task": "Please include both target and mask images for OpenAI image masking task",
-
-    "UPDATES FROM v3.4": "___DO NOT TRANSLATE THIS LINE___",
-
-    "AI Article Wizard": "AI SEO Article Wizard™",
+    "AI Article Wizard": "AI Article Wizard",
     "Maximum supported results is 50": "Maximum supported results is 50",
     "Advanced Options": "Advanced Options",
-    "AI Article Wizard Feature": "AI SEO Article Wizard™ Feature",
+    "AI Article Wizard Feature": "AI Article Wizard Feature",
     "Get Ideas": "Get Ideas",
     "STEP 1": "STEP 1",
     "STEP 2": "STEP 2",
@@ -2702,10 +2605,7 @@
     "Talking Points List": "Talking Points List",
     "Images List": "Images List",
     "Article Generation Error": "Article Generation Error",
-    "Article Wizard completed and saved in documents successfully": "Article Wizard completed and saved in documents successfully",
-
-    "UPDATES FROM V3.5": "___DO NOT TRANSLATE THIS LINE___",
-    
+    "Article Wizard completed and saved in documents successfully": "Article Wizard completed and saved in documents successfully",    
     "Hey, my name is Travis Guider and I am a professional Travel Guide expert. I can help you with your next great adventure.": "Hey, my name is Travis Guider and I am a professional Travel Guide expert. I can help you with your next great adventure.",
     "Hey, my name is Matt Tivate and I am a professional Motivational Coach. I can help you increase your motivation for anything you do.": "Hey, my name is Matt Tivate and I am a professional Motivational Coach. I can help you increase your motivation for anything you do.",
     "Hey, my name is Jimmy Carrey and I am a professional stand-up comedian. I can make even an elephan laugh.": "Hey, my name is Jimmy Carrey and I am a professional stand-up comedian. I can make even an elephan laugh.",
@@ -2762,9 +2662,6 @@
     "Max image size": "Max image size",
     "AI Vision Conversation": "AI Vision Conversation",
     "AI Vision Feature": "AI Vision Feature",
-
-    "UPDATES FROM V3.6": "___DO NOT TRANSLATE THIS LINE___",
-
     "Your current subscription plan does not include support for AI Vision feature": "Your current subscription plan does not include support for AI Vision feature",
     "AI Vision feature is not available for free tier users, subscribe to get a proper access": "AI Vision feature is not available for free tier users, subscribe to get a proper access",
     "Your current subscription plan does not include support for AI Article Wizard feature": "Your current subscription plan does not include support for AI Article Wizard feature",
@@ -2775,9 +2672,6 @@
     "Select Default Template Language": "Select Default Template Language",
     "User has already this plan assigned, select a different plan": "User has already this plan assigned, select a different plan",
     "Subscription has been successfully cancelled. Please check your wallet and stop auto payment": "Subscription has been successfully cancelled. Please check your wallet and stop auto payment",
-
-    "UPDATES FROM V3.7": "___DO NOT TRANSLATE THIS LINE___",
-
     "Referral ID has been successfully changed": "Referral ID has been successfully changed",
     "Referral ID Updated": "Referral ID Updated",
     "Change Referral ID": "Change Referral ID",
@@ -2817,9 +2711,6 @@
     "Chat Image Feature Access": "Chat Image Feature Access",
     "Chat Image feature is not available for free tier users, subscribe to get a proper access": "Chat Image feature is not available for free tier users, subscribe to get a proper access",
     "Your current subscription plan does not include support for Chat Image feature": "Your current subscription plan does not include support for Chat Image feature",
-
-    "UPDATES FROM V3.8": "___DO NOT TRANSLATE THIS LINE___",
-
     "Not sufficient characters to generate audio, please subscribe or top up": "Not sufficient characters to generate audio, please subscribe or top up",
     "AI Chat Image": "AI Chat Image",
     "AI Web Chat": "AI Web Chat",
@@ -2849,9 +2740,6 @@
     "Your current subscription plan does not include support for AI Web Chat feature": "Your current subscription plan does not include support for AI Web Chat feature",
     "Selected CSV file is too big. ": "Selected CSV file is too big. ",
     "Selected PDF file is too big. ": "Selected PDF file is too big. ",
-
-    "UPDATES FROM V3.9": "___DO NOT TRANSLATE THIS LINE___",
-
     "Fine Tune Models Manager": "Fine Tune Models Manager",
     "Fine Tune Models": "Fine Tune Models",
     "Congratulations! Your account is activated successfully.": "Congratulations! Your account is activated successfully.",
@@ -2862,9 +2750,6 @@
     "JSONL training file is required": "JSONL training file is required",
     "Fine Tune task has been successfully created": "Fine Tune task has been successfully created",
     "Only jsonl file are allowed to be uploaded for training": "Only jsonl file are allowed to be uploaded for training",
-
-    "UPDATES FROM V4.0": "___DO NOT TRANSLATE THIS LINE___",
-
     "Make sure to generate a content before saving": "Make sure to generate a content before saving",
     "Successfully saved in the documents": "Successfully saved in the documents",
     "Changes were successfully saved in the documents": "Changes were successfully saved in the documents",
@@ -2963,9 +2848,6 @@
     "You will need to rewrite an article first before saving your changes": "You will need to rewrite an article first before saving your changes",
     "Estimated Result Length": "Estimated Result Length",
     "Estimated words length for each generated text result": "Estimated words length for each generated text result",
-
-    "UPDATES FROM V4.2": "___DO NOT TRANSLATE THIS LINE___",
-
     "Are you sure you want to deactivate the script?": "Are you sure you want to deactivate the script?",
     "Confirm License Code Deactivation": "Confirm License Code Deactivation",
     "Your Envato Username": "Your Envato Username",
@@ -3213,9 +3095,6 @@
     "Tamil (Malaysia)": "Tamil (Malaysia)",
     "Armenian (Armenia)": "Armenian (Armenia)",
     "Belarusian (Belarus)": "Belarusian (Belarus)",
-
-    "UPDATES FROM V4.4": "___DO NOT TRANSLATE THIS LINE___",
-
     "Create Video": "Create Video",
     "Create Voice": "Create Voice",
     "AI Plagiarism Checker": "AI Plagiarism Checker",
@@ -3243,9 +3122,6 @@
     "AI Content Detector Settings": "AI Content Detector Settings",
     "AI Content Detector Feature": "AI Content Detector Feature",
     "AI Content Detector Feature Access": "AI Content Detector Feature Access",
-
-    "UPDATES FROM V4.5": "___DO NOT TRANSLATE THIS LINE___",
-
     "Default Background Audio Tracks": "Default Background Audio Tracks",
     "Upload Public Background Music Audio File": "Upload Public Background Music Audio File",
     "Make Public": "Make Public",
@@ -3354,9 +3230,6 @@
     "Finance Expert": "Finance Expert",
     "Chat Assistant Welcome Message": "Chat Assistant Welcome Message",
     "Hey there! Let me help you with your finance questions today...": "Hey there! Let me help you with your finance questions today...",
-
-    "UPDATES FROM V4.6": "___DO NOT TRANSLATE THIS LINE___",
-
     "Activate AWS Standard Voices": "Activate AWS Standard Voices",
     "Activate AWS Neural Voices": "Activate AWS Neural Voices",
     "GCP Storage Bucket Name": "GCP Storage Bucket Name",
@@ -3417,9 +3290,6 @@
     "Brand Voice has been successfully deleted": "Brand Voice has been successfully deleted",
     "Brand Voice Delete Failed": "Brand Voice Delete Failed",
     "There was an error while deleting this brand voice": "There was an error while deleting this brand voice",
-
-    "UPDATES FROM V4.7": "___DO NOT TRANSLATE THIS LINE___",
-
     "Total Dalle Images included in Plan": "Total Dalle Images included in Plan",
     "Total Stable Diffusion Images included in Plan": "Total Stable Diffusion Images included in Plan",
     "Words / DE Images / SD Images / Characters / Minutes": "Words / DE Images / SD Images / Characters / Minutes",
@@ -3440,9 +3310,6 @@
     "Welcome Credits & Limits for Non-Subscribers": "Welcome Credits & Limits for Non-Subscribers",
     "DE/SD Images Left": "DE/SD Images Left",
     "DE/SD Images": "DE/SD Images",
-
-    "UPDATES FROM V4.8": "___DO NOT TRANSLATE THIS LINE___",
-
     "New Voice Name": "New Voice Name",
     "Select your existing voice clone": "Select your existing voice clone",
     "Re-Train Existing Voice": "Re-Train Existing Voice",
@@ -3539,9 +3406,6 @@
     "Prepaid Packs": "Prepaid Packs",
     "I Agree, Sign me Up": "I Agree, Sign me Up",
     "I Agree, Let me Login": "I Agree, Let me Login",
-
-    "UPDATES FROM V4.9": "___DO NOT TRANSLATE THIS LINE___",
-
     "AI Vision": "AI Vision",
     "AI Writer": "AI Writer",
     "Image Prompt Manager": "Image Prompt Manager",
@@ -3727,9 +3591,6 @@
     "Number of GPT 4 Credits as a Gift upon Registration": "Number of GPT 4 Credits as a Gift upon Registration",
     "Number of GPT 4 Turbo Credits as a Gift upon Registration": "Number of GPT 4 Turbo Credits as a Gift upon Registration",
     "Number of GPT 3.5 Turbo Credits as a Gift upon Registration": "Number of GPT 3.5 Turbo Credits as a Gift upon Registration",
-
-    "UPDATES FROM V5.0": "___DO NOT TRANSLATE THIS LINE___",
-    
     "Gemini Pro": "Gemini Pro",
     "Available AI Models": "Available AI Models",
     "Default AI Model for Templates": "Default AI Model for Templates",
@@ -3774,9 +3635,6 @@
     "User Prepaid Gemini Pro Credits": "User Prepaid Gemini Pro Credits",
     "Aspect Ratio": "Aspect Ratio",
     "Your request was flagged by SD content moderation system, as a result your request was denied": "Your request was flagged by SD content moderation system, as a result your request was denied",
-
-    "UPDATES FROM V5.1": "___DO NOT TRANSLATE THIS LINE___",
-
     "Total GPT 3.5 Turbo words available": "Total GPT 3.5 Turbo words available",
     "Unsupported file format was selected, make sure to upload a file with a supported file format listed below": "Unsupported file format was selected, make sure to upload a file with a supported file format listed below",
     "No files added yet": "No files added yet",
@@ -3793,6 +3651,162 @@
     "File Search Tool must be enabled if you want Chat Assistant to consider your uploaded file or let upload a file during chat": "File Search Tool must be enabled if you want Chat Assistant to consider your uploaded file or let upload a file during chat",
     "Let users upload their own files during chatbot usage, uploaded files will expire after 7 days if the chat conversation will be inactive": "Let users upload their own files during chatbot usage, uploaded files will expire after 7 days if the chat conversation will be inactive",
     "Create New Chat Assistant": "Create New Chat Assistant",
-    "Uploaded files will take few minutes to be processed first": "Uploaded files will take few minutes to be processed first"
+    "Uploaded files will take few minutes to be processed first": "Uploaded files will take few minutes to be processed first",
+    "Integrations Settings": "Integrations Settings",
+    "Integration Feature Access": "Integration Feature Access",
+    "Integration Feature": "Integration Feature",
+    "Integration credentials were successfully stored": "Integration credentials were successfully stored",
+    "Integration credentials were successfully updated": "Integration credentials were successfully updated",
+    "Invalid username or password.": "Invalid username or password.",
+    "Posts your contents directly to your favorite CMS": "Posts your contents directly to your favorite CMS",
+    "Integrations": "Integrations",
+    "Provide your": "Provide your",
+    "connection informaiton": "connection informaiton",
+    "Activated": "Activated",
+    "Configure": "Configure",
+    "Wordress Configuration Issue": "Wordress Configuration Issue",
+    "You have deactivate Wordpress integration, make sure to enable it first": "You have deactivate Wordpress integration, make sure to enable it first",
+    "Make sure to setup your Wordpress credentials first and enable this integration": "Make sure to setup your Wordpress credentials first and enable this integration",
+    "Publish to Wordpress": "Publish to Wordpress",
+    "Post has been successfully published to Wordpress": "Post has been successfully published to Wordpress",
+    "Enter Your Gemini API Key": "Enter Your Gemini API Key",
+    "Enter Your Claude API Key": "Enter Your Claude API Key",
+    "Personal Gemini API Usage Feature": "Personal Gemini API Usage Feature",
+    "Personal Claude API Usage Feature": "Personal Claude API Usage Feature",
+    "The latest most advanced model of Openai. It can solve difficult problems with greater accuracy than any of our previous models": "The latest most advanced model of Openai. It can solve difficult problems with greater accuracy than any of our previous models",
+    "Available Prepaid GPT 4o Model Words": "Available Prepaid GPT 4o Model Words",
+    "Available GPT 4o Model Words": "Available GPT 4o Model Words",
+    "Not enough balance to proceed for GPT 4o model, upgrade or top up": "Not enough balance to proceed for GPT 4o model, upgrade or top up",
+    "Words Available": "Words Available",
+    "No words left": "No words left",
+    "Get More!": "Get More!",
+    "View All Credits": "View All Credits",
+    "View Credits": "View Credits",
+    "No Active Subscription": "No Active Subscription",
+    "Invite your friends and get": "Invite your friends and get",
+    "of all their purchases": "of all their purchases",
+    "of their first purchase": "of their first purchase",
+    "Invite Friends": "Invite Friends",
+    "Credits on": "Credits on",
+    "Unlock your creativity with": "Unlock your creativity with",
+    "credits": "credits",
+    "Maximize your content creation with": "Maximize your content creation with",
+    "Each credit unlocks powerful AI tools and features designed to enhance your content creation.": "Each credit unlocks powerful AI tools and features designed to enhance your content creation.",
+    "AI Chats/Templates": "AI Chats/Templates",
+    "Credits": "Credits",
+    "Extra": "Extra",
+    "Next billing is on": "Next billing is on",
+    "Current Plan": "Current Plan",
+    "No Active Plan": "No Active Plan",
+    "You do not have an active subscription": "You do not have an active subscription",
+    "Lifetime Plan": "Lifetime Plan",
+    "month": "month",
+    "year": "year",
+    "See Pricing Plans": "See Pricing Plans",
+    "Your balance": "Your balance",
+    "Current referral earnings": "Current referral earnings",
+    "Invite & Earn": "Invite & Earn",
+    "Time Saved": "Time Saved",
+    "Total hours you saved": "Total hours you saved",
+    "Your Documents": "Your Documents",
+    "Documents Saved": "Documents Saved",
+    "documents": "documents",
+    "View All": "View All",
+    "Favorite AI Writer Templates": "Favorite AI Writer Templates",
+    "Recent Documents": "Recent Documents",
+    "Need Help?": "Need Help?",
+    "Got questions? We have you covered": "Got questions? We have you covered",
+    "Create Suppport Ticket": "Create Suppport Ticket",
+    "Available from": "Available from",
+    "9am till 5pm": "9am till 5pm",
+    "Support Tickets": "Support Tickets",
+    "News & Notifications": "News & Notifications",
+    "Action Required": "Action Required",
+    "No Action Required": "No Action Required",
+    "Included image must be in png, jpeg or webp formats": "Included image must be in png, jpeg or webp formats",
+    "GA4 for Admin Panel": "GA4 for Admin Panel",
+    "Google Analytics Property ID": "Google Analytics Property ID",
+    "Google Service Account Credentials": "Google Service Account Credentials",
+    "Total Earnings": "Total Earnings",
+    "Current Month Earnings": "Current Month Earnings",
+    "this month vs last": "this month vs last",
+    "Last Month Earnings": "Last Month Earnings",
+    "New Subscribers": "New Subscribers",
+    "Referral Earnings": "Referral Earnings",
+    "Current Month Words": "Current Month Words",
+    "Last Month Words": "Last Month Words",
+    "Users vs Subscribers": "Users vs Subscribers",
+    "User Traffic": "User Traffic",
+    "GA 4 is not configured yet": "GA 4 is not configured yet",
+    "Top Countries": "Top Countries",
+    "Average Session Duration": "Average Session Duration",
+    "Last 30 Days": "Last 30 Days",
+    "Bounce Rate": "Bounce Rate",
+    "Sessions": "Sessions",
+    "Views per Session": "Views per Session",
+    "Users and Sessions": "Users and Sessions",
+    "Payout": "Payout",
+    "User Info": "User Info",
+    "Users": "Users",
+    "Non-Subscribers": "Non-Subscribers",
+    "AI Photo Studio": "AI Photo Studio",
+    "State-of-the-art AI image processing for the creation and enhancement of visual contents": "State-of-the-art AI image processing for the creation and enhancement of visual contents",
+    "ReImagine": "ReImagine",
+    "Erase Objects": "Erase Objects",
+    "Inpaint Image": "Inpaint Image",
+    "Outpaint Image": "Outpaint Image",
+    "Search and Replace": "Search and Replace",
+    "Remove Background": "Remove Background",
+    "Sketch to Image": "Sketch to Image",
+    "Structure to Image": "Structure to Image",
+    "Conservative Upscale": "Conservative Upscale",
+    "Creative Upscale": "Creative Upscale",
+    "Text to Image": "Text to Image",
+    "Target Image": "Target Image",
+    "Drag and drop your image or": "Drag and drop your image or",
+    "PNG | JPG | WEBP": "PNG | JPG | WEBP",
+    "Provide your image prompt description...": "Provide your image prompt description...",
+    "What would you like to replace?": "What would you like to replace?",
+    "Search Prompt": "Search Prompt",
+    "Result Size": "Result Size",
+    "Left": "Left",
+    "Right": "Right",
+    "Up": "Up",
+    "Down": "Down",
+    "The number of pixels to outpaint on the left side of the image. At least one outpainting direction must be supplied with a non-zero value.": "The number of pixels to outpaint on the left side of the image. At least one outpainting direction must be supplied with a non-zero value.",
+    "The number of pixels to outpaint on the right side of the image. At least one outpainting direction must be supplied with a non-zero value.": "The number of pixels to outpaint on the right side of the image. At least one outpainting direction must be supplied with a non-zero value.",
+    "The number of pixels to outpaint on the up side of the image. At least one outpainting direction must be supplied with a non-zero value.": "The number of pixels to outpaint on the up side of the image. At least one outpainting direction must be supplied with a non-zero value.",
+    "The number of pixels to outpaint on the down side of the image. At least one outpainting direction must be supplied with a non-zero value.": "The number of pixels to outpaint on the down side of the image. At least one outpainting direction must be supplied with a non-zero value.",
+    "Negative prompt description...": "Negative prompt description...",
+    "Controls the likelihood of creating additional details not heavily conditioned by the init image.": "Controls the likelihood of creating additional details not heavily conditioned by the init image.",
+    "How much influence, or control, the image has on the generation. Represented as a float between 0 and 1, where 0 is the least influence and 1 is the maximum.": "How much influence, or control, the image has on the generation. Represented as a float between 0 and 1, where 0 is the least influence and 1 is the maximum.",
+    "Control Strength": "Control Strength",
+    "Seed": "Seed",
+    "A specific value that is used to guide the randomness of the generation. Use 0 to get a random seed.": "A specific value that is used to guide the randomness of the generation. Use 0 to get a random seed.",
+    "Target Image Warning": "Target Image Warning",
+    "Image successfully generated": "Image successfully generated",
+    "AI Photo Studio Feature": "AI Photo Studio Feature",
+    "AI Photo Studio Settings": "AI Photo Studio Settings",
+    "AI Photo Studio Feature Access": "AI Photo Studio Feature Access",
+    "Start generating your image": "Start generating your image",
+
+    "AI Settings": "AI Settings",
+    "AI Management": "AI Management",
+    "AI Usage Dashboard": "AI Usage Dashboard",
+    "AI Voiceover Voices": "AI Voiceover Voices",
+    "AI Image Prompts": "AI Image Prompts",
+    "Languages": "Languages",
+    "Installed Languages": "Installed Languages",
+    "Edit Strings": "Edit Strings",
+    "Generate JSON File": "Generate JSON File",
+    "Editing Language": "Editing Language",
+    "Strings": "Strings",
+    "Translations": "Translations",
+    "Set": "Set",
+    "Add New Language": "Add New Language",
+    "Publish All JSON Files": "Publish All JSON Files",
+    "Reinstall Language Files": "Reinstall Language Files",
+    "All Json Files Published": "All Json Files Published",
+    "JSON file successfully created": "JSON file successfully created"   
 
 }

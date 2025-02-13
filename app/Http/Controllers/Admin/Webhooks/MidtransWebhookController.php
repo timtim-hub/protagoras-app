@@ -64,6 +64,7 @@ class MidtransWebhookController extends Controller
                     $user->gpt_3_turbo_credits_prepaid = ($user->gpt_3_turbo_credits_prepaid + $plan->gpt_3_turbo_credits_prepaid);
                     $user->gpt_4_turbo_credits_prepaid = ($user->gpt_4_turbo_credits_prepaid + $plan->gpt_4_turbo_credits_prepaid);
                     $user->gpt_4_credits_prepaid = ($user->gpt_4_credits_prepaid + $plan->gpt_4_credits_prepaid);
+                    $user->gpt_4o_credits_prepaid = ($user->gpt_4o_credits_prepaid + $plan->gpt_4o_credits_prepaid);
                     $user->fine_tune_credits_prepaid = ($user->fine_tune_credits_prepaid + $plan->fine_tune_credits_prepaid);
                     $user->claude_3_opus_credits_prepaid = ($user->claude_3_opus_credits_prepaid + $plan->claude_3_opus_credits_prepaid);
                     $user->claude_3_sonnet_credits_prepaid = ($user->claude_3_sonnet_credits_prepaid + $plan->claude_3_sonnet_credits_prepaid);
@@ -80,6 +81,7 @@ class MidtransWebhookController extends Controller
                     $user->gpt_3_turbo_credits = $plan->gpt_3_turbo_credits;
                     $user->gpt_4_turbo_credits = $plan->gpt_4_turbo_credits;
                     $user->gpt_4_credits = $plan->gpt_4_credits;
+                    $user->gpt_4o_credits = $plan->gpt_4o_credits;
                     $user->claude_3_opus_credits = $plan->claude_3_opus_credits;
                     $user->claude_3_sonnet_credits = $plan->claude_3_sonnet_credits;
                     $user->claude_3_haiku_credits = $plan->claude_3_haiku_credits;
@@ -143,6 +145,7 @@ class MidtransWebhookController extends Controller
                 $user->gpt_3_turbo_credits = $plan->gpt_3_turbo_credits;
                 $user->gpt_4_turbo_credits = $plan->gpt_4_turbo_credits;
                 $user->gpt_4_credits = $plan->gpt_4_credits;
+                $user->gpt_4o_credits = $plan->gpt_4o_credits;
                 $user->claude_3_opus_credits = $plan->claude_3_opus_credits;
                 $user->claude_3_sonnet_credits = $plan->claude_3_sonnet_credits;
                 $user->claude_3_haiku_credits = $plan->claude_3_haiku_credits;
@@ -222,6 +225,7 @@ class MidtransWebhookController extends Controller
                     $user->gpt_3_turbo_credits = $plan->gpt_3_turbo_credits;
                     $user->gpt_4_turbo_credits = $plan->gpt_4_turbo_credits;
                     $user->gpt_4_credits = $plan->gpt_4_credits;
+                    $user->gpt_4o_credits = $plan->gpt_4o_credits;
                     $user->claude_3_opus_credits = $plan->claude_3_opus_credits;
                     $user->claude_3_sonnet_credits = $plan->claude_3_sonnet_credits;
                     $user->claude_3_haiku_credits = $plan->claude_3_haiku_credits;

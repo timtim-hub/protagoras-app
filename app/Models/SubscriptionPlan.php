@@ -49,6 +49,8 @@ class SubscriptionPlan extends Model
         'whisper_storage_days',
         'team_members',
         'personal_openai_api',
+        'personal_claude_api',
+        'personal_gemini_api',
         'personal_sd_api',
         'days',
         'dalle_image_engine',
@@ -66,6 +68,7 @@ class SubscriptionPlan extends Model
         'chat_word_file_size',
         'voice_clone_number',
         'video_image_feature',
+        'photo_studio_feature',
         'voice_clone_feature',
         'sound_studio_feature',
         'plagiarism_feature',
@@ -84,11 +87,13 @@ class SubscriptionPlan extends Model
         'gpt_3_turbo_credits',
         'gpt_4_turbo_credits',
         'gpt_4_credits',
+        'gpt_4o_credits',
         'claude_3_opus_credits',
         'claude_3_sonnet_credits',
         'claude_3_haiku_credits',
         'fine_tune_credits',
         'gemini_pro_credits',
+        'integration_feature',
     ];
 
     /**

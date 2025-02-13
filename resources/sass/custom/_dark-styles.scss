@@ -764,6 +764,35 @@
 		}
 	}
 
+	.checkout-wrapper-box {
+		border-color: #2B2D31!important;
+		background-color: #313338!important;
+	}
+
+	.side-plan-wrapper {
+		border-color: #2B2D31!important;
+
+		span {
+			color: #b5bac1!important;
+		}
+
+		#referral-button {
+			background-color: #2B2D31;
+			border-color: #2B2D31;
+			color: #b5bac1!important;
+
+			&:hover, &:focus {
+				background-color: $primaryTextActiveColor!important;
+				border-color: $primaryTextActiveColor!important;
+				color: #FFF!important;
+			}
+		}
+	}
+
+	#creditsModel .modal-header {
+		border-bottom-color: #2B2D31!important;
+	}
+
 }
 
 body.dark-theme *::-webkit-scrollbar-thumb, body.dark-theme *:hover::-webkit-scrollbar-thumb {
