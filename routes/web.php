@@ -162,7 +162,7 @@ Route::group(['prefix' => 'install', 'middleware' => 'install'], function() {
 Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']], function () {
     // ADMIN ROUTES
     Route::group(['prefix' => 'app'], function() {
-        Route::group(['prefix' => 'admin', 'middleware' => ['verified', '2fa.verify', 'role:admin', 'PreventBackHistory']], function() {
+        Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth', 'role:admin']], function() {
 
             // UPDATE ROUTE
             Route::get('/update/now', [UpdateController::class, 'updateDatabase']);
@@ -1100,13 +1100,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 
 });
 
-// Fallback route to ensure the admin.about route is defined
-Route::get('/admin/settings/about', [App\Http\Controllers\Admin\Settings\GlobalController::class, 'about'])->name('admin.settings.about');
-
-// Fallback route to ensure the admin.dashboard route is defined
-Route::get('/admin/dashboard', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('admin.dashboard');
-
-// Test route to verify routing
+// Keep only the test route at the bottom
 Route::get('/test', function() {
     return 'Routing OK';
 });
