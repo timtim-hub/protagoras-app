@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class MainSetting extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'languages',
+        'default_language',
+    ];
+
+    protected $casts = [
+        'languages' => 'array',
+    ];
 }
