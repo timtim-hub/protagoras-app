@@ -118,7 +118,7 @@ class AdminController extends Controller
         $users = User::latest()->take(10)->get();
         $transaction = Payment::latest()->take(10)->get();       
  
-        return view('admin.dashboard.index', compact('total_data_monthly', 'total_data_yearly', 'chart_data', 'percentage', 'users', 'transaction', 'notifications', 'tickets'));
+        return view('default.admin.dashboard.index', compact('total_data_monthly', 'total_data_yearly', 'chart_data', 'percentage', 'users', 'transaction', 'notifications', 'tickets'));
     }
 
 
